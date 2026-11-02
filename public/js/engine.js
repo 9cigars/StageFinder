@@ -62,10 +62,13 @@ export function dataScores(data, id) {
     } : none("No benchmark for that year");
   } else out.salary = none("No median salary found");
 
-  // 2. ROI (gross payback months; lower is better)
-  const pb = latest(S.payback), pbB = benchLatest(data, "payback");
-  out.roi = pb && pbB ? {
-    score: clamp((pbB.value / pb.value) * 100), own: pb.value, year: pb.year, bench: pbB.value, unit: "months", benchN: pbB.n,
+  // 2. ROI: current programme fee / latest median salary (gross months); lower is better
+  const pbOf = (iim) => { const sl = latest(iim.series.salary); return iim.fee && sl ? { months: (iim.fee.lakh / sl.value) * 12, fee: iim.fee.lakh, year: sl.year } : null; };
+  const pb = pbOf(data.iims[id]);
+  const pbB = ABC.map((k) => pbOf(data.iims[k])).filter(Boolean);
+  out.roi = pb && pbB.length >= 2 ? {
+    score: clamp((mean(pbB.map((x) => x.months)) / pb.months) * 100), own: pb.months, year: pb.year, fee: pb.fee, feeBatch: data.iims[id].fee.batch,
+    bench: mean(pbB.map((x) => x.months)), unit: "months", benchN: pbB.length,
   } : none("Fee data not found for this IIM");
 
   // 3. faculty with PhDs
@@ -74,11 +77,15 @@ export function dataScores(data, id) {
     score: clamp((ph.value / phB.value) * 100), own: ph.value, year: ph.year, bench: phB.value, unit: "%", benchN: phB.n,
   } : none("No PhD share found");
 
-  // 4. research: journal articles per faculty; benchmark is whichever of A/B/C has it
-  const ar = latest(S.articlesPerFaculty), arB = benchLatest(data, "articlesPerFaculty", 1);
-  out.research = ar && arB ? {
-    score: clamp((ar.value / arB.value) * 100), own: ar.value, year: ar.year, bench: arB.value, unit: "articles / faculty", benchN: arB.n,
-    thin: true,
+  // 4. research: journal articles per faculty (2023-25 average of OpenAlex articles / latest NIRF faculty count)
+  const rsOf = (iim) => {
+    const a = ["2023", "2024", "2025"].map((y) => iim.series.articles?.[y]).filter((v) => v != null), f = latest(iim.series.faculty);
+    return a.length && f ? { v: mean(a) / f.value, art: mean(a), fac: f.value } : null;
+  };
+  const rs = rsOf(data.iims[id]);
+  const rsB = ABC.map((k) => rsOf(data.iims[k])).filter(Boolean);
+  out.research = rs && rsB.length >= 2 ? {
+    score: clamp((rs.v / mean(rsB.map((x) => x.v))) * 100), own: rs.v, year: 2025, bench: mean(rsB.map((x) => x.v)), unit: "articles / faculty", benchN: rsB.length, art: rs.art, fac: rs.fac,
   } : none("No journal-article count found");
 
   // 5. diversity: 70% women share, 30% international share
@@ -117,7 +124,10 @@ export function stageFromData(data, id) {
   if (rec) ev.push(`Over ${rec.from}–${rec.to} it moved ${rec.change >= 0 ? "+" : ""}${(rec.change * 100).toFixed(1)}% in total.`);
 
   let stage, momentum, rule;
-  if (rec && rec.change <= T.declineDrop) {
+  // a falling median on a much bigger class or more recruiters is dilution from expansion, not decline
+  const grew = (key) => { const a = data.iims[id].series[key], l = latest(a); const v = rec && a ? a[rec.from] : null; return !!(l && v != null && l.value > v * 1.05); };
+  const dilution = grew("placed") || grew("firms");
+  if (rec && rec.change <= T.declineDrop && !dilution) {
     stage = "Decline"; momentum = "falling";
     rule = `Median salary fell ${(Math.abs(rec.change) * 100).toFixed(1)}% between ${rec.from} and ${rec.to}; a fall of more than 3% marks decline.`;
   } else if (L >= T.maturityFrom) {

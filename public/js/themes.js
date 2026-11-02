@@ -16,7 +16,6 @@ export const THEMES = {
   sambalpur: { accent: "#9a85ff", accent2: "#4fd1c5", bg: "#0e0a20", surface: "#1a1436", ink: "#f0edff", motif: "waves", fx: "ripples", seed: 6, line: "The long reach of the Hirakud reservoir" },
   shillong: { accent: "#2ed8b0", accent2: "#b8ef72", bg: "#06161a", surface: "#0d262b", ink: "#e8fbf6", motif: "ridge", fx: "mist", seed: 7, mist: true, line: "Rolling hills under mist" },
   sirmaur: { accent: "#ee5f8e", accent2: "#8fd1a8", bg: "#150a11", surface: "#241320", ink: "#fdeef4", motif: "ridge", fx: "petals", seed: 8, line: "Rhododendron and pine in the Shivalik foothills" },
-  trichy: { accent: "#eab62e", accent2: "#74d3e8", bg: "#0c0b22", surface: "#171634", ink: "#fbf5e0", motif: "gopuram", fx: "lanterns", seed: 9, line: "A temple town on the Kaveri" },
 };
 
 export const themeFor = (id) => ({ ...NEUTRAL, ...(THEMES[id] || {}) });

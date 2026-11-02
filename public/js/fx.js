@@ -29,8 +29,8 @@ const KINDS = {
     step: (p) => { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1; },
     draw: (p, t, all) => {
       cx.fillStyle = rgba(col.a, 0.8); cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, 6.28); cx.fill();
-      for (const q of all) { if (q === p) continue; const d = Math.hypot(p.x - q.x, p.y - q.y); if (d < 130) { cx.strokeStyle = rgba(col.b, (1 - d / 130) * 0.28); cx.lineWidth = 1; cx.beginPath(); cx.moveTo(p.x, p.y); cx.lineTo(q.x, q.y); cx.stroke(); } }
-      const dm = Math.hypot(p.x - mouse.x, p.y - mouse.y); if (dm < 170) { cx.strokeStyle = rgba(col.a, (1 - dm / 170) * 0.5); cx.beginPath(); cx.moveTo(p.x, p.y); cx.lineTo(mouse.x, mouse.y); cx.stroke(); } } },
+      for (const q of all) { if (q === p) continue; const dx = p.x - q.x, dy = p.y - q.y; if (dx * dx + dy * dy < 16900) { const d = Math.sqrt(dx * dx + dy * dy); cx.strokeStyle = rgba(col.b, (1 - d / 130) * 0.28); cx.lineWidth = 1; cx.beginPath(); cx.moveTo(p.x, p.y); cx.lineTo(q.x, q.y); cx.stroke(); } }
+      const mx = p.x - mouse.x, my = p.y - mouse.y; if (mx * mx + my * my < 28900) { const dm = Math.sqrt(mx * mx + my * my); cx.strokeStyle = rgba(col.a, (1 - dm / 170) * 0.5); cx.beginPath(); cx.moveTo(p.x, p.y); cx.lineTo(mouse.x, mouse.y); cx.stroke(); } } },
   rain: { n: 80, make: () => ({ x: rnd(W), y: rnd(H), l: rnd(12, 24), vy: rnd(7, 12), vx: 2.4 }),
     step: (p) => { p.x += p.vx; p.y += p.vy; },
     draw: (p) => { cx.strokeStyle = rgba(col.b, 0.28); cx.lineWidth = 1.2; cx.beginPath(); cx.moveTo(p.x, p.y); cx.lineTo(p.x - 2.4, p.y - p.l); cx.stroke(); } },
@@ -49,22 +49,24 @@ const KINDS = {
 };
 
 function resize() {
-  dpr = Math.min(devicePixelRatio || 1, 2);
+  dpr = Math.min(devicePixelRatio || 1, 1.5);
   W = innerWidth; H = innerHeight;
   cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px";
   cx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
-function rebuild() { const k = KINDS[kind] || KINDS.network; parts = Array.from({ length: Math.round(k.n * (W < 700 ? 0.55 : 1)) }, k.make); }
+function rebuild() { const k = KINDS[kind] || KINDS.network; parts = Array.from({ length: Math.round(k.n * (W < 700 ? 0.45 : 0.7)) }, k.make); }
+let lastDraw = 0;
 function loop(t) {
   requestAnimationFrame(loop);
-  if (document.hidden || !cx) return;
+  if (document.hidden || !cx || t - lastDraw < 28) return;   // ~35 fps is plenty for ambient particles
+  lastDraw = t;
   cx.clearRect(0, 0, W, H);
   const k = KINDS[kind] || KINDS.network;
   for (const p of parts) {
     // cursor pushes particles away (network connects to the cursor instead)
     if (kind !== "network" && kind !== "mist" && kind !== "ripples") {
-      const dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.hypot(dx, dy);
-      if (d < 120 && d > 0) { const f = (1 - d / 120) * (mouse.down ? 9 : 2.2); p.x += (dx / d) * f; p.y += (dy / d) * f; }
+      const dx = p.x - mouse.x, dy = p.y - mouse.y;
+      if (dx * dx + dy * dy < 14400 && dx * dx + dy * dy > 0) { const d = Math.sqrt(dx * dx + dy * dy); const f = (1 - d / 120) * (mouse.down ? 9 : 2.2); p.x += (dx / d) * f; p.y += (dy / d) * f; }
     }
     k.step(p, t);
     if (p.y > H + 20) { p.y = -20; p.x = rnd(W); }
@@ -87,14 +89,12 @@ export function initFx() {
   addEventListener("resize", () => { resize(); rebuild(); });
   if (!reduce) requestAnimationFrame(loop);
 
-  const glow = $("#cursor"), ring = $("#ring");
+  const glow = $("#cursor"), ring = $("#ring"), motifEl = $("#motif");
+  let lastTarget = null, lastPx = 9, lastPy = 9;
   let gx = innerWidth / 2, gy = innerHeight / 2, rx = gx, ry = gy;
   addEventListener("pointermove", (e) => {
     mouse.x = e.clientX; mouse.y = e.clientY;
-    const r = document.documentElement.style;
-    r.setProperty("--px", ((e.clientX / innerWidth) * 2 - 1).toFixed(3));
-    r.setProperty("--py", ((e.clientY / innerHeight) * 2 - 1).toFixed(3));
-    if (ring) ring.classList.toggle("hot", !!e.target.closest?.("button, a, select, [data-action], .tilt, input, textarea"));
+    if (ring && e.target !== lastTarget) { lastTarget = e.target; ring.classList.toggle("hot", !!e.target.closest?.("button, a, select, [data-action], .tilt, input, textarea")); }
   }, { passive: true });
   addEventListener("pointerdown", () => { mouse.down = 1; setTimeout(() => (mouse.down = 0), 180); });
   if (fine && !reduce && glow) {
@@ -102,6 +102,9 @@ export function initFx() {
     (function follow() {
       gx += (mouse.x - gx) * 0.12; gy += (mouse.y - gy) * 0.12; rx += (mouse.x - rx) * 0.32; ry += (mouse.y - ry) * 0.32;
       glow.style.transform = `translate3d(${gx - 260}px,${gy - 260}px,0)`;
+      // parallax variables live on #motif only, so moving the mouse never restyles the whole page
+      const px = +((gx / innerWidth) * 2 - 1).toFixed(2), py = +((gy / innerHeight) * 2 - 1).toFixed(2);
+      if (px !== lastPx || py !== lastPy) { lastPx = px; lastPy = py; motifEl.style.setProperty("--px", px); motifEl.style.setProperty("--py", py); }
       ring.style.transform = `translate3d(${rx - 16}px,${ry - 16}px,0)`;
       requestAnimationFrame(follow);
     })();

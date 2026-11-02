@@ -16,15 +16,15 @@
    "state": "Gujarat",
    "founded": 1961,
    "benchmark": true,
-   "salaryBasis": "MEP (maximum earning potential)",
+   "salaryBasis": "NIRF median of placed graduates",
    "series": {
     "salary": {
      "2021": 27.6,
-     "2022": 31.59,
-     "2023": 32.02,
-     "2024": 32.02,
-     "2025": 34.59,
-     "2026": 37.0
+     "2022": 30.0,
+     "2023": 31.0,
+     "2024": 31.0,
+     "2025": 33.0,
+     "2026": null
     },
     "salaryMean": {
      "2021": 27.55,
@@ -33,14 +33,6 @@
      "2024": 35.18,
      "2025": 35.5,
      "2026": 37.97
-    },
-    "payback": {
-     "2021": 10.0,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": 8.67302688638335,
-     "2026": 8.5945945945946
     },
     "phd": {
      "2021": null,
@@ -65,14 +57,6 @@
      "2024": 7.91891891891892,
      "2025": 8.14545454545455,
      "2026": 8.44859813084112
-    },
-    "articlesPerFaculty": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": 1.12
     },
     "women": {
      "2021": 0.266514806378132,
@@ -105,6 +89,13 @@
      "2024": 386.0,
      "2025": 395.0,
      "2026": 392.0
+    },
+    "articles": {
+     "2021": 131.0,
+     "2022": 148.0,
+     "2023": 177.0,
+     "2024": 131.0,
+     "2025": 108.0
     }
    },
    "notes": [
@@ -116,11 +107,8 @@
     "International faculty share was not found for any year."
    ],
    "dataFlags": [
-    "Median 2023: IPRS extract shows ₹32.02 lakh (combined); Cracku shows ₹31.58 lakh. 2024 also reads ₹32.02 lakh. Check the 2023 and 2024 PDFs.",
-    "Median 2025: ₹34.59 lakh combined; ₹34.53 lakh domestic only. The combined figure is used.",
-    "NIRF tables show a different 'median salary' (₹27.6, 30, 31, 31 lakh for 2021-2024 graduates) from the IPRS MEP medians. They are not used because the basis is unclear.",
-    "2025 offers and firms: the Annual Report text says 489 offers and 142 firms; the IPRS report says 395 offers and 178 firms. IPRS is used.",
-    "Fee ₹30.4 lakh (Careers360, 2025) includes hostel and mess; the other fee figures are programme fee. It is not used."
+    "Salary uses NIRF medians so it is comparable with the other IIMs. IPRS 'maximum earning potential' (₹34.59 L in 2025, ₹37 L in 2026) is higher and is not used.",
+    "2021 and 2022 medians (27.6, 30.0) come from the workbook's NIRF note; 2023-2025 (31.0, 31.0, 33.0) were re-read from the NIRF 2026 filing."
    ],
    "sources": [
     {
@@ -202,8 +190,27 @@
      "id": "A1",
      "title": "IIMA Annual Report 2024-25",
      "quality": "Primary"
+    },
+    {
+     "id": "OA",
+     "title": "OpenAlex works API: journal articles by affiliation text, 2021-2025",
+     "quality": "Open scholarly index; lower bound"
+    },
+    {
+     "id": "FEE",
+     "title": "MBAUniverse: IIM fees for MBA (current-batch total programme fee)",
+     "quality": "Secondary"
     }
-   ]
+   ],
+   "unaudited2026": {
+    "salary": 37.0
+   },
+   "fee": {
+    "lakh": 27.5,
+    "batch": "2025-27",
+    "note": "Matches the workbook's fee note (₹27.5 L for 2025-27).",
+    "source": "MBAUniverse, IIM fees for MBA (secondary)"
+   }
   },
   "bangalore": {
    "id": "bangalore",
@@ -221,7 +228,7 @@
      "2023": 33.0,
      "2024": 32.5,
      "2025": 32.61,
-     "2026": 34.75
+     "2026": null
     },
     "salaryMean": {
      "2021": null,
@@ -230,14 +237,6 @@
      "2024": 35.92,
      "2025": 34.88,
      "2026": 35.35
-    },
-    "payback": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": 9.08923643054278,
-     "2026": 9.15107913669065
     },
     "phd": {
      "2021": 0.956896551724138,
@@ -294,6 +293,13 @@
      "2024": 163.0,
      "2025": 177.0,
      "2026": 177.0
+    },
+    "articles": {
+     "2021": 93.0,
+     "2022": 121.0,
+     "2023": 103.0,
+     "2024": 107.0,
+     "2025": 102.0
     }
    },
    "notes": [
@@ -305,11 +311,7 @@
     "Women faculty and international faculty were not found."
    ],
    "dataFlags": [
-    "Median 2022: NIRF shows ₹31.5 lakh; Cracku shows ₹31.20 lakh. NIRF is used.",
-    "Students placed 2023: NIRF 502; Careers360 shows 512 in one table and 502 in another. 502 is used.",
-    "2025 placed (602) and offers (660) come from a news site and include PGPBA students, so they are not directly comparable with 2021-2024.",
-    "Mean salary 2022 of ₹33.82 lakh (Cracku) equals IIM A's 2022 mean exactly and was not used.",
-    "Salary basis (CTC versus another measure) is not stated by IIMB or the news sources. Do not compare it directly with IIM A's maximum-earning-potential figure."
+    "Medians come from IIM Bangalore placement reports and were not cross-checked against NIRF (the NIRF files were not reachable)."
    ],
    "sources": [
     {
@@ -356,8 +358,27 @@
      "id": "B6",
      "title": "IIMB Research & Publications Annual Reports 2020-21, 2021-22, 2023-24, 2024-25",
      "quality": "Primary (institute)"
+    },
+    {
+     "id": "OA",
+     "title": "OpenAlex works API: journal articles by affiliation text, 2021-2025",
+     "quality": "Open scholarly index; lower bound"
+    },
+    {
+     "id": "FEE",
+     "title": "MBAUniverse: IIM fees for MBA (current-batch total programme fee)",
+     "quality": "Secondary"
     }
-   ]
+   ],
+   "unaudited2026": {
+    "salary": 34.75
+   },
+   "fee": {
+    "lakh": 26.0,
+    "batch": "2026-28",
+    "note": "",
+    "source": "MBAUniverse, IIM fees for MBA (secondary)"
+   }
   },
   "calcutta": {
    "id": "calcutta",
@@ -373,9 +394,9 @@
      "2021": 27.67,
      "2022": 31.0,
      "2023": 33.67,
-     "2024": null,
-     "2025": 34.0,
-     "2026": 35.0
+     "2024": 30.0,
+     "2025": 35.0,
+     "2026": null
     },
     "salaryMean": {
      "2021": 29.0,
@@ -385,21 +406,13 @@
      "2025": 34.23,
      "2026": 36.0
     },
-    "payback": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": 8.82352941176471,
-     "2026": null
-    },
     "phd": {
      "2021": null,
      "2022": null,
      "2023": null,
      "2024": null,
-     "2025": null,
-     "2026": null
+     "2025": 1.0,
+     "2026": 0.9891304347826086
     },
     "faculty": {
      "2021": 91.0,
@@ -407,7 +420,7 @@
      "2023": 86.0,
      "2024": 134.0,
      "2025": 105.0,
-     "2026": null
+     "2026": 92.0
     },
     "studentsPerFaculty": {
      "2021": 11.7252747252747,
@@ -417,21 +430,13 @@
      "2025": 10.0761904761905,
      "2026": null
     },
-    "articlesPerFaculty": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": null
-    },
     "women": {
      "2021": 0.310215557638238,
      "2022": 0.301572617946346,
      "2023": 0.275023386342376,
      "2024": 0.263305322128852,
      "2025": 0.296786389413989,
-     "2026": null
+     "2026": 0.29745042492917845
     },
     "intl": {
      "2021": 0.0,
@@ -439,7 +444,7 @@
      "2023": 0.0,
      "2024": 0.0,
      "2025": 0.0,
-     "2026": null
+     "2026": 0.0
     },
     "placed": {
      "2021": 523.0,
@@ -456,6 +461,13 @@
      "2024": 194.0,
      "2025": 196.0,
      "2026": 202.0
+    },
+    "articles": {
+     "2021": 63.0,
+     "2022": 64.0,
+     "2023": 64.0,
+     "2024": 58.0,
+     "2025": 62.0
     }
    },
    "notes": [
@@ -467,11 +479,9 @@
     "Women faculty and international faculty were not found."
    ],
    "dataFlags": [
-    "Average salary 2022 to 2024: sources disagree (2022: 30.60 or 34.20; 2023: 35.07 or 34.20; 2024: 32.62 or 35.07). None used.",
-    "Median 2023 is ₹33.67 lakh in both NIRF and MBAUniverse. A Careers360 article repeats it for 2024, but it is the NIRF figure for 2022-23 graduates, so 2024 is left blank.",
-    "Faculty counts in NIRF: 91, 87, 86, 134, 105. The swings suggest different counting rules between filings.",
-    "Students placed: 2021-2023 are NIRF placed counts (about 520-540); 2024-2026 are students participating in final placements (about 460), which is a different measure. Do not read the drop as fewer students placed.",
-    "2025-27 fee is quoted as both ₹27.0 and ₹27.5 lakh by the same article."
+    "Medians 2021-2025 (27.67, 31.0, 33.67, 30.0, 35.0) match IIM Calcutta's NIRF filings. The workbook had 2024 blank and 2025 as 34.0; NIRF gives 30.0 and 35.0.",
+    "News sites attribute ₹33.67 L to both 2023 and 2024; the NIRF filing assigns it to the 2022-23 batch (graduating 2023).",
+    "PhD share is from the NIRF 2025 (105 of 105 listed faculty) and 2026 (91 of 92) filings."
    ],
    "sources": [
     {
@@ -513,8 +523,27 @@
      "id": "C7",
      "title": "MBAUniverse: IIM fees",
      "quality": "Secondary. Verify on iimcal.ac.in."
+    },
+    {
+     "id": "OA",
+     "title": "OpenAlex works API: journal articles by affiliation text, 2021-2025",
+     "quality": "Open scholarly index; lower bound"
+    },
+    {
+     "id": "FEE",
+     "title": "MBAUniverse: IIM fees for MBA (current-batch total programme fee)",
+     "quality": "Secondary"
     }
-   ]
+   ],
+   "unaudited2026": {
+    "salary": 35.0
+   },
+   "fee": {
+    "lakh": 27.0,
+    "batch": "2025-27",
+    "note": "Sources disagree (₹27 L on the fee table, ₹27.5 L in the summary, ₹31 L on one site that may include hostel); ₹27 L is the most widely reported programme fee.",
+    "source": "MBAUniverse, IIM fees for MBA (secondary)"
+   }
   },
   "jammu": {
    "id": "jammu",
@@ -532,7 +561,7 @@
      "2023": 15.25,
      "2024": 15.0,
      "2025": 15.8,
-     "2026": 15.0
+     "2026": null
     },
     "salaryMean": {
      "2021": null,
@@ -541,14 +570,6 @@
      "2024": 15.48,
      "2025": 16.04,
      "2026": 16.47
-    },
-    "payback": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": null
     },
     "phd": {
      "2021": null,
@@ -573,14 +594,6 @@
      "2024": 6.0625,
      "2025": 11.0888888888889,
      "2026": 8.52380952380952
-    },
-    "articlesPerFaculty": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": null
     },
     "women": {
      "2021": null,
@@ -613,6 +626,13 @@
      "2024": null,
      "2025": 200.0,
      "2026": 260.0
+    },
+    "articles": {
+     "2021": 23.0,
+     "2022": 55.0,
+     "2023": 68.0,
+     "2024": 60.0,
+     "2025": 51.0
     }
    },
    "notes": [
@@ -623,10 +643,7 @@
     "Placed counts for 2025 and 2026 were not found."
    ],
    "dataFlags": [
-    "Faculty counts: 32 (2022), 71, 80, 45, 63. The same institute cannot change this much; different groups are probably counted.",
-    "2023 median: NIRF 15.25 and Cracku 15.25 agree. 2024: NIRF 15.00 and Cracku 15.00 agree.",
-    "Cracku repeats the highest package ₹26.60 lakh for both the 2023-25 and 2024-26 batches, which may be a copy error.",
-    "Women: 100 of 485 (2024 edition) vs 310 of 537 (2026 edition). The 2026 file may include a different programme mix."
+    "2021-2022 medians (10.0, 12.75) match the NIRF filing; 2023-2025 come from institute placement reports and were not cross-checked against NIRF."
    ],
    "sources": [
     {
@@ -648,8 +665,27 @@
      "id": "FEE",
      "title": "Careers360 and MBAUniverse fee tables",
      "quality": "Secondary"
+    },
+    {
+     "id": "OA",
+     "title": "OpenAlex works API: journal articles by affiliation text, 2021-2025",
+     "quality": "Open scholarly index; lower bound"
+    },
+    {
+     "id": "FEE",
+     "title": "MBAUniverse: IIM fees for MBA (current-batch total programme fee)",
+     "quality": "Secondary"
     }
-   ]
+   ],
+   "unaudited2026": {
+    "salary": 15.0
+   },
+   "fee": {
+    "lakh": 22.81,
+    "batch": "2026-28",
+    "note": "",
+    "source": "MBAUniverse, IIM fees for MBA (secondary)"
+   }
   },
   "ranchi": {
    "id": "ranchi",
@@ -667,7 +703,7 @@
      "2023": 16.5,
      "2024": 18.0,
      "2025": 17.64,
-     "2026": 18.0
+     "2026": null
     },
     "salaryMean": {
      "2021": 14.69,
@@ -676,14 +712,6 @@
      "2024": 18.69,
      "2025": 19.24,
      "2026": 19.26
-    },
-    "payback": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": null
     },
     "phd": {
      "2021": null,
@@ -708,14 +736,6 @@
      "2024": 10.5365853658537,
      "2025": 8.13333333333333,
      "2026": 7.71428571428571
-    },
-    "articlesPerFaculty": {
-     "2021": null,
-     "2022": null,
-     "2023": 1.07246376811594,
-     "2024": 1.53658536585366,
-     "2025": 1.57777777777778,
-     "2026": 1.36734693877551
     },
     "women": {
      "2021": 0.430188679245283,
@@ -748,6 +768,13 @@
      "2024": 76.0,
      "2025": 81.0,
      "2026": 77.0
+    },
+    "articles": {
+     "2021": 104.0,
+     "2022": 136.0,
+     "2023": 130.0,
+     "2024": 121.0,
+     "2025": 108.0
     }
    },
    "notes": [
@@ -758,11 +785,7 @@
     "Women faculty, international faculty and offer counts were not found."
    ],
    "dataFlags": [
-    "Highest 2023 package: ₹67 lakh in one table and ₹35.5 lakh in another (international vs domestic). Not used here.",
-    "2025 mean: ₹19.24 lakh in the annual report, ₹19.29 lakh on Cracku. The annual report figure is used.",
-    "Students placed: 2021-2022 are NIRF placed counts; 2023 is a 'total students' count that probably includes other programmes; 2024-2026 count MBA participants only (about 215-220). Do not read the changes as growth or decline.",
-    "PG student totals from NIRF: 830 (2023), 864 (2024), 732 (2025), 756 (2026). The swings suggest the filings count different groups.",
-    "Journal articles 2026 (134) comes from a summary row with six numbers for seven labels, so the mapping may be off."
+    "Medians come from institute placement reports and were not cross-checked against NIRF (the NIRF files were not reachable)."
    ],
    "sources": [
     {
@@ -794,8 +817,27 @@
      "id": "R5",
      "title": "Cracku: IIM Ranchi average package 2026; Careers360 fee comparison",
      "quality": "Secondary"
+    },
+    {
+     "id": "OA",
+     "title": "OpenAlex works API: journal articles by affiliation text, 2021-2025",
+     "quality": "Open scholarly index; lower bound"
+    },
+    {
+     "id": "FEE",
+     "title": "MBAUniverse: IIM fees for MBA (current-batch total programme fee)",
+     "quality": "Secondary"
     }
-   ]
+   ],
+   "unaudited2026": {
+    "salary": 18.0
+   },
+   "fee": {
+    "lakh": 19.2,
+    "batch": "2025-27",
+    "note": "The source does not say whether this is the full two-year fee.",
+    "source": "MBAUniverse, IIM fees for MBA (secondary)"
+   }
   },
   "sambalpur": {
    "id": "sambalpur",
@@ -808,7 +850,7 @@
    "salaryBasis": "CTC as reported by the institute",
    "series": {
     "salary": {
-     "2021": null,
+     "2021": 10.35,
      "2022": 12.42,
      "2023": 16.0,
      "2024": 13.15,
@@ -821,14 +863,6 @@
      "2023": null,
      "2024": 14.21,
      "2025": 15.65,
-     "2026": null
-    },
-    "payback": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
      "2026": null
     },
     "phd": {
@@ -854,14 +888,6 @@
      "2024": 5.67692307692308,
      "2025": 6.7012987012987,
      "2026": 8.51351351351351
-    },
-    "articlesPerFaculty": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": null
     },
     "women": {
      "2021": 0.24468085106383,
@@ -894,6 +920,13 @@
      "2024": 163.0,
      "2025": null,
      "2026": null
+    },
+    "articles": {
+     "2021": 17.0,
+     "2022": 18.0,
+     "2023": 37.0,
+     "2024": 72.0,
+     "2025": 88.0
     }
    },
    "notes": [
@@ -904,10 +937,7 @@
     "Mean salary is available only for 2024 and 2025."
    ],
    "dataFlags": [
-    "2025 median ₹15.03 lakh (₹15.02 lakh in another article) comes from a page that says it uses 2023-25 data; it may not be the 2025 batch alone.",
-    "NIRF 2024 edition (graduates 2023-24) shows 173 placed and 19 in higher studies out of 192; the median fell from ₹16.0 to ₹13.15 lakh.",
-    "NIRF 2026 student count (630, 426 women) looks high against 516 the year before.",
-    "2021 faculty count of 12 and the later jump to 49 reflect the institute's early growth."
+    "2021-2023 medians (10.35, 12.42, 16.0) match the NIRF filings; 2024-2025 come from placement reports and were not cross-checked. Recruiter count is from 2024 only."
    ],
    "sources": [
     {
@@ -929,8 +959,27 @@
      "id": "FEE",
      "title": "Careers360 and MBAUniverse fee tables",
      "quality": "Secondary"
+    },
+    {
+     "id": "OA",
+     "title": "OpenAlex works API: journal articles by affiliation text, 2021-2025",
+     "quality": "Open scholarly index; lower bound"
+    },
+    {
+     "id": "FEE",
+     "title": "MBAUniverse: IIM fees for MBA (current-batch total programme fee)",
+     "quality": "Secondary"
     }
-   ]
+   ],
+   "unaudited2026": {
+    "salary": null
+   },
+   "fee": {
+    "lakh": 21.13,
+    "batch": "2026-28",
+    "note": "",
+    "source": "MBAUniverse, IIM fees for MBA (secondary)"
+   }
   },
   "shillong": {
    "id": "shillong",
@@ -948,7 +997,7 @@
      "2023": 26.09,
      "2024": 25.67,
      "2025": 25.0,
-     "2026": 26.0
+     "2026": null
     },
     "salaryMean": {
      "2021": null,
@@ -957,14 +1006,6 @@
      "2024": 26.1,
      "2025": 26.44,
      "2026": 27.03
-    },
-    "payback": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": 12.0830769230769
     },
     "phd": {
      "2021": 1.0,
@@ -989,14 +1030,6 @@
      "2024": 14.3783783783784,
      "2025": 5.87692307692308,
      "2026": 9.59259259259259
-    },
-    "articlesPerFaculty": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": null
     },
     "women": {
      "2021": 0.405263157894737,
@@ -1029,6 +1062,13 @@
      "2024": 87.0,
      "2025": 141.0,
      "2026": 147.0
+    },
+    "articles": {
+     "2021": 53.0,
+     "2022": 64.0,
+     "2023": 48.0,
+     "2024": 53.0,
+     "2025": 48.0
     }
    },
    "notes": [
@@ -1039,11 +1079,7 @@
     "Return on investment exists only for 2026 (fee ₹26.18 lakh vs median ₹26.0 lakh)."
    ],
    "dataFlags": [
-    "2024 median: IMS India shows ₹25.67 lakh (median) while Cracku shows ₹25.67 lakh as the average. Used as a median with a flag.",
-    "2025 median ₹25.00 lakh is marked uncertain in the source's own table.",
-    "Recruiter counts for 2026: 147 (51 first-time in one table, 70 in another).",
-    "Students: 532 (2024 edition), 382 (2025), 777 (2026) do not form a sensible series; the filings probably count different programmes.",
-    "NIRF 2022 student total (447) covers all programmes."
+    "Medians 2021-2025 match IIM Shillong's NIRF filings (22.28, 26.09, 25.67, 25.0)."
    ],
    "sources": [
     {
@@ -1065,8 +1101,27 @@
      "id": "FEE",
      "title": "Careers360 and MBAUniverse fee tables",
      "quality": "Secondary"
+    },
+    {
+     "id": "OA",
+     "title": "OpenAlex works API: journal articles by affiliation text, 2021-2025",
+     "quality": "Open scholarly index; lower bound"
+    },
+    {
+     "id": "FEE",
+     "title": "MBAUniverse: IIM fees for MBA (current-batch total programme fee)",
+     "quality": "Secondary"
     }
-   ]
+   ],
+   "unaudited2026": {
+    "salary": 26.0
+   },
+   "fee": {
+    "lakh": 26.18,
+    "batch": "2024-26",
+    "note": "Older schedule: the newest published fee may be higher.",
+    "source": "MBAUniverse, IIM fees for MBA (secondary)"
+   }
   },
   "sirmaur": {
    "id": "sirmaur",
@@ -1094,14 +1149,6 @@
      "2025": 13.3,
      "2026": null
     },
-    "payback": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": null
-    },
     "phd": {
      "2021": 0.870967741935484,
      "2022": 0.909090909090909,
@@ -1125,14 +1172,6 @@
      "2024": 11.25,
      "2025": 11.0181818181818,
      "2026": 10.7321428571429
-    },
-    "articlesPerFaculty": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": null
     },
     "women": {
      "2021": null,
@@ -1165,6 +1204,13 @@
      "2024": null,
      "2025": 250.0,
      "2026": null
+    },
+    "articles": {
+     "2021": 32.0,
+     "2022": 50.0,
+     "2023": 51.0,
+     "2024": 43.0,
+     "2025": 31.0
     }
    },
    "notes": [
@@ -1175,10 +1221,9 @@
     "Mean salary is from news sites and conflicts with the NIRF median in 2025."
    ],
    "dataFlags": [
-    "2023 median: NIRF ₹12.61 lakh (cohort of 288) vs Careers360 ₹13 lakh (batch of 238). NIRF is used.",
-    "NIRF faculty: 62, 66, 34, 52, 55, 56. The swings suggest different counting rules.",
-    "2021 NIRF student total (223) and female count (2) look garbled; the female count was left out.",
-    "2026 median not found. A 2026 article gives only the mean (₹13.30 lakh), which repeats the 2025 figure."
+    "Medians 2021-2025 (10.0, 11.4, 12.61, 12.98, 14.2) match IIM Sirmaur's NIRF filings exactly.",
+    "Faculty counts swing between NIRF editions (62, 66, 34, 52, 55, 56) because the filing rules changed; students per faculty is shown for context only and is not scored.",
+    "The 2026 placement report is not out yet, so 2025 is the latest verified year."
    ],
    "sources": [
     {
@@ -1205,155 +1250,27 @@
      "id": "FEE",
      "title": "Careers360 and MBAUniverse fee tables",
      "quality": "Secondary"
+    },
+    {
+     "id": "OA",
+     "title": "OpenAlex works API: journal articles by affiliation text, 2021-2025",
+     "quality": "Open scholarly index; lower bound"
+    },
+    {
+     "id": "FEE",
+     "title": "MBAUniverse: IIM fees for MBA (current-batch total programme fee)",
+     "quality": "Secondary"
     }
-   ]
-  },
-  "trichy": {
-   "id": "trichy",
-   "name": "IIM Tiruchirappalli",
-   "short": "IIMT",
-   "city": "Tiruchirappalli",
-   "state": "Tamil Nadu",
-   "founded": 2011,
-   "benchmark": false,
-   "salaryBasis": "CTC as reported by the institute",
-   "series": {
-    "salary": {
-     "2021": null,
-     "2022": null,
-     "2023": 19.5,
-     "2024": 18.24,
-     "2025": null,
-     "2026": 16.75
-    },
-    "salaryMean": {
-     "2021": 14.85,
-     "2022": 17.01,
-     "2023": 20.55,
-     "2024": 19.34,
-     "2025": 19.27,
-     "2026": 18.0
-    },
-    "payback": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": 13.9701492537313
-    },
-    "phd": {
-     "2021": 0.8,
-     "2022": 1.0,
-     "2023": null,
-     "2024": 1.0,
-     "2025": 0.982758620689655,
-     "2026": 0.934426229508197
-    },
-    "faculty": {
-     "2021": 55.0,
-     "2022": 37.0,
-     "2023": null,
-     "2024": 52.0,
-     "2025": 58.0,
-     "2026": 61.0
-    },
-    "studentsPerFaculty": {
-     "2021": 7.70909090909091,
-     "2022": 13.8108108108108,
-     "2023": null,
-     "2024": 13.7115384615385,
-     "2025": 13.8965517241379,
-     "2026": 14.4918032786885
-    },
-    "articlesPerFaculty": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": null
-    },
-    "women": {
-     "2021": 0.443396226415094,
-     "2022": 0.348336594911937,
-     "2023": 0.417391304347826,
-     "2024": 0.495091164095372,
-     "2025": 0.41439205955335,
-     "2026": 0.311085972850679
-    },
-    "intl": {
-     "2021": 0.0,
-     "2022": 0.00391389432485323,
-     "2023": 0.00347826086956522,
-     "2024": 0.0,
-     "2025": 0.0,
-     "2026": 0.0
-    },
-    "placed": {
-     "2021": null,
-     "2022": null,
-     "2023": null,
-     "2024": null,
-     "2025": null,
-     "2026": 357.0
-    },
-    "firms": {
-     "2021": null,
-     "2022": null,
-     "2023": 172.0,
-     "2024": 192.0,
-     "2025": 189.0,
-     "2026": 250.0
-    }
+   ],
+   "unaudited2026": {
+    "salary": null
    },
-   "notes": [
-    "Salary is CTC as the institute reports it. IIM A's figures are maximum earning potential (MEP), so the two are not directly comparable.",
-    "2026 placement figures are interim and unaudited; treat the 2026 median as provisional.",
-    "Medians for 2021, 2022 and 2025 were not found. Trichy's first audited report (2025) gave no median.",
-    "Return on investment exists only for 2026, using the interim median.",
-    "Research output, women faculty and international faculty were not found for any year.",
-    "Faculty counts are unstable between filings, so students per faculty is indicative."
-   ],
-   "dataFlags": [
-    "2026 numbers are interim (as of 20 April 2026, 57 students still in the process). A final audited 2026 report was not found, so the median of ₹16.75 lakh is probably understated.",
-    "2024 mean: ₹19.34 lakh (Careers360) vs ₹19.43 lakh (IMS India). 2024 median ₹18.24 lakh in both.",
-    "2021 and 2022 means are combined across PGPM and PGPM-HR in the source; later years are PGPM only.",
-    "NIRF faculty: 55 (2021), 37 (2022), none (2023), 52, 58, 61. The 2021 figure may include visiting faculty.",
-    "Fee: ₹19.5 lakh (tuition) vs ₹21 lakh (including mess advance and deposit) for the 2024-26 batch."
-   ],
-   "sources": [
-    {
-     "id": "ID",
-     "title": "Source",
-     "quality": "Quality"
-    },
-    {
-     "id": "N1",
-     "title": "IIM Trichy data submitted to NIRF 2021-2026 (iimtrichy.ac.in)",
-     "quality": "Primary (institute filing)"
-    },
-    {
-     "id": "T1",
-     "title": "IMS India: IIM Trichy placements",
-     "quality": "Secondary"
-    },
-    {
-     "id": "T2",
-     "title": "IIM Trichy press release: first audited placement report (Nov 2025)",
-     "quality": "Primary (institute), audited"
-    },
-    {
-     "id": "T3",
-     "title": "Cracku and Careers360 on IIM Trichy placements 2024 and 2026",
-     "quality": "Secondary; 2026 is interim"
-    },
-    {
-     "id": "T4",
-     "title": "Careers360 IIM fee comparison",
-     "quality": "Secondary"
-    }
-   ]
+   "fee": {
+    "lakh": 21.0,
+    "batch": "2026-28",
+    "note": "Matches the workbook (about ₹20-21 L).",
+    "source": "MBAUniverse, IIM fees for MBA (secondary)"
+   }
   }
  },
  "pilot": {
@@ -1570,5 +1487,16 @@
    "Improving the management of college itself.",
    "wj fwjf"
   ]
+ },
+ "method": {
+  "commonYear": 2025,
+  "salary": "NIRF median of placed graduates (institute-submitted), batch graduating in the year shown",
+  "roi": "Current programme fee ÷ latest median salary × 12 (gross months, before tax and living costs)",
+  "faculty": "Share of faculty listed in NIRF with a Ph.D., latest edition",
+  "research": "Journal articles per listed faculty: 2023-2025 average of OpenAlex articles ÷ latest NIRF faculty count",
+  "diversity": "Women share of PG students (70%) and international share (30%), latest NIRF edition",
+  "removed": {
+   "trichy": "Removed: its NIRF median is flat (₹18.6 L, ₹18.1 L, ₹18.0 L for 2023-25) while the class grew 48% and recruiters rose, so there is no evidence of decline."
+  }
  }
 }

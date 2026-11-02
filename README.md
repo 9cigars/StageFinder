@@ -4,7 +4,7 @@
 
 **Live site:** https://9cigars.github.io/StageFinder/
 
-Built for the IIM Sirmaur Operations Management project (Product Life Cycle Analysis). It covers nine IIMs: Sirmaur, Ahmedabad, Bangalore, Calcutta, Jammu, Ranchi, Sambalpur, Shillong and Tiruchirappalli, with IIM Ahmedabad, Bangalore and Calcutta as the benchmark.
+Built for the IIM Sirmaur Operations Management project (Product Life Cycle Analysis). It covers eight IIMs: Sirmaur, Ahmedabad, Bangalore, Calcutta, Jammu, Ranchi, Sambalpur and Shillong, with IIM Ahmedabad, Bangalore and Calcutta as the benchmark. IIM Tiruchirappalli was removed: its own NIRF filings show a flat median (₹18.6 L, ₹18.1 L, ₹18.0 L for 2023-25) while its class grew 48%, so there is no evidence of decline.
 
 ## What it does
 
@@ -32,11 +32,26 @@ Open http://localhost:3000. Share a link that opens a specific IIM with its them
 | `server.js` | Static hosting + anonymous response API on SQLite. |
 | `data/responses.db` | Created on first response (git-ignored). |
 
+## Data and how it is measured
+
+Every IIM has a value for each of the five metrics, measured the same way:
+
+| Metric | Measure | Source |
+|---|---|---|
+| Salary | NIRF median of placed graduates, 2025 batch, vs the IIM A/B/C average | NIRF filings, placement reports |
+| ROI | Current programme fee ÷ latest median × 12 (gross months) | MBAUniverse fee table (secondary) |
+| Faculty with PhDs | Share of NIRF-listed faculty with a Ph.D. | NIRF filings |
+| Research | 2023-25 average journal articles ÷ NIRF faculty count | OpenAlex works API (full institute name) |
+| Diversity | 70% women share + 30% international share of PG students | NIRF filings |
+
+Corrections made to the workbooks are listed, with sources, in `scripts/patch_data.py`: Calcutta 2024 and 2025 medians and PhD share (IIM Calcutta's own NIRF filings), Ahmedabad moved from maximum earning potential to the NIRF median, Sambalpur 2021, and 2026 placement-report figures set aside because they are not yet in NIRF.
+
 ## Rebuild the data after editing a workbook
 
 ```bash
 pip install openpyxl
 python scripts/extract.py "<folder with IIM_*_Metrics_2021-2026.xlsx>" "<survey .xlsx>"
+python scripts/patch_data.py
 ```
 
 ## The ten questions (edit them in `public/js/questions.js`)

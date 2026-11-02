@@ -9,14 +9,14 @@ const $ = (s, r = document) => r.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const KEY = "iimstage.v2";
 const empty = () => ({ stage: {}, ratings: {}, causes: {}, details: {} });
-const ORDER = ["sirmaur", "ahmedabad", "bangalore", "calcutta", "jammu", "ranchi", "sambalpur", "shillong", "trichy"];
+const ORDER = ["sirmaur", "ahmedabad", "bangalore", "calcutta", "jammu", "ranchi", "sambalpur", "shillong"];
 
 let data, apiOk = false;
 const saved = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } })();
 const state = { step: "home", iim: saved.iim || null, qi: 0, agg: null, fresh: false, answers: { ...empty(), ...(saved.answers || {}) }, meta: saved.meta || {}, anonId: saved.anonId || null };
 const persist = () => { try { localStorage.setItem(KEY, JSON.stringify({ iim: state.iim, answers: state.answers, meta: state.meta, anonId: state.anonId })); } catch {} };
 const toast = (msg) => { const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("on"), 2200); };
-const nick = (id) => (id === "trichy" ? "Trichy" : data.iims[id].name.replace("IIM ", ""));
+const nick = (id) => data.iims[id].name.replace("IIM ", "");
 const words = (s, start = 0) => s.split(" ").map((w, i) => `<span class="w" style="--i:${i + start}">${esc(w)}</span>`).join(" ");
 
 const ICON = {
@@ -79,7 +79,7 @@ function boardMarkers(board) {
 }
 function viewHome() {
   const board = stageBoard(data);
-  const ticker = ["Nine IIMs", "Audited data 2021–2026", "Five metrics", "Ten questions", "One life-cycle curve", "Your voice counts"].map((x) => `<span>${x}</span>`).join("");
+  const ticker = ["Eight IIMs", "NIRF-aligned data 2021–2025", "Five metrics", "Ten questions", "One life-cycle curve", "Your voice counts"].map((x) => `<span>${x}</span>`).join("");
   return `
   <section class="hero">
     <span class="eyebrow rv in">Operations management · product life cycle</span>
@@ -228,16 +228,16 @@ function showReveal() {
 }
 
 /* ------------------------------------------------------------------ results */
-const barRow = (label, cls, v) => `<div class="bar ${cls} ${v == null ? "none" : ""}"><span>${label}</span><div class="t"><i style="--w:${v == null ? 0 : Math.round(v)}%"></i></div><b ${v == null ? "" : `data-count="${Math.round(v)}"`}>${v == null ? "n/a" : "0"}</b></div>`;
+const barRow = (label, cls, v) => `<div class="bar ${cls} ${v == null ? "none" : ""}"><span>${label}</span><div class="t"><i style="--w:${v == null ? 0 : Math.round(v)}%"></i></div><b ${v == null ? "" : `data-count="${Math.round(v)}"`}>${v == null ? "–" : "0"}</b></div>`;
 function evidence(m, iim) {
   const d = m.data;
   if (d.score == null) return `No verified public figure yet (${esc(d.why.toLowerCase())}).`;
-  const n = d.benchN, who = n === 3 ? "IIM A/B/C average" : n === 1 && m.id === "research" ? "IIM Ahmedabad (the only A/B/C figure found)" : `average of the ${n} IIM A/B/C with data`;
+  const n = d.benchN, who = n === 3 ? "IIM A/B/C average" : `average of the ${n} IIM A/B/C with data`;
   switch (m.id) {
     case "salary": return `${fmt.lpa(d.own)} median (${d.year}) against ${fmt.lpa(d.bench)} at the ${who}. Basis: ${esc(iim.salaryBasis)}.`;
-    case "roi": return `${fmt.num(d.own, 1)} months of gross payback (${d.year}) against ${fmt.num(d.bench, 1)} at the ${who}.`;
+    case "roi": return `${fmt.num(d.own, 1)} months of gross payback: ₹${d.fee} L fee (${d.feeBatch} batch) against the ${d.year} median, versus ${fmt.num(d.bench, 1)} months at the ${who}.`;
     case "faculty": return `${fmt.pct(d.own)} of listed faculty hold a PhD (${d.year}) against ${fmt.pct(d.bench)} at the ${who}.`;
-    case "research": return `${fmt.num(d.own)} journal articles per faculty (${d.year}) against ${fmt.num(d.bench)} at the ${who}. Counting bases differ, so treat as indicative.`;
+    case "research": return `${fmt.num(d.own)} journal articles per faculty (about ${Math.round(d.art)} a year over 2023-25 across ${d.fac} faculty) against ${fmt.num(d.bench)} at the ${who}. Counted from OpenAlex, so a lower bound.`;
     case "diversity": return `${fmt.pct(d.own)} women among PG students (${d.year}) against ${fmt.pct(d.bench)} at the ${who}; international share ${d.intl != null ? fmt.pct(d.intl, 2) : "n/a"}.`;
   }
   return "";
@@ -308,6 +308,9 @@ function viewResults() {
   <section><span class="eyebrow rv">Behind the numbers</span><div class="card rv">
     <details open><summary>How the stage is decided</summary><p class="muted small" style="margin-top:10px">Salary is compared with the average of IIM Ahmedabad, Bangalore and Calcutta in the same year. Below <b>${THRESHOLDS.growthBelow * 100}%</b> of that level the institute is in <b>Growth</b>; <b>${THRESHOLDS.growthBelow * 100}–${THRESHOLDS.maturityFrom * 100}%</b> is late growth or early maturity depending on recent growth; <b>${THRESHOLDS.maturityFrom * 100}%+</b> is <b>Maturity</b>. A fall of more than ${Math.abs(THRESHOLDS.declineDrop) * 100}% over about three years marks <b>Decline</b>. The students' Part A signals are a cross-check; they do not change the data stage.</p></details>
     <details><summary>Data quality flags for ${esc(iim.name)}</summary><ul class="ev" style="margin-top:10px">${(iim.dataFlags.length ? iim.dataFlags : ["No conflicts recorded in the workbook."]).map((f) => `<li>${esc(f)}</li>`).join("")}</ul>${iim.notes.length ? `<p class="small faint" style="margin-top:12px"><b>Notes from the workbook</b></p><ul class="ev">${iim.notes.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` : ""}</details>
+    <details><summary>How each number is measured</summary><ul class="ev" style="margin-top:10px">${Object.entries(data.method).filter(([k]) => k !== "removed" && k !== "commonYear").map(([k, v]) => `<li><b>${esc(k)}</b>: ${esc(v)}</li>`).join("")}<li><b>Comparison year</b>: ${data.method.commonYear} for every IIM, so all are compared on the same batch.</li></ul>
+      ${iim.fee ? `<p class="note">Fee used: ₹${iim.fee.lakh} L for the ${esc(iim.fee.batch)} batch (${esc(iim.fee.source)}). ${esc(iim.fee.note || "")}</p>` : ""}</details>
+    <details><summary>Why IIM Tiruchirappalli is not listed</summary><p class="muted small" style="margin-top:10px">${esc(data.method.removed.trichy)}</p></details>
     <details><summary>Sources (${iim.sources.length})</summary><table><tbody>${iim.sources.map((x) => `<tr><td>${esc(x.id)}</td><td>${esc(x.title)}</td><td>${esc(x.quality || "")}</td></tr>`).join("")}</tbody></table></details>
     <details><summary>Limits of this tool</summary><p class="muted small" style="margin-top:10px">ROI and research are only available for a few institutes, so for most the data bar is blank and the student view stands alone. IIM Ahmedabad reports salary as maximum earning potential, which is not strictly comparable with CTC. One student's answers are one opinion; the combined view appears once five students have responded.</p></details>
   </div></section>`;
