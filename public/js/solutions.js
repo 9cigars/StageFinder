@@ -9,7 +9,7 @@ const KD = { action: 0, outcome: 1, reference: 2 };
 export function casesFor(sol, causeId, detail, iimId, data) {
   const isBench = data.iims[iimId]?.benchmark;
   return sol.cases
-    .filter((c) => c.causes.includes(causeId))
+    .filter((c) => c.causes.includes(causeId) && (!c.onlyFor || c.onlyFor === iimId))
     .map((c) => {
       const own = c.who.includes(data.iims[iimId].name);
       return { ...c, own, who: c.who.replace(/ \(own (history|policy)\)/, "") };
@@ -17,7 +17,7 @@ export function casesFor(sol, causeId, detail, iimId, data) {
     .sort((a, b) => {
       const d = (x) => (detail && x.forDetail?.includes(detail) ? 0 : 1);
       const p = (x) => (x.peer === "both" || x.peer === (isBench ? "benchmark" : "new") ? 0 : 1);
-      return d(a) - d(b) || p(a) - p(b) || EV[a.evidence] - EV[b.evidence] || KD[a.kind] - KD[b.kind];
+      return (a.onlyFor ? 0 : 1) - (b.onlyFor ? 0 : 1) || d(a) - d(b) || p(a) - p(b) || EV[a.evidence] - EV[b.evidence] || KD[a.kind] - KD[b.kind];
     });
 }
 
@@ -60,7 +60,7 @@ export function causeCheck(data, id, cid) {
         return { v: "supports", t: `Payback is ${r1(r.own)} months against ${r1(r.bench)} at IIM A/B/C.` + (fr && fr < 0.95 ? ` The fee itself is ${P(fr)} of the A/B/C fee, so the gap comes mainly from pay, not price.` : "") };
       return { v: "contradicts", t: `Payback is ${r1(r.own)} months, close to the ${r1(r.bench)} at IIM A/B/C.` };
     }
-    case "r4": {
+    case "r6": {
       const st = stageFromData(data, id); if (!st || st.cagr == null) return null;
       return st.cagr >= st.abcCagr
         ? { v: "contradicts", t: `Median pay grew ${P(st.cagr, 1)} a year, against ${P(st.abcCagr, 1)} at IIM A/B/C. Growth is not slow; the starting level is lower.` }

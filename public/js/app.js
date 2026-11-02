@@ -260,10 +260,10 @@ function caseHtml(c) {
     <p>${esc(c.what)}</p>${c.adapt ? `<p class="adapt"><b>How to use it:</b> ${esc(c.adapt)}</p>` : ""}<a class="src" href="${esc(c.src.u)}" target="_blank" rel="noopener noreferrer">${esc(c.src.t)} ↗</a></div>`;
 }
 function causeBlock(l, iimId) {
-  const chk = causeCheck(data, iimId, l.id), cases = casesFor(sol, l.id, l.detail, iimId, data).slice(0, 4), gap = sol.gaps[l.id];
+  const chk = causeCheck(data, iimId, l.id), all = casesFor(sol, l.id, l.detail, iimId, data), cases = all.slice(0, 4), rest = all.slice(4), gap = sol.gaps[l.id];
   return `<div class="cause2"><div class="cause-h"><b>→</b><span>${esc(l.label)}${l.detail ? ` <b>· ${esc(l.detail)}</b>` : ""}</span></div>
     ${chk ? `<div class="check ${chk.v}"><b>${{ supports: "Your data supports this", contradicts: "Your data does not back this", partial: "Partly checked" }[chk.v]}.</b> ${esc(chk.t)}</div>` : `<div class="check none">No public figure measures this directly, so it rests on student experience.</div>`}
-    ${cases.length ? `<details class="fixes" open><summary>What comparable institutes did <span class="faint">(${cases.length})</span></summary>${cases.map(caseHtml).join("")}</details>` : ""}
+    ${cases.length ? `<details class="fixes" open><summary>What comparable institutes did <span class="faint">(${all.length})</span></summary>${cases.map(caseHtml).join("")}${rest.length ? `<details class="more"><summary>Show ${rest.length} more</summary>${rest.map(caseHtml).join("")}</details>` : ""}</details>` : ""}
     ${gap ? `<p class="gap"><b>Not documented:</b> ${esc(gap)}</p>` : ""}</div>`;
 }
 // no cause named for a bottleneck: show the best-documented fixes for that metric instead

@@ -285,3 +285,5 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--line); padd
 .pill.k-action { color: var(--good); } .pill.k-outcome { color: var(--warn); } .pill.k-reference { color: var(--muted); }
 .pill.e-official, .pill.e-report { border-color: color-mix(in srgb, var(--accent) 50%, transparent); } .pill.e-secondary { color: var(--faint); border-style: dashed; }
 .gap { margin: 10px 0 0; font-size: .82rem; color: var(--faint); }
+
+.fixes .more { border-top: 0; padding: 8px 0 0; } .fixes .more > summary { font-size: .82rem; color: var(--muted); }

@@ -34,7 +34,7 @@ Open http://localhost:3000. Share a link that opens a specific IIM with its them
 
 ## Solutions library
 
-`public/data/solutions.json` holds 40 documented cases, each tied to one or more of the 30 causes students can name. A case records the institute, what it did, the source link and an evidence label (Official, Report, Dataset, News, Secondary). A case is marked "Result only" when the outcome is public but the method is not. Where nothing is documented for a cause, the library says so in `gaps` instead of inventing a fix.
+`public/data/solutions.json` holds 56 documented cases, each tied to one or more of the 30 causes students can name. A case records the institute, what it did, the source link and an evidence label (Official, Report, Dataset, News, Secondary). A case is marked "Result only" when the outcome is public but the method is not. Where nothing is documented for a cause, the library says so in `gaps` instead of inventing a fix.
 
 For every cause a student names, the result page shows:
 1. **A data check**: whether the institute's own figures support the cause (for example, a student blaming "too few recruiters" at a campus with more recruiters than IIM A/B/C is told the data does not back it).
