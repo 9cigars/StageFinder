@@ -1,0 +1,9 @@
+{
+  "name": "iim-stage-finder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Where does your IIM stand in its life cycle? Quiz + public data + student voices.",
+  "scripts": { "start": "node server.js", "data": "python scripts/extract.py" },
+  "engines": { "node": ">=22.5" }
+}

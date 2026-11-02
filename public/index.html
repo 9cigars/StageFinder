@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IIM Stage Finder: where does your IIM stand?</title>
+<meta name="description" content="Answer 10 questions. See which life-cycle stage your IIM is in, what it is good at, and what is holding it back, using public data and student voices.">
+<meta name="theme-color" content="#0b0d14">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%239fb0ff'/%3E%3Cpath d='M5 25 C11 25 12 8 18 8 C24 8 24 25 29 25' stroke='%230b0d14' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="motif" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div id="cursor" aria-hidden="true"></div><div id="ring" aria-hidden="true"></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="tip" role="tooltip"></div>
+<div id="reveal" aria-live="polite"></div>
+
+<header class="top">
+  <button class="brand" data-action="home" aria-label="Go to start"><svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect width="32" height="32" rx="9" fill="url(#bg)"/><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs><path d="M5 25 C11 25 12 8 18 8 C24 8 24 25 29 25" stroke="#0b0d14" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>Stage Finder</span></button>
+  <nav id="topnav"></nav>
+</header>
+
+<main id="app" tabindex="-1"></main>
+
+<footer>
+  <p id="apiStatus"></p>
+  <p>Built for the IIM Sirmaur Operations Management project (Product Life Cycle Analysis). Data comes from each institute's NIRF filings and placement reports; every figure carries its source flags. Colour themes are original and are not official branding.</p>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+<script src="config.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
