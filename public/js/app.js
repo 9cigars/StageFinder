@@ -3,6 +3,7 @@ import { analyse, stageBoard, votesFrom, votePosition, aggregateToAnswers, lates
 import { applyTheme, themeFor } from "./themes.js";
 import { initFx, observe } from "./fx.js";
 import { plcChart, plcXY, radarChart, sparkline, salaryExplorer } from "./charts.js";
+import { casesFor, causeCheck } from "./solutions.js";
 import * as api from "./api.js";
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -11,7 +12,7 @@ const KEY = "iimstage.v2";
 const empty = () => ({ stage: {}, ratings: {}, causes: {}, details: {} });
 const ORDER = ["sirmaur", "ahmedabad", "bangalore", "calcutta", "jammu", "ranchi", "sambalpur", "shillong"];
 
-let data, apiOk = false;
+let data, sol, apiOk = false;
 const saved = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } })();
 const state = { step: "home", iim: saved.iim || null, qi: 0, agg: null, fresh: false, answers: { ...empty(), ...(saved.answers || {}) }, meta: saved.meta || {}, anonId: saved.anonId || null };
 const persist = () => { try { localStorage.setItem(KEY, JSON.stringify({ iim: state.iim, answers: state.answers, meta: state.meta, anonId: state.anonId })); } catch {} };
@@ -29,7 +30,7 @@ const ICON = {
 /* ------------------------------------------------------------------ boot + routing */
 async function boot() {
   initFx();
-  try { data = await (await fetch("data/iims.json")).json(); }
+  try { [data, sol] = await Promise.all([fetch("data/iims.json").then((r) => r.json()), fetch("data/solutions.json").then((r) => r.json())]); }
   catch { $("#app").innerHTML = `<section class="hero"><h1>Data failed to load</h1><p class="lead">Open this site through a web server (<code>node server.js</code>) so it can read <code>data/iims.json</code>.</p></section>`; return; }
   const q = new URLSearchParams(location.search).get("iim");
   if (q && data.iims[q]) { if (state.iim !== q) state.answers = empty(); state.iim = q; }
@@ -250,7 +251,36 @@ function narrative(r) {
   return h;
 }
 function causeLines(metricId) {
-  return (state.answers.causes[metricId] || []).map((cid) => { const c = CAUSE_BY_ID[cid]; return { label: c.label, detail: state.answers.details[cid] }; });
+  return (state.answers.causes[metricId] || []).map((cid) => { const c = CAUSE_BY_ID[cid]; return { id: cid, label: c.label, detail: state.answers.details[cid] }; });
+}
+const EVL = { official: "Official", report: "Report", news: "News", secondary: "Secondary", dataset: "Dataset" };
+const KDL = { action: "Policy or programme", outcome: "Result only", reference: "Benchmark" };
+function caseHtml(c) {
+  return `<div class="case"><div class="case-h"><b>${esc(c.who)}</b>${c.own ? `<span class="pill good">Your institute</span>` : ""}<span class="pill k-${c.kind}">${KDL[c.kind]}</span><span class="pill e-${c.evidence}" data-tip="${esc(sol.evidence[c.evidence])}">${EVL[c.evidence]}</span></div>
+    <p>${esc(c.what)}</p>${c.adapt ? `<p class="adapt"><b>How to use it:</b> ${esc(c.adapt)}</p>` : ""}<a class="src" href="${esc(c.src.u)}" target="_blank" rel="noopener noreferrer">${esc(c.src.t)} ↗</a></div>`;
+}
+function causeBlock(l, iimId) {
+  const chk = causeCheck(data, iimId, l.id), cases = casesFor(sol, l.id, l.detail, iimId, data).slice(0, 4), gap = sol.gaps[l.id];
+  return `<div class="cause2"><div class="cause-h"><b>→</b><span>${esc(l.label)}${l.detail ? ` <b>· ${esc(l.detail)}</b>` : ""}</span></div>
+    ${chk ? `<div class="check ${chk.v}"><b>${{ supports: "Your data supports this", contradicts: "Your data does not back this", partial: "Partly checked" }[chk.v]}.</b> ${esc(chk.t)}</div>` : `<div class="check none">No public figure measures this directly, so it rests on student experience.</div>`}
+    ${cases.length ? `<details class="fixes" open><summary>What comparable institutes did <span class="faint">(${cases.length})</span></summary>${cases.map(caseHtml).join("")}</details>` : ""}
+    ${gap ? `<p class="gap"><b>Not documented:</b> ${esc(gap)}</p>` : ""}</div>`;
+}
+// no cause named for a bottleneck: show the best-documented fixes for that metric instead
+function fallbackFixes(m, iimId) {
+  const ids = CAUSES[m.id].map((c) => c.id), seen = new Set(), cases = [];
+  for (const id of ids) for (const c of casesFor(sol, id, "", iimId, data)) if (!seen.has(c.id)) { seen.add(c.id); cases.push(c); }
+  cases.sort((a, b) => ["official", "report", "dataset", "news", "secondary"].indexOf(a.evidence) - ["official", "report", "dataset", "news", "secondary"].indexOf(b.evidence));
+  return `<p class="small faint" style="margin-top:6px">You named no cause, so these are the best-documented fixes for this metric.</p>${cases.length ? `<details class="fixes" open><summary>What comparable institutes did <span class="faint">(${Math.min(cases.length, 4)})</span></summary>${cases.slice(0, 4).map(caseHtml).join("")}</details>` : ""}`;
+}
+// causes the student named for metrics that are not ranked as bottlenecks still get checked and matched
+function otherCauses(r, iim) {
+  const shown = new Set([...r.bottlenecks, ...r.concerns].map((m) => m.id));
+  const rows = r.metrics.filter((m) => !shown.has(m.id) && causeLines(m.id).length);
+  if (!rows.length) return "";
+  return `<div class="card rv" style="margin-top:18px"><span class="eyebrow">Other causes you named</span>
+    <p class="muted small">These metrics are not among the weakest, but you named causes for them, so they are checked the same way.</p>
+    ${rows.map((m) => `<h3 style="font-size:1.25rem;margin-top:16px">${esc(m.label)} <span class="tag ${m.tag}">${m.tag}</span></h3>${causeLines(m.id).map((l) => causeBlock(l, iim.id)).join("")}`).join("")}</div>`;
 }
 function bnCard(m, iim, concern = false) {
   const lines = causeLines(m.id), q = QUESTIONS.find((x) => x.metric === m.id);
@@ -259,7 +289,7 @@ function bnCard(m, iim, concern = false) {
     <p class="small muted" style="margin-bottom:8px"><b>What the data says.</b> ${evidence(m, iim)}</p>
     ${m.rating ? `<p class="small muted" style="margin-bottom:10px"><b>What you said.</b> ${esc(q.levels[m.rating - 1])} (${m.rating}/5).</p>` : ""}
     <p class="small" style="margin-bottom:0"><b>Specific causes you named</b></p>
-    ${lines.length ? lines.map((l) => `<div class="cause"><b>→</b><span>${esc(l.label)}${l.detail ? ` <b>· ${esc(l.detail)}</b>` : ""}</span></div>`).join("") : `<p class="small faint" style="margin-top:6px">None selected.</p>`}</div>`;
+    ${lines.length ? lines.map((l) => causeBlock(l, iim.id)).join("") : fallbackFixes(m, iim.id)}</div>`;
 }
 function viewResults() {
   const r = analyse(data, state.iim, state.answers), s = r.stage, id = state.iim, iim = r.iim;
@@ -300,8 +330,9 @@ function viewResults() {
 
   <section><span class="eyebrow rv">Bottlenecks to fix first</span>
     <div class="bn">${r.bottlenecks.length ? "" : `<div class="card rv" style="grid-column:1/-1"><h3 style="font-size:1.4rem">No data-backed bottleneck below ${THRESHOLDS.bottleneckBelow}</h3><p class="muted small" style="margin:8px 0 0">Every metric public data covers scores ${THRESHOLDS.bottleneckBelow} or more against the IIM A/B/C benchmark.</p></div>`}${r.bottlenecks.map((m) => bnCard(m, iim)).join("")}${r.concerns.map((m) => bnCard(m, iim, true)).join("")}</div>
+    ${otherCauses(r, iim)}
     <p class="faint small rv" style="margin-top:12px">Bottlenecks are the lowest-scoring metrics that public data backs up. A weak spot only students raised is shown separately until data can confirm it.</p>
-    <div class="card hold rv"><b>Solutions library: coming next.</b><br><span class="small">Each bottleneck above will link to documented fixes comparable institutes used, with sources.</span></div></section>
+    <div class="card hold rv"><b>How to read the fixes</b><br><span class="small">Each fix is something a named institute has documented, with its source. Labels show how strong the source is: Official (institute or government page), Report (placement or admissions report), Dataset (this project's NIRF-aligned data), News, Secondary (aggregator, verify before relying). "Result only" means the outcome is public but the method is not. Check fit before adopting anything.</span></div></section>
 
   <section id="community"></section>${pilot}
 

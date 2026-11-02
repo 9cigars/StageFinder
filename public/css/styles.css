@@ -271,3 +271,17 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--line); padd
   .card { break-inside: avoid; } .stage-title h2 { color: #111; background: none; -webkit-text-fill-color: #111; }
   .rv { opacity: 1 !important; transform: none !important; } .bar .t i, .sev i, .pilot-row .t i { width: var(--w) !important; } .draw .plc-line { stroke-dashoffset: 0; } .draw .pop, .draw .mk, .draw .plc-area { opacity: 1; transform: none; } .draw .grow { transform: none; }
 }
+
+/* ---------- solutions ---------- */
+.cause2 { margin-top: 14px; padding: 14px 16px; border-radius: 16px; background: var(--card-2); border: 1px solid var(--line); }
+.cause-h { display: flex; gap: 10px; font-weight: 700; } .cause-h b { color: var(--accent-2); }
+.check { margin-top: 10px; padding: 9px 12px; border-radius: 12px; font-size: .85rem; border-left: 3px solid var(--line); background: color-mix(in srgb, var(--bg) 40%, transparent); }
+.check.supports { border-left-color: var(--good); } .check.contradicts, .check.partial { border-left-color: var(--warn); } .check.none { color: var(--faint); }
+.check b { color: var(--ink); }
+.fixes { border-top: 0; padding: 10px 0 0; } .fixes summary { font-weight: 800; font-size: .86rem; color: var(--accent-2); }
+.case { margin-top: 10px; padding: 12px 14px; border-radius: 14px; background: color-mix(in srgb, var(--surface) 70%, transparent); border: 1px solid var(--line); }
+.case-h { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 4px; } .case p { margin: 4px 0; font-size: .88rem; color: var(--muted); }
+.case .adapt { color: var(--ink); } .case .src { font-size: .8rem; font-weight: 700; word-break: break-word; }
+.pill.k-action { color: var(--good); } .pill.k-outcome { color: var(--warn); } .pill.k-reference { color: var(--muted); }
+.pill.e-official, .pill.e-report { border-color: color-mix(in srgb, var(--accent) 50%, transparent); } .pill.e-secondary { color: var(--faint); border-style: dashed; }
+.gap { margin: 10px 0 0; font-size: .82rem; color: var(--faint); }
