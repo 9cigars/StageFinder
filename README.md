@@ -1,6 +1,16 @@
-# IIM Stage Finder
+# StageFinder
 
-Pick an IIM, answer 10 questions, and see which product-life-cycle stage the institute is in, its strengths and weaknesses, and its biggest bottlenecks. The result blends public data (your 9 workbooks) with the student's answers. The page re-themes for each IIM.
+**Where does your IIM stand in its life cycle?** Answer 10 questions to see which stage your IIM is in (Introduction, Growth, Maturity or Decline), what it does well, and exactly what is holding it back. Your answers are set against public NIRF and placement data for 2021-2026, and the page re-themes for each institute.
+
+**Live site:** https://9cigars.github.io/StageFinder/
+
+Built for the IIM Sirmaur Operations Management project (Product Life Cycle Analysis). It covers nine IIMs: Sirmaur, Ahmedabad, Bangalore, Calcutta, Jammu, Ranchi, Sambalpur, Shillong and Tiruchirappalli, with IIM Ahmedabad, Bangalore and Calcutta as the benchmark.
+
+## What it does
+
+1. The student picks their IIM and answers ten questions: five read the stage from things they can see, five find the bottleneck on each of five metrics (salary, ROI, PhD faculty, research, diversity).
+2. The answers are compared with the public data.
+3. The result shows the stage, where students and the data agree or disagree, strengths and weaknesses, and the bottlenecks to fix first, with the specific causes named.
 
 ## Run it
 
@@ -8,7 +18,7 @@ Pick an IIM, answer 10 questions, and see which product-life-cycle stage the ins
 node server.js          # needs Node 22.5+; no npm install
 ```
 
-Open http://localhost:3000. Share a link that opens a specific IIM with its theme: `http://localhost:3000/?iim=sirmaur`.
+Open http://localhost:3000. Share a link that opens a specific IIM with its theme: `http://localhost:3000/?iim=sirmaur`. On the live site: `https://9cigars.github.io/StageFinder/?iim=sirmaur`.
 
 ## What is where
 
