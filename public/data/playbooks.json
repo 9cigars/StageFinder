@@ -1,0 +1,651 @@
+{
+ "retrieved": "2026-11-03",
+ "note": "Each playbook lists leading IIMs and global business schools that faced the same problem, the age and position they were at, what is documented that they did, and the documented result. 'ageThen' is the school's age at the time; the page compares it with the viewing IIM's age. Where a source states the result but not the method, the card says so.",
+ "problems": {
+  "pay": {
+   "title": "Pay far below the IIM A/B/C level",
+   "playbooks": [
+    "credibility",
+    "sustain"
+   ]
+  },
+  "roi": {
+   "title": "Slow fee payback",
+   "playbooks": [
+    "credibility"
+   ]
+  },
+  "growth": {
+   "title": "Salary growth slowing",
+   "playbooks": [
+    "sustain",
+    "credibility"
+   ]
+  },
+  "recruiters": {
+   "title": "Thin or shrinking recruiter base",
+   "playbooks": [
+    "credibility",
+    "sustain"
+   ]
+  },
+  "research": {
+   "title": "Research output per faculty below the leaders",
+   "playbooks": [
+    "research",
+    "faculty"
+   ]
+  },
+  "faculty": {
+   "title": "Faculty capacity or depth under strain",
+   "playbooks": [
+    "faculty"
+   ]
+  },
+  "intl": {
+   "title": "Almost no international students",
+   "playbooks": [
+    "international"
+   ]
+  },
+  "women": {
+   "title": "Women's share below the peer group",
+   "playbooks": [
+    "gender"
+   ]
+  }
+ },
+ "playbooks": {
+  "credibility": {
+   "title": "Earn global credibility early",
+   "why": "Pay and recruiter pull follow reputation. The leaders below sought their first international accreditation at about age 10-14, which is where the newer IIMs are now. None of the sources claims accreditation alone raised salaries; it is the documented first step leaders took, and it forces the faculty, research and learning standards that recruiters and rankings read.",
+   "analogs": [
+    {
+     "id": "isb-aacsb",
+     "school": "ISB (India)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 10,
+     "when": "2011",
+     "situation": "A decade-old school, founded 2001 with its first cohort that year.",
+     "did": [
+      "Received AACSB accreditation on 2 December 2011, the first business school in South Asia to do so, timed with its 10th anniversary.",
+      "Later added AMBA (announced 2020), becoming one of the world's triple-accredited schools."
+     ],
+     "result": "AACSB at age 10; triple accreditation by age 19.",
+     "evidence": "official",
+     "src": [
+      {
+       "t": "ISB: ISB gets AACSB accreditation",
+       "u": "https://www.isb.edu/news/isb-in-the-news/isb-gets-aacsb-accreditation"
+      },
+      {
+       "t": "ISB: ISB achieves AMBA accreditation",
+       "u": "https://www.isb.edu/en/news-events/news-grid/indian-school-business-isb-achieves-amba-accreditation-and-becomes-100th.html"
+      }
+     ],
+     "caveat": "The pages state dates and mission, not the steps ISB took to qualify."
+    },
+    {
+     "id": "ceibs-equis",
+     "school": "CEIBS (China)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 10,
+     "when": "2004-2008",
+     "situation": "Founded in 1994 as a joint venture of the Shanghai government and the European Commission.",
+     "did": [
+      "Won EQUIS in March 2004, the first school on the Chinese mainland to do so.",
+      "Added AACSB in December 2008, and has renewed both on cycle since."
+     ],
+     "result": "In the Financial Times MBA top 25 every year from 2005 to 2026; 8th in 2026.",
+     "evidence": "official",
+     "src": {
+      "t": "CEIBS: rankings and accreditation",
+      "u": "https://www.ceibs.edu/rankings-accreditation"
+     }
+    },
+    {
+     "id": "iimk-amba",
+     "school": "IIM Kozhikode",
+     "group": "leading-iim",
+     "stage": "growth",
+     "ageThen": 14,
+     "when": "2010 and 2021",
+     "situation": "Founded 1996, a second-generation IIM.",
+     "did": [
+      "In 2010 became the first IIM accredited by AMBA.",
+      "In October 2021 became the fifth IIM to win EQUIS."
+     ],
+     "result": "Double crown (AMBA and EQUIS); NIRF 2021 rank 4 is cited on the same page.",
+     "evidence": "official",
+     "src": {
+      "t": "IIM Kozhikode: EQUIS accreditation",
+      "u": "https://iimk.ac.in/equis-accreditation"
+     },
+     "caveat": "The institute credits 'all stakeholders' and does not describe the process."
+    },
+    {
+     "id": "iimi-triple",
+     "school": "IIM Indore",
+     "group": "leading-iim",
+     "stage": "growth",
+     "ageThen": 20,
+     "when": "2016-2019",
+     "situation": "Founded 1996; first PGP batch in 1998.",
+     "did": [
+      "AMBA on 13 October 2016, the fourth IIM to hold it.",
+      "AACSB in February 2019.",
+      "EQUIS on 10 December 2019, completing the Triple Crown.",
+      "Had set up a foreign tie-up (Lyon) in 2005, a Fellow Programme in 2006 and an International Advisory Board in 2021."
+     ],
+     "result": "Triple Crown within 3 years of the first accreditation.",
+     "evidence": "official",
+     "src": {
+      "t": "IIM Indore: chronicle",
+      "u": "https://iimidr.ac.in/about/iim-indore-at-a-glance/iim-indore-over-the-years-a-chronicle/"
+     }
+    },
+    {
+     "id": "shl-acc",
+     "school": "IIM Shillong (peer)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 19,
+     "when": "2026",
+     "situation": "Founded 2007.",
+     "did": [
+      "AACSB, announced by AACSB International on 29 April 2026.",
+      "EQUIS, reported in the same newsletter."
+     ],
+     "result": "Double accreditation at age 19, alongside a top-100 CEOWORLD listing.",
+     "evidence": "official",
+     "src": {
+      "t": "IIM Shillong newsletter, May 2026",
+      "u": "https://www.iimshillong.ac.in/wp-content/uploads/2026/06/IIM-Newsletter-May-26.pdf"
+     },
+     "caveat": "The newsletter lists what EQUIS evaluates (faculty quality, research, internationalisation, corporate engagement) but not the changes Shillong made."
+    },
+    {
+     "id": "rnc-amba",
+     "school": "IIM Ranchi (peer)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 17,
+     "when": "2026",
+     "situation": "Founded 2009; salary growth has slowed below the A/B/C pace.",
+     "did": [
+      "Received the AMBA accreditation certificate at the AMBA & BGA Global Deans and Directors Conference 2026 in Madrid.",
+      "Debuted in the QS Executive MBA Rankings 2026."
+     ],
+     "result": "First international accreditation at age 17.",
+     "evidence": "official",
+     "src": {
+      "t": "IIM Ranchi newsletter, Raconteur V13 N2",
+      "u": "https://iimranchi.ac.in/media/2026/08/Newsletter-Raconteur-V13-N2.pdf"
+     }
+    },
+    {
+     "id": "smb-aacsb",
+     "school": "IIM Sambalpur (peer)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 10,
+     "when": "recent",
+     "situation": "Founded 2015, closest in age to IIM Sirmaur.",
+     "did": [
+      "Took AACSB membership and began the accreditation process.",
+      "Hosted its AACSB mentor for a campus visit and worked on the Initial Self-Evaluation Report roadmap, covering strategic goals, faculty qualifications, learner success, research influence and assurance of learning."
+     ],
+     "result": "In progress; no accreditation date given.",
+     "evidence": "news",
+     "src": {
+      "t": "MediaInfoline: IIM Sambalpur advances towards AACSB",
+      "u": "https://www.mediainfoline.com/uncategorized/iim-sambalpur-advances-towards-aacsb-accreditation-to-join-elite-global-b-school-league"
+     }
+    }
+   ],
+   "notDocumented": "No source shows how much accreditation moved salaries or recruiter counts, and none of the schools published the internal steps it took to qualify. No international accreditation was found for IIM Jammu or IIM Sirmaur."
+  },
+  "research": {
+   "title": "Build a research base while the faculty is being built",
+   "why": "Research per faculty is the metric where the newer IIMs trail most (Shillong 0.61, Sirmaur 0.74 against 0.96). The leaders below built research capacity in their first two decades, in different ways: a fully Ph.D. faculty measured on top-journal output, partner-school mentoring, and early foreign training.",
+   "analogs": [
+    {
+     "id": "hkust-res",
+     "school": "HKUST Business School (Hong Kong)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 9,
+     "when": "2000-2010",
+     "situation": "Founded 1991. In 2000, at age 9, it first entered the Financial Times list and was ranked 40th in research, measured by faculty publications in top journals.",
+     "did": [
+      "Grew faculty from 11 to 136 in nine years while staying among the only 15 ranked schools with a 100% Ph.D.-qualified faculty.",
+      "Measured itself on top-journal publications from its first ranking entry."
+     ],
+     "result": "Research rank 40th (2000), 20th (2003), 10th (2010); MBA 16th (2009) and 6th (2011).",
+     "evidence": "official",
+     "src": [
+      {
+       "t": "HKUST: Business School enters the Financial Times world list (2000)",
+       "u": "https://bm.hkust.edu.hk/press-releases/2000/01/hkust-business-school-enters-financial-times-world-list"
+      },
+      {
+       "t": "HKUST: FT MBA 2003 rankings",
+       "u": "https://bm.hkust.edu.hk/news/2003/01/financial-times-mba-2003-rankings-hkust-business-school"
+      },
+      {
+       "t": "HKUST: top 10 in the world for MBA and business research (2010)",
+       "u": "https://bm.hkust.edu.hk/news/2010/01/top-10-world-hkust-mba-and-business-research"
+      }
+     ],
+     "caveat": "The school's releases state the ranks and faculty growth, not the incentives or hiring rules behind them."
+    },
+    {
+     "id": "isb-faculty",
+     "school": "ISB (India)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 10,
+     "when": "since 2001",
+     "situation": "A new school needing research credibility without a long-built faculty.",
+     "did": [
+      "Combined resident faculty with visiting faculty from its founding partners (Wharton, Kellogg, London Business School).",
+      "Senior partner-school faculty serve as Area Leaders and help with curriculum, faculty recruitment and research mentorship.",
+      "Offers individual and area research budgets, research associates and grants from its research centres."
+     ],
+     "result": "A research-driven faculty model in place from the first cohort.",
+     "evidence": "official",
+     "src": {
+      "t": "ISB: why work at ISB",
+      "u": "https://www.isb.edu/faculty-and-research/why-work-at-isb"
+     }
+    },
+    {
+     "id": "iima-itp",
+     "school": "IIM Ahmedabad",
+     "group": "leading-iim",
+     "stage": "growth",
+     "ageThen": 4,
+     "when": "1960s",
+     "situation": "A new IIM with no experienced faculty, set up with Ford Foundation funding and Harvard Business School as partner.",
+     "did": [
+      "Sent its first batches of recruited faculty to HBS for the nine-month International Teachers Programme, which taught them to teach and write cases and brought the case method to India.",
+      "Ravi Matthai (director from 1965) judged that the HBS arrangement should be upgraded or ended; it ended. The article notes it had no research collaboration, IIMA faculty could not teach at HBS, and IIMA was becoming known as a branch of HBS. He fostered faculty freedom, including to pursue their own research."
+     ],
+     "result": "A home-grown faculty and research culture; the IIMA-HBS arrangement was discontinued.",
+     "evidence": "official",
+     "src": {
+      "t": "T T Ram Mohan: Ravi Matthai and IIMA, a story of institution-building (IIM Indore Management Journal, 2011)",
+      "u": "https://iimidr.ac.in/wp-content/uploads/2019/12/v2011-v3issue2-Ravi-Matthai-and-IIMA-A-Story-of.pdf"
+     },
+     "caveat": "The article's lesson is that a foreign partner trained the faculty but did not share research, so independence had to be built."
+    },
+    {
+     "id": "smb-art-pb",
+     "school": "IIM Sambalpur (peer)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 10,
+     "when": "2021-2025",
+     "situation": "Founded 2015; faculty grew from 12 to 74 between 2021 and 2026 in NIRF filings.",
+     "did": [
+      "Method not published."
+     ],
+     "result": "Journal articles in OpenAlex rose from 17 (2021) to 88 (2025).",
+     "evidence": "dataset",
+     "src": {
+      "t": "OpenAlex works API",
+      "u": "https://api.openalex.org/works?filter=raw_affiliation_strings.search:%22Indian%20Institute%20of%20Management%20Sambalpur%22,type:article&group_by=publication_year"
+     },
+     "caveat": "Output rose in step with faculty growth; the policy behind it is not documented."
+    }
+   ],
+   "notDocumented": "Per-paper incentives, teaching-load relief and seed grants at HKUST and the IIMs above are not in the sources found. No stage-matched research fix was found for IIM Calcutta (a mature school with 0.67 articles per faculty)."
+  },
+  "faculty": {
+   "title": "Scale the faculty without diluting quality",
+   "why": "Newer IIMs are adding faculty quickly, and it shows in the data: Shillong grew from 32 to 81 listed faculty but its Ph.D. share fell from 100% to 87.7%; Sambalpur grew from 12 to 74 and held about 95%; Sirmaur's listed faculty has not grown while its class has.",
+   "analogs": [
+    {
+     "id": "hkust-fac",
+     "school": "HKUST Business School (Hong Kong)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 9,
+     "when": "1991-2000",
+     "situation": "Student body up from 235 to 2,680 in nine years.",
+     "did": [
+      "Expanded faculty from 11 to 136 in the same period.",
+      "Remained one of only 15 ranked schools with a 100% Ph.D.-qualified faculty."
+     ],
+     "result": "Faculty grew twelve-fold without a reported fall in doctoral share.",
+     "evidence": "official",
+     "src": {
+      "t": "HKUST: Business School enters the Financial Times world list",
+      "u": "https://bm.hkust.edu.hk/press-releases/2000/01/hkust-business-school-enters-financial-times-world-list"
+     }
+    },
+    {
+     "id": "isb-pop",
+     "school": "ISB (India)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 10,
+     "when": "since 2001",
+     "situation": "Needed breadth of courses before a large resident faculty existed.",
+     "did": [
+      "A portfolio of resident and visiting faculty from top US, European, Singapore and Indian schools.",
+      "Partner-school Area Leaders took part in faculty recruitment."
+     ],
+     "result": "Course breadth from the first batches while resident faculty grew.",
+     "evidence": "official",
+     "src": {
+      "t": "ISB: why work at ISB",
+      "u": "https://www.isb.edu/faculty-and-research/why-work-at-isb"
+     }
+    },
+    {
+     "id": "shl-fac",
+     "school": "IIM Shillong (peer)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 19,
+     "when": "2021-2026",
+     "situation": "Faculty listed in NIRF grew from 32 to 81.",
+     "did": [
+      "Hired fast across areas."
+     ],
+     "result": "Ph.D. share fell from 100% to 87.7% over the same period, the trade-off of rapid hiring.",
+     "evidence": "dataset",
+     "src": {
+      "t": "NIRF filings, IIM Shillong",
+      "u": "https://www.iimshillong.ac.in/wp-content/uploads/2026/03/NIRF-2026.pdf"
+     }
+    },
+    {
+     "id": "smb-fac-pb",
+     "school": "IIM Sambalpur (peer)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 10,
+     "when": "2021-2026",
+     "situation": "Faculty listed in NIRF grew from 12 to 74.",
+     "did": [
+      "Hired six-fold in five years."
+     ],
+     "result": "Kept a Ph.D. share of about 95% (92.9% to 95.4% across editions).",
+     "evidence": "dataset",
+     "src": {
+      "t": "NIRF filings, IIM Sambalpur",
+      "u": "https://iimsambalpur.ac.in/wp-content/uploads/2024/02/NIRF-2024-Data-Submission.pdf"
+     }
+    }
+   ],
+   "notDocumented": "None of these sources publishes its hiring criteria or how it protected doctoral quality during rapid hiring."
+  },
+  "international": {
+   "title": "Build international exposure into the model",
+   "why": "International students are 0% at IIM Sirmaur and about 0-1% at every IIM in the dataset. The global schools below built international faculty and partners in from the start, not later.",
+   "analogs": [
+    {
+     "id": "hkust-intl",
+     "school": "HKUST Business School (Hong Kong)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 9,
+     "when": "2000",
+     "situation": "Nine years old and in its first Financial Times ranking.",
+     "did": [
+      "Built an internationally recruited faculty."
+     ],
+     "result": "Ranked 4th in the world for international faculty and 3rd for international course content.",
+     "evidence": "official",
+     "src": {
+      "t": "HKUST: Business School enters the Financial Times world list",
+      "u": "https://bm.hkust.edu.hk/press-releases/2000/01/hkust-business-school-enters-financial-times-world-list"
+     },
+     "caveat": "The release states the result; recruitment tactics are not described."
+    },
+    {
+     "id": "ceibs-jv",
+     "school": "CEIBS (China)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 0,
+     "when": "1994",
+     "situation": "A new school in Shanghai.",
+     "did": [
+      "Founded as a joint venture of the Shanghai government and the European Commission, with Shanghai Jiao Tong University and EFMD as executive partners."
+     ],
+     "result": "EQUIS in 2004, and campuses in Beijing, Shenzhen, Accra and Zurich.",
+     "evidence": "official",
+     "src": {
+      "t": "CEIBS: establishment",
+      "u": "https://www.ceibs.edu/node/218"
+     }
+    },
+    {
+     "id": "isb-partner",
+     "school": "ISB (India)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 0,
+     "when": "2001",
+     "situation": "A new school with no international reputation.",
+     "did": [
+      "Opened with founding partners Wharton, Kellogg and London Business School supplying visiting faculty and Area Leaders."
+     ],
+     "result": "International faculty exposure from the first cohort.",
+     "evidence": "official",
+     "src": {
+      "t": "ISB: why work at ISB",
+      "u": "https://www.isb.edu/faculty-and-research/why-work-at-isb"
+     }
+    },
+    {
+     "id": "rnc-step-pb",
+     "school": "IIM Ranchi (peer)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 17,
+     "when": "since 2014",
+     "situation": "Founded 2009.",
+     "did": [
+      "Runs a Student Exchange Programme (STEP) since 2014."
+     ],
+     "result": "Reports about 100 exchange students from over 60 business schools and about 200 international students from 30+ countries (page undated).",
+     "evidence": "official",
+     "src": {
+      "t": "IIM Ranchi: internationalisation",
+      "u": "https://iimranchi.ac.in/internationalization/"
+     }
+    },
+    {
+     "id": "smb-alba-pb",
+     "school": "IIM Sambalpur (peer)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 10,
+     "when": "recent",
+     "situation": "Founded 2015.",
+     "did": [
+      "Signed its first foreign exchange MoU with ALBA (Greece) for a trimester exchange at no extra academic fee; more are under negotiation."
+     ],
+     "result": "Exchange route opened; inbound totals not published.",
+     "evidence": "official",
+     "src": {
+      "t": "IIM Sambalpur: student exchange details",
+      "u": "https://iimsambalpur.ac.in/student-exchange-details"
+     }
+    }
+   ],
+   "notDocumented": "No source gives the share of international students at any of these schools at the matching age, so the data cannot say what share is realistic."
+  },
+  "gender": {
+   "title": "Raise women's share",
+   "why": "Women are 25-34% of students at IIM Ahmedabad, Bangalore, Calcutta and Sirmaur, against 48-68% at Shillong, Jammu and Sambalpur. The newer IIMs show what policy can do; Harvard shows what a mature leader did.",
+   "analogs": [
+    {
+     "id": "smb-5pc-pb",
+     "school": "IIM Sambalpur (peer)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 2,
+     "when": "2017 onward",
+     "situation": "Before 2017 women were under 11% of MBA classes across the IIMs, Sambalpur included.",
+     "did": [
+      "Gave female candidates an additional 5% cut-off reduction when calling for interviews, then ranked everyone on a common merit list."
+     ],
+     "result": "Its director reports 50% female enrolment from 2017 onwards; the 2024-26 batch was 76% women, though the 2025-27 batch was 33%.",
+     "evidence": "news",
+     "src": {
+      "t": "Careers360: IIM Sambalpur 10th MBA batch",
+      "u": "https://news.careers360.com/iim-sambalpur-welcomes-10th-mba-batch-comprises-76-female-60-non-engineering-students"
+     }
+    },
+    {
+     "id": "kzk-60-pb",
+     "school": "IIM Kozhikode",
+     "group": "leading-iim",
+     "stage": "growth",
+     "ageThen": 22,
+     "when": "2018",
+     "situation": "Founded 1996.",
+     "did": [
+      "Added 60 supernumerary seats for women, the first IIM to do so."
+     ],
+     "result": "Intake of women guaranteed whatever the selection criteria.",
+     "evidence": "news",
+     "src": {
+      "t": "Careers360: How IIM Kozhikode changed the game",
+      "u": "https://news.careers360.com/how-iim-kozhikode-changed-game"
+     }
+    },
+    {
+     "id": "hbs-gender",
+     "school": "Harvard Business School (USA)",
+     "group": "global",
+     "stage": "maturity",
+     "ageThen": 100,
+     "when": "2010-2014",
+     "situation": "A century-old school where women were 25% of the class of 1985 and 35% about ten years before 2014.",
+     "did": [
+      "Under Dean Nitin Nohria (from 2010), made gender a priority and launched a Gender Initiative.",
+      "Pledged to more than double the share of women protagonists in its cases to 20% within five years.",
+      "Launched a recruitment programme targeting women."
+     ],
+     "result": "A record 41% of the entering MBA class were women in 2014.",
+     "evidence": "news",
+     "src": [
+      {
+       "t": "The Harvard Crimson: Tackling gender inequality at HBS",
+       "u": "https://www.thecrimson.com/article/2016/5/4/tacking-gender-inequality-at-hbs/"
+      },
+      {
+       "t": "Fortune: Harvard B-school dean offers unusual apology (2014)",
+       "u": "https://fortune.com/2014/01/29/harvard-b-school-dean-offers-unusual-apology"
+      },
+      {
+       "t": "GMAT Club: HBS launches recruitment programme targeting women",
+       "u": "https://gmatclub.com/blog/hbs-launches-recruitment-program-targeting-women/"
+      }
+     ],
+     "caveat": "Not stage-matched (a mature school). Figures are from news reports of the dean's statements."
+    },
+    {
+     "id": "sir-sap-pb",
+     "school": "IIM Sirmaur (own policy)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 11,
+     "when": "2026",
+     "situation": "Women were 28.6% of PG students in 2026.",
+     "did": [
+      "Its 2026 admissions policy reserves 40 seats for female applicants through a separate admission route."
+     ],
+     "result": "The effect will show from the 2026-28 batch.",
+     "evidence": "official",
+     "src": {
+      "t": "IIM Sirmaur MBA admissions policy 2026",
+      "u": "https://admissions.iimsirmaur.ac.in/mba-sap-admissions-policy-2026"
+     }
+    }
+   ],
+   "notDocumented": "How the 76% at Sambalpur was sustained or why the next batch fell to 33% is not explained in the sources found."
+  },
+  "sustain": {
+   "title": "Keep growth going past the first decade",
+   "why": "Ranchi (4.8% a year) and Shillong (3.9% over the last three years) are growing slower than the 5.8% A/B/C pace at ages 17-19, and Ahmedabad and Bangalore have slowed at maturity. The schools below kept climbing through the same ages.",
+   "analogs": [
+    {
+     "id": "isb-growth",
+     "school": "ISB (India)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 21,
+     "when": "2021-2022",
+     "situation": "Twenty years old and already top-ranked in India.",
+     "did": [
+      "Method not published in the sources found."
+     ],
+     "result": "Median salary up 12% in 2021, a pandemic year, and about 15% in 2022; offers reported rising from 1,195 to 2,072.",
+     "evidence": "news",
+     "src": {
+      "t": "InsideIIM: ISB placements 2022",
+      "u": "https://insideiim.com/isb-placements-2022"
+     },
+     "caveat": "Reports differ on the size of the gains and use mid-80% or whole-batch figures."
+    },
+    {
+     "id": "hkust-climb",
+     "school": "HKUST Business School (Hong Kong)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 19,
+     "when": "2008-2011",
+     "situation": "Eighteen to twenty years old and already inside the top 20.",
+     "did": [
+      "Moved up the Financial Times MBA ranking while its research rank rose from 17th to 10th and its doctoral placement rank rose 20 places."
+     ],
+     "result": "MBA 17th (2008), 16th (2009), 6th (2011), record high.",
+     "evidence": "official",
+     "src": [
+      {
+       "t": "HKUST: MBA ranks 17th (2008)",
+       "u": "https://bm.hkust.edu.hk/news/2008/01/hkust-mba-ranks-17-world-financial-times-ranking"
+      },
+      {
+       "t": "HKUST: MBA advances to 16th (2009)",
+       "u": "https://bm.hkust.edu.hk/press-releases/2009/01/hkust-mba-advances-16-world-financial-times-ranking"
+      },
+      {
+       "t": "HKUST: record-high ranking, MBA No. 6 (2011)",
+       "u": "https://bm.hkust.edu.hk/news/2011/01/record-high-ranking-hkust-mba-world-no6"
+      }
+     ],
+     "caveat": "The school's releases pair the MBA rise with the research rise but do not state a cause."
+    },
+    {
+     "id": "ceibs-top25",
+     "school": "CEIBS (China)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 11,
+     "when": "2005-2026",
+     "situation": "First entered the Financial Times MBA top 25 at about age 11.",
+     "did": [
+      "Held EQUIS (2004) and AACSB (2008) and renewed them on cycle."
+     ],
+     "result": "Stayed in the FT MBA top 25 for more than 20 consecutive years, including ten as Asia's No. 1.",
+     "evidence": "official",
+     "src": {
+      "t": "CEIBS: rankings and accreditation",
+      "u": "https://www.ceibs.edu/rankings-accreditation"
+     }
+    }
+   ],
+   "notDocumented": "No source states why any of these schools kept growing at ages 15-20. No stage-matched analogue was found for the slowdown at IIM Ahmedabad and Bangalore, which are mature."
+  }
+ }
+}

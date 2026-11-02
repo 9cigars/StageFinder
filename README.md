@@ -32,6 +32,14 @@ Open http://localhost:3000. Share a link that opens a specific IIM with its them
 | `server.js` | Static hosting + anonymous response API on SQLite. |
 | `data/responses.db` | Created on first response (git-ignored). |
 
+## Diagnosis and playbooks
+
+Every result page opens with **the problems in the institute's own numbers**, ranked by severity against the IIM A/B/C average and the other IIMs (`public/js/diagnose.js`): pay level, fee payback, slowing growth, thin recruiter base, research per faculty, faculty capacity, international students, women's share.
+
+Each problem points to a **playbook** in `public/data/playbooks.json`: leading IIMs, peer IIMs and global business schools that faced the same problem, with the age they were at, what is documented that they did, the result, and the source. The page ranks them by stage match, comparing the school's age then with the viewing IIM's age and stage. If no documented case is at the viewer's stage (for example a mature school), it says so instead of forcing a match. Cards say when a source gives a result but not the method.
+
+Current playbooks: global credibility (ISB, CEIBS, IIM Kozhikode, IIM Indore, and peers Shillong, Ranchi, Sambalpur), research base (HKUST, ISB, early IIM Ahmedabad), faculty scale-up, international exposure, women's share (including Harvard Business School), and sustaining growth.
+
 ## Solutions library
 
 `public/data/solutions.json` holds 56 documented cases, each tied to one or more of the 30 causes students can name. A case records the institute, what it did, the source link and an evidence label (Official, Report, Dataset, News, Secondary). A case is marked "Result only" when the outcome is public but the method is not. Where nothing is documented for a cause, the library says so in `gaps` instead of inventing a fix.

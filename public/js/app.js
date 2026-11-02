@@ -4,6 +4,7 @@ import { applyTheme, themeFor } from "./themes.js";
 import { initFx, observe } from "./fx.js";
 import { plcChart, plcXY, radarChart, sparkline, salaryExplorer } from "./charts.js";
 import { casesFor, causeCheck } from "./solutions.js";
+import { diagnose } from "./diagnose.js";
 import * as api from "./api.js";
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -12,7 +13,7 @@ const KEY = "iimstage.v2";
 const empty = () => ({ stage: {}, ratings: {}, causes: {}, details: {} });
 const ORDER = ["sirmaur", "ahmedabad", "bangalore", "calcutta", "jammu", "ranchi", "sambalpur", "shillong"];
 
-let data, sol, apiOk = false;
+let data, sol, pb, apiOk = false;
 const saved = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } })();
 const state = { step: "home", iim: saved.iim || null, qi: 0, agg: null, fresh: false, answers: { ...empty(), ...(saved.answers || {}) }, meta: saved.meta || {}, anonId: saved.anonId || null };
 const persist = () => { try { localStorage.setItem(KEY, JSON.stringify({ iim: state.iim, answers: state.answers, meta: state.meta, anonId: state.anonId })); } catch {} };
@@ -30,7 +31,7 @@ const ICON = {
 /* ------------------------------------------------------------------ boot + routing */
 async function boot() {
   initFx();
-  try { [data, sol] = await Promise.all([fetch("data/iims.json").then((r) => r.json()), fetch("data/solutions.json").then((r) => r.json())]); }
+  try { [data, sol, pb] = await Promise.all([fetch("data/iims.json").then((r) => r.json()), fetch("data/solutions.json").then((r) => r.json()), fetch("data/playbooks.json").then((r) => r.json())]); data.playbooksMeta = pb.problems; }
   catch { $("#app").innerHTML = `<section class="hero"><h1>Data failed to load</h1><p class="lead">Open this site through a web server (<code>node server.js</code>) so it can read <code>data/iims.json</code>.</p></section>`; return; }
   const q = new URLSearchParams(location.search).get("iim");
   if (q && data.iims[q]) { if (state.iim !== q) state.answers = empty(); state.iim = q; }
@@ -291,6 +292,51 @@ function bnCard(m, iim, concern = false) {
     <p class="small" style="margin-bottom:0"><b>Specific causes you named</b></p>
     ${lines.length ? lines.map((l) => causeBlock(l, iim.id)).join("") : fallbackFixes(m, iim.id)}</div>`;
 }
+
+/* ------------------------------------------------------------------ diagnosis + playbooks */
+const GL = { global: "Global leader", "leading-iim": "Leading IIM", peer: "Peer IIM" };
+const stageCode = (name) => ({ Growth: "growth", Maturity: "maturity", Decline: "decline" }[name]);
+function ageChip(a, age) {
+  if (a.ageThen === 0) return `At founding · you are ${age}`;
+  const d = a.ageThen - age, rel = Math.abs(d) <= 4 ? "Similar age" : d < 0 ? "Earlier stage" : "Later stage";
+  return `${rel} · they were ${a.ageThen}, you are ${age}`;
+}
+function analogHtml(a, age) {
+  const srcs = [].concat(a.src);
+  return `<div class="analog"><div class="an-h"><b>${esc(a.school)}</b><span class="pill grp-${a.group}">${GL[a.group]}</span><span class="pill match">${ageChip(a, age)}</span><span class="pill e-${a.evidence}" data-tip="${esc(sol.evidence[a.evidence])}">${EVL[a.evidence]}</span></div>
+    <p class="when">${esc(a.when)}</p><p><b>What they faced.</b> ${esc(a.situation)}</p>
+    <ul class="did">${a.did.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p class="res"><b>Result.</b> ${esc(a.result)}</p>${a.caveat ? `<p class="cav">${esc(a.caveat)}</p>` : ""}
+    <div class="srcs">${srcs.map((x) => `<a class="src" href="${esc(x.u)}" target="_blank" rel="noopener noreferrer">${esc(x.t)} ↗</a>`).join("")}</div></div>`;
+}
+function playbookCard(pid, probs, age, stage) {
+  const book = pb.playbooks[pid], ac = book.analogs;
+  const sorted = [...ac].sort((a, b) => (a.stage === stage ? 0 : 1) - (b.stage === stage ? 0 : 1) || Math.abs(a.ageThen - age) - Math.abs(b.ageThen - age));
+  const same = ac.filter((a) => a.stage === stage).length;
+  const first = sorted.slice(0, 3), rest = sorted.slice(3);
+  return `<div class="card playbook rv"><span class="eyebrow">Playbook</span><h3 style="font-size:1.55rem">${esc(book.title)}</h3>
+    <div class="chips" style="margin:10px 0 4px">${probs.map((p) => `<span class="pill">fixes: ${esc(p.title)}</span>`).join("")}</div>
+    <p class="muted small">${esc(book.why)}</p>
+    ${same ? "" : `<p class="check partial"><b>No stage-matched analogue found.</b> No documented case in this playbook was at your stage (${esc(stage)}), so these are the closest, with their own stage shown.</p>`}
+    ${first.map((a) => analogHtml(a, age)).join("")}
+    ${rest.length ? `<details class="more"><summary>Show ${rest.length} more</summary>${rest.map((a) => analogHtml(a, age)).join("")}</details>` : ""}
+    <p class="gap"><b>Not documented:</b> ${esc(book.notDocumented)}</p></div>`;
+}
+function diagnosisSection(iim) {
+  const dg = diagnose(data, iim.id), stage = stageCode(dg.stage), age = dg.age, top = dg.problems.slice(0, 5);
+  const weight = new Map();
+  top.forEach((p) => p.playbooks.forEach((id) => { const w = weight.get(id) || { sev: 0, probs: [] }; w.sev = Math.max(w.sev, p.severity); w.probs.push(p); weight.set(id, w); }));
+  const books = [...weight.entries()].sort((a, b) => b[1].sev - a[1].sev).slice(0, 4);
+  return `<section><span class="eyebrow rv">What the data says is wrong</span>
+    <h2 class="sec rv">${esc(iim.name)}'s problems, ranked from its own numbers</h2>
+    <p class="muted rv" style="max-width:66ch">Each problem is measured against the IIM A/B/C average and the other IIMs. ${esc(iim.name)} is ${age} years old and in the <b>${esc(dg.stage)}</b> stage, so the playbooks below favour schools that faced the same problem at a similar age.</p>
+    ${top.length ? `<div class="probs">${top.map((p) => `<div class="card prob rv"><div class="prob-h"><h3>${esc(p.title)}</h3><span class="sevn">${p.severity}</span></div>
+      <div class="sev"><i style="--w:${p.severity}%"></i></div><ul class="ev">${p.evidence.map((e) => `<li>${esc(e)}</li>`).join("")}</ul></div>`).join("")}</div>`
+      : `<div class="card rv"><b>No problem stands out against the benchmark.</b> Every measured metric is at or near the IIM A/B/C level.</div>`}
+    ${dg.notes.map((n) => `<p class="faint small rv" style="margin-top:10px">${esc(n)}</p>`).join("")}
+    ${books.length ? `<span class="eyebrow rv" style="margin-top:34px">How leaders fixed the same problems at your stage</span>${books.map(([id, w]) => playbookCard(id, w.probs, age, stage)).join("")}` : ""}
+    <p class="faint small rv" style="margin-top:12px">Playbooks show what the named schools are documented to have done, with sources. They do not prove those actions caused the results, and none was found for problems marked "not documented".</p></section>`;
+}
 function viewResults() {
   const r = analyse(data, state.iim, state.answers), s = r.stage, id = state.iim, iim = r.iim;
   const hasStudent = Object.values(state.answers.ratings).some((v) => v != null) || Object.keys(state.answers.stage).length;
@@ -313,6 +359,8 @@ function viewResults() {
     ${s ? `<ul class="ev">${s.evidence.map((e) => `<li>${esc(e)}</li>`).join("")}</ul>` : ""}
     <div class="row no-print" style="margin-top:24px"><button class="btn primary" data-action="print">Print or save as PDF</button><button class="btn" data-action="copy">Copy summary</button><button class="btn ghost" data-action="retake">Retake the questions</button></div>
   </div>${voteBlock}</section>
+
+  ${diagnosisSection(iim)}
 
   <section><span class="eyebrow rv">Strengths and weaknesses</span>
     <div class="card two rv"><div>${radarChart(r.metrics)}<div class="legend"><span><i style="background:var(--accent-2)"></i>Public data (0–100 vs IIM A/B/C)</span><span><i style="background:var(--accent)"></i>Student rating</span></div></div>
