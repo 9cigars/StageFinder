@@ -20,7 +20,6 @@ META = {
     "sambalpur": dict(name="IIM Sambalpur", short="IIMS", city="Sambalpur", state="Odisha", founded=2015, benchmark=False),
     "shillong": dict(name="IIM Shillong", short="IIMSh", city="Shillong", state="Meghalaya", founded=2007, benchmark=False),
     "sirmaur": dict(name="IIM Sirmaur", short="IIMSir", city="Paonta Sahib", state="Himachal Pradesh", founded=2015, benchmark=False),
-    "trichy": dict(name="IIM Tiruchirappalli", short="IIMT", city="Tiruchirappalli", state="Tamil Nadu", founded=2011, benchmark=False),
 }
 
 # label (regex on the Component / Metric column) -> series key

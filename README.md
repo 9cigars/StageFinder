@@ -4,7 +4,7 @@
 
 **Live site:** https://9cigars.github.io/StageFinder/
 
-Built for the IIM Sirmaur Operations Management project (Product Life Cycle Analysis). It covers eight IIMs: Sirmaur, Ahmedabad, Bangalore, Calcutta, Jammu, Ranchi, Sambalpur and Shillong, with IIM Ahmedabad, Bangalore and Calcutta as the benchmark. IIM Tiruchirappalli was removed: its own NIRF filings show a flat median (₹18.6 L, ₹18.1 L, ₹18.0 L for 2023-25) while its class grew 48%, so there is no evidence of decline.
+Built for the IIM Sirmaur Operations Management project (Product Life Cycle Analysis). It covers eight IIMs: Sirmaur, Ahmedabad, Bangalore, Calcutta, Jammu, Ranchi, Sambalpur and Shillong, with IIM Ahmedabad, Bangalore and Calcutta as the benchmark.
 
 ## What it does
 
@@ -18,7 +18,7 @@ Built for the IIM Sirmaur Operations Management project (Product Life Cycle Anal
 node server.js          # needs Node 22.5+; no npm install
 ```
 
-Open http://localhost:3000. Share a link that opens a specific IIM with its theme: `http://localhost:3000/?iim=sirmaur`. On the live site: `https://9cigars.github.io/StageFinder/?iim=sirmaur`.
+Open http://localhost:3000 (set `window.IIM_API_BASE = ''` in `public/config.js` to collect responses on this server). Share a link that opens a specific IIM with its theme: `http://localhost:3000/?iim=sirmaur`. On the live site: `https://9cigars.github.io/StageFinder/?iim=sirmaur`.
 
 ## What is where
 

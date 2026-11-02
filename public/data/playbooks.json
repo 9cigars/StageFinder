@@ -299,9 +299,80 @@
       "u": "https://api.openalex.org/works?filter=raw_affiliation_strings.search:%22Indian%20Institute%20of%20Management%20Sambalpur%22,type:article&group_by=publication_year"
      },
      "caveat": "Output rose in step with faculty growth; the policy behind it is not documented."
+    },
+    {
+     "id": "smu-res",
+     "school": "SMU Lee Kong Chian School of Business (Singapore)",
+     "group": "global",
+     "stage": "growth",
+     "ageThen": 17,
+     "when": "2016-2018",
+     "situation": "Founded in 2000, still a small faculty; its own dean said results came despite a relatively small faculty.",
+     "did": [
+      "Hires faculty on the basis of research or recognised expertise in their field.",
+      "Reported a record 11 new faculty hired in a single summer in a later year."
+     ],
+     "result": "UT Dallas research ranking 49th (2016) to 40th (2017); FT Asia-Pacific MBA 13th (2017) to 6th (2018); in 2024 1st in Singapore and 2nd in Asia in the FT research-impact ranking.",
+     "evidence": "official",
+     "src": [
+      {
+       "t": "SMU: LKCSB moves up 7 notches, 6th in FT Asia-Pacific 2018",
+       "u": "https://business.smu.edu.sg/sites/business.smu.edu.sg/files/news/Media_release_SMU_LKCSB_moves_up_7_notches%252C_ranked_6th_in_FT_Asia_Pac_Ranking_2018.pdf"
+      },
+      {
+       "t": "SMU: business school 3rd in Asia in research rankings",
+       "u": "https://admissions.smu.edu.sg/our-community/news/smus-business-school-3rd-asia-prestigious-research-rankings"
+      },
+      {
+       "t": "SMU: LKCSB ranked 1st in Singapore for research impact (2024)",
+       "u": "https://news.smu.edu.sg/sites/news.smu.edu.sg/files/smu/news_room/press%20release_LKCSB%20ranked%201st%20in%20Singapore%20and%202nd%20in%20Asia%20by%20FT%20for%20research%20impact_final.pdf"
+      }
+     ],
+     "caveat": "The sources give ranks and the hiring basis, not specific incentives."
+    },
+    {
+     "id": "haskayne",
+     "school": "Haskayne School of Business, University of Calgary (Canada)",
+     "group": "global",
+     "stage": "maturity",
+     "ageThen": null,
+     "when": "2015-2019",
+     "situation": "An established school ranked 11th for articles in its priority journals in 2015.",
+     "did": [
+      "Built the Eyes High Journal List of 63 high-impact journals, 35 of them designated Star journals, to tell faculty where to aim.",
+      "Its associate dean of research credits faculty for rising to the challenge of targeting these publications."
+     ],
+     "result": "5th for Eyes High Star articles in 2019, and 4th when weighted by Ph.D. faculty size.",
+     "evidence": "official",
+     "src": {
+      "t": "University of Calgary: Haskayne dramatically improves research rankings",
+      "u": "https://ucalgary.ca/news/haskayne-school-business-dramatically-improves-research-rankings-past-five-years"
+     },
+     "caveat": "The article does not mention incentives, hiring or workload changes."
+    },
+    {
+     "id": "bc-carroll",
+     "school": "Boston College Carroll School (USA)",
+     "group": "global",
+     "stage": "maturity",
+     "ageThen": null,
+     "when": "2006-2019",
+     "situation": "An established school whose research rank in 2006 was 32 places below its 2019 rank.",
+     "did": [
+      "Rapidly increased financial and technical support for faculty research projects, in the dean's words.",
+      "Instituted and refined annual Research Reports to track and strengthen faculty performance.",
+      "Hired faculty who do superb research."
+     ],
+     "result": "Research rank 20th worldwide in 2019 and 13th in 2018.",
+     "evidence": "official",
+     "src": {
+      "t": "Boston College Carroll School: Financial Times",
+      "u": "https://www.bc.edu/content/bc-web/schools/carroll-school/news/2019/financial-times.html"
+     },
+     "caveat": "The dean's account; the school does not publish the budget or the incentive terms."
     }
    ],
-   "notDocumented": "Per-paper incentives, teaching-load relief and seed grants at HKUST and the IIMs above are not in the sources found. No stage-matched research fix was found for IIM Calcutta (a mature school with 0.67 articles per faculty)."
+   "notDocumented": "Per-paper incentives, teaching-load relief and seed grants are not stated in the sources found. Haskayne and Boston College are established schools, so they show methods rather than what to do at age 11-19."
   },
   "faculty": {
    "title": "Scale the faculty without diluting quality",
@@ -480,7 +551,7 @@
      }
     }
    ],
-   "notDocumented": "No source gives the share of international students at any of these schools at the matching age, so the data cannot say what share is realistic."
+   "notDocumented": "No source gives the share of international students at any of these schools at the matching age, and no established-school case was found for raising it."
   },
   "gender": {
    "title": "Raise women's share",
@@ -643,9 +714,53 @@
       "t": "CEIBS: rankings and accreditation",
       "u": "https://www.ceibs.edu/rankings-accreditation"
      }
+    },
+    {
+     "id": "iima-dubai",
+     "school": "IIM Ahmedabad",
+     "group": "leading-iim",
+     "stage": "maturity",
+     "ageThen": 64,
+     "when": "2025",
+     "situation": "A mature leader whose median pay growth has slowed to about 3% a year (2022-25).",
+     "did": [
+      "Became the first IIM to set up an international campus, in Dubai, with its first programme from September 2025."
+     ],
+     "result": "Too early to measure.",
+     "evidence": "news",
+     "src": {
+      "t": "Careers360: IIM Ahmedabad to set up Dubai campus",
+      "u": "https://news.careers360.com/iim-ahmedabad-set-up-international-campus-in-dubai-first-programme-starts-in-september-2025-reports/amp"
+     },
+     "caveat": "The article names neither the programme nor the reason."
+    },
+    {
+     "id": "iimb-ug",
+     "school": "IIM Bangalore",
+     "group": "leading-iim",
+     "stage": "maturity",
+     "ageThen": 52,
+     "when": "2025",
+     "situation": "A mature leader whose recent pay growth has slowed to about 1% a year (2022-25).",
+     "did": [
+      "Announced two undergraduate programmes in July 2025, a BSc (Honours) in Economics and a data-science BSc, each four years with an intake of 40."
+     ],
+     "result": "Too early to measure; one report cites about 12,000 applications by December 2025.",
+     "evidence": "secondary",
+     "src": [
+      {
+       "t": "Cracku: IIM Bangalore UG applications",
+       "u": "https://cracku.in/iim-bangalore-ug-applications-for-new-programs"
+      },
+      {
+       "t": "IIM Bangalore Digest: UG programmes in Economics and Data Science",
+       "u": "https://digest.iimb.ac.in/?p=18773"
+      }
+     ],
+     "caveat": "IIMB's announcement page could not be opened directly; details come from the report and search summaries of it."
     }
    ],
-   "notDocumented": "No source states why any of these schools kept growing at ages 15-20. No stage-matched analogue was found for the slowdown at IIM Ahmedabad and Bangalore, which are mature."
+   "notDocumented": "No fix for a shrinking recruiter base was found; IIM Ranchi's count was 124 (2023), 76 (2024) and 81 (2025) in one aggregator, and sources conflict. The IIM Ahmedabad and Bangalore moves are too recent to show results, and no source explains why ISB, HKUST or CEIBS kept growing at ages 15-20."
   }
  }
 }

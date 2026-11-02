@@ -12,13 +12,8 @@ d = json.load(open(P, encoding="utf-8"))
 I = d["iims"]
 Y = [str(y) for y in d["years"]]
 
-# ---- 1. Trichy removed: its "decline" is not supported by its own NIRF filings -----------------------------------
-# NIRF medians (2022-23, 2023-24, 2024-25): 18.6, 18.1, 18.0 lakh, i.e. -3% while the graduating class grew from
-# 268 to 397 (+48%) and recruiters rose (172 -> 250). The workbook's 19.5 / 18.24 / 16.75 mixes news figures with a
-# 2026 value that has no NIRF counterpart. A flat median on a much bigger cohort is dilution, not decline.
-I.pop("trichy", None)
 
-# ---- 2. Salary: one basis for everyone (NIRF median of placed graduates, institute-submitted) ----------------------
+# ---- 1. Salary: one basis for everyone (NIRF median of placed graduates, institute-submitted) ----------------------
 # 2026 placement-report figures are not yet in NIRF and use mixed bases (IIMA reports maximum earning potential),
 # so they are set aside and kept under "unaudited2026" instead of being mixed into the series.
 for k, v in I.items():
@@ -95,8 +90,7 @@ d["method"] = {
     "roi": "Current programme fee ÷ latest median salary × 12 (gross months, before tax and living costs)",
     "faculty": "Share of faculty listed in NIRF with a Ph.D., latest edition",
     "research": "Journal articles per listed faculty: 2023-2025 average of OpenAlex articles ÷ latest NIRF faculty count",
-    "diversity": "Women share of PG students (70%) and international share (30%), latest NIRF edition",
-    "removed": {"trichy": "Removed: its NIRF median is flat (₹18.6 L, ₹18.1 L, ₹18.0 L for 2023-25) while the class grew 48% and recruiters rose, so there is no evidence of decline."},
+    "diversity": "Women share of PG students (70%) and international share (30%), latest NIRF edition"
 }
 for k, v in I.items():
     v["sources"] = v.get("sources", []) + [

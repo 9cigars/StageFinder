@@ -1494,9 +1494,6 @@
   "roi": "Current programme fee ÷ latest median salary × 12 (gross months, before tax and living costs)",
   "faculty": "Share of faculty listed in NIRF with a Ph.D., latest edition",
   "research": "Journal articles per listed faculty: 2023-2025 average of OpenAlex articles ÷ latest NIRF faculty count",
-  "diversity": "Women share of PG students (70%) and international share (30%), latest NIRF edition",
-  "removed": {
-   "trichy": "Removed: its NIRF median is flat (₹18.6 L, ₹18.1 L, ₹18.0 L for 2023-25) while the class grew 48% and recruiters rose, so there is no evidence of decline."
-  }
+  "diversity": "Women share of PG students (70%) and international share (30%), latest NIRF edition"
  }
 }

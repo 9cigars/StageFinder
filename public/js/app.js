@@ -39,7 +39,6 @@ async function boot() {
   applyTheme(state.iim);
   render();
   apiOk = await api.health();
-  $("#apiStatus").innerHTML = `<span class="api-dot ${apiOk ? "on" : ""}"></span>${apiOk ? "Responses are collected anonymously on the server." : "Backend not connected: your result is shown here and kept on this device only."}`;
 }
 function go(step, extra = {}) {
   Object.assign(state, { step }, extra);
@@ -81,7 +80,6 @@ function boardMarkers(board) {
 }
 function viewHome() {
   const board = stageBoard(data);
-  const ticker = ["Eight IIMs", "NIRF-aligned data 2021–2025", "Five metrics", "Ten questions", "One life-cycle curve", "Your voice counts"].map((x) => `<span>${x}</span>`).join("");
   return `
   <section class="hero">
     <span class="eyebrow rv in">Operations management · product life cycle</span>
@@ -91,8 +89,7 @@ function viewHome() {
       <div class="board-h"><div><span class="eyebrow" style="margin:0">Live stage board</span></div>
         <div class="legend2"><span>Hover a dot for the numbers</span><span>Click a name to open it</span></div></div>
       <div id="board">${plcChart(boardMarkers(board))}</div>
-    </div>
-    <div class="ticker rv" data-d="800"><div>${ticker}${ticker}${ticker}${ticker}</div></div>
+    </div>
   </section>
   <section id="pick"><span class="eyebrow rv">Step 1 · choose your institute</span>
     <div class="iim-grid">${ORDER.map((id) => iimCard(id, board)).join("")}</div>
@@ -212,7 +209,6 @@ function viewAbout() {
       <div class="field"><label for="prog">Programme</label><select id="prog" data-meta="programme"><option value="">Prefer not to say</option>${PROGRAMMES.map((p) => `<option ${state.meta.programme === p ? "selected" : ""}>${esc(p)}</option>`).join("")}</select></div>
       <div class="field"><label for="yr">Year of study</label><select id="yr" data-meta="year"><option value="">Prefer not to say</option>${YEARS_OF_STUDY.map((p) => `<option ${state.meta.year === p ? "selected" : ""}>${esc(p)}</option>`).join("")}</select></div></div>
     <div class="field"><label for="cm">One change that would most improve ${esc(name)}</label><textarea id="cm" maxlength="300" data-meta="comment" placeholder="No names or personal details, please.">${esc(state.meta.comment || "")}</textarea></div>
-    <p class="faint small">${apiOk ? "Your answers are stored anonymously to build the combined view for your institute." : "No backend is connected, so your answers stay on this device."}</p>
     <div class="q-nav"><button class="btn ghost" data-action="backq">← Back</button><button class="btn primary mag" data-action="finish">Reveal my result →</button></div></div></div>`;
 }
 function finish() {
@@ -298,6 +294,7 @@ const GL = { global: "Global leader", "leading-iim": "Leading IIM", peer: "Peer 
 const stageCode = (name) => ({ Growth: "growth", Maturity: "maturity", Decline: "decline" }[name]);
 function ageChip(a, age) {
   if (a.ageThen === 0) return `At founding · you are ${age}`;
+  if (a.ageThen == null) return "Established school";
   const d = a.ageThen - age, rel = Math.abs(d) <= 4 ? "Similar age" : d < 0 ? "Earlier stage" : "Later stage";
   return `${rel} · they were ${a.ageThen}, you are ${age}`;
 }
@@ -334,8 +331,7 @@ function diagnosisSection(iim) {
       <div class="sev"><i style="--w:${p.severity}%"></i></div><ul class="ev">${p.evidence.map((e) => `<li>${esc(e)}</li>`).join("")}</ul></div>`).join("")}</div>`
       : `<div class="card rv"><b>No problem stands out against the benchmark.</b> Every measured metric is at or near the IIM A/B/C level.</div>`}
     ${dg.notes.map((n) => `<p class="faint small rv" style="margin-top:10px">${esc(n)}</p>`).join("")}
-    ${books.length ? `<span class="eyebrow rv" style="margin-top:34px">How leaders fixed the same problems at your stage</span>${books.map(([id, w]) => playbookCard(id, w.probs, age, stage)).join("")}` : ""}
-    <p class="faint small rv" style="margin-top:12px">Playbooks show what the named schools are documented to have done, with sources. They do not prove those actions caused the results, and none was found for problems marked "not documented".</p></section>`;
+    ${books.length ? `<span class="eyebrow rv" style="margin-top:34px">How leaders fixed the same problems at your stage</span>${books.map(([id, w]) => playbookCard(id, w.probs, age, stage)).join("")}` : ""}</section>`;
 }
 function viewResults() {
   const r = analyse(data, state.iim, state.answers), s = r.stage, id = state.iim, iim = r.iim;
@@ -378,9 +374,7 @@ function viewResults() {
 
   <section><span class="eyebrow rv">Bottlenecks to fix first</span>
     <div class="bn">${r.bottlenecks.length ? "" : `<div class="card rv" style="grid-column:1/-1"><h3 style="font-size:1.4rem">No data-backed bottleneck below ${THRESHOLDS.bottleneckBelow}</h3><p class="muted small" style="margin:8px 0 0">Every metric public data covers scores ${THRESHOLDS.bottleneckBelow} or more against the IIM A/B/C benchmark.</p></div>`}${r.bottlenecks.map((m) => bnCard(m, iim)).join("")}${r.concerns.map((m) => bnCard(m, iim, true)).join("")}</div>
-    ${otherCauses(r, iim)}
-    <p class="faint small rv" style="margin-top:12px">Bottlenecks are the lowest-scoring metrics that public data backs up. A weak spot only students raised is shown separately until data can confirm it.</p>
-    <div class="card hold rv"><b>How to read the fixes</b><br><span class="small">Each fix is something a named institute has documented, with its source. Labels show how strong the source is: Official (institute or government page), Report (placement or admissions report), Dataset (this project's NIRF-aligned data), News, Secondary (aggregator, verify before relying). "Result only" means the outcome is public but the method is not. Check fit before adopting anything.</span></div></section>
+    ${otherCauses(r, iim)}</section>
 
   <section id="community"></section>${pilot}
 
@@ -389,9 +383,7 @@ function viewResults() {
     <details><summary>Data quality flags for ${esc(iim.name)}</summary><ul class="ev" style="margin-top:10px">${(iim.dataFlags.length ? iim.dataFlags : ["No conflicts recorded in the workbook."]).map((f) => `<li>${esc(f)}</li>`).join("")}</ul>${iim.notes.length ? `<p class="small faint" style="margin-top:12px"><b>Notes from the workbook</b></p><ul class="ev">${iim.notes.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` : ""}</details>
     <details><summary>How each number is measured</summary><ul class="ev" style="margin-top:10px">${Object.entries(data.method).filter(([k]) => k !== "removed" && k !== "commonYear").map(([k, v]) => `<li><b>${esc(k)}</b>: ${esc(v)}</li>`).join("")}<li><b>Comparison year</b>: ${data.method.commonYear} for every IIM, so all are compared on the same batch.</li></ul>
       ${iim.fee ? `<p class="note">Fee used: ₹${iim.fee.lakh} L for the ${esc(iim.fee.batch)} batch (${esc(iim.fee.source)}). ${esc(iim.fee.note || "")}</p>` : ""}</details>
-    <details><summary>Why IIM Tiruchirappalli is not listed</summary><p class="muted small" style="margin-top:10px">${esc(data.method.removed.trichy)}</p></details>
     <details><summary>Sources (${iim.sources.length})</summary><table><tbody>${iim.sources.map((x) => `<tr><td>${esc(x.id)}</td><td>${esc(x.title)}</td><td>${esc(x.quality || "")}</td></tr>`).join("")}</tbody></table></details>
-    <details><summary>Limits of this tool</summary><p class="muted small" style="margin-top:10px">ROI and research are only available for a few institutes, so for most the data bar is blank and the student view stands alone. IIM Ahmedabad reports salary as maximum earning potential, which is not strictly comparable with CTC. One student's answers are one opinion; the combined view appears once five students have responded.</p></details>
   </div></section>`;
 }
 function pilotBlock() {
