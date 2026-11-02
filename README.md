@@ -38,7 +38,7 @@ Every result page opens with **the problems in the institute's own numbers**, ra
 
 Each problem points to a **playbook** in `public/data/playbooks.json`: leading IIMs, peer IIMs and global business schools that faced the same problem, with the age they were at, what is documented that they did, the result, and the source. The page ranks them by stage match, comparing the school's age then with the viewing IIM's age and stage. If no documented case is at the viewer's stage (for example a mature school), it says so instead of forcing a match. Cards say when a source gives a result but not the method.
 
-Current playbooks: global credibility (ISB, CEIBS, IIM Kozhikode, IIM Indore, and peers Shillong, Ranchi, Sambalpur), research base (HKUST, ISB, early IIM Ahmedabad), faculty scale-up, international exposure, women's share (including Harvard Business School), and sustaining growth.
+Current playbooks (39 sourced cases): global credibility (ISB, CEIBS, IIM Kozhikode, IIM Indore, and peers Shillong, Ranchi, Sambalpur), research base (HKUST, SMU, ISB, early IIM Ahmedabad, and established schools Haskayne and Boston College), faculty scale-up, international exposure (HKUST, CEIBS, ISB, IIM Ahmedabad's exchange network, INSEAD), women's share (including Harvard Business School), sustaining growth (ISB, HKUST, CEIBS, and IIM Ahmedabad and Bangalore's moves beyond the MBA), and rebuilding the recruiter base (Olin, and peer IIMs).
 
 ## Solutions library
 

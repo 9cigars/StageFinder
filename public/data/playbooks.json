@@ -25,8 +25,8 @@
   "recruiters": {
    "title": "Thin or shrinking recruiter base",
    "playbooks": [
-    "credibility",
-    "sustain"
+    "recruiters",
+    "credibility"
    ]
   },
   "research": {
@@ -549,9 +549,56 @@
       "t": "IIM Sambalpur: student exchange details",
       "u": "https://iimsambalpur.ac.in/student-exchange-details"
      }
+    },
+    {
+     "id": "iima-exchange",
+     "school": "IIM Ahmedabad",
+     "group": "leading-iim",
+     "stage": "maturity",
+     "ageThen": 52,
+     "when": "2013 and since",
+     "situation": "A mature leader with almost no international students in its two-year programme.",
+     "did": [
+      "Built an exchange network: in 2013, more than 60 foreign business schools offered more than 120 seats to about 424 students, with seats expected to rise to about 150.",
+      "Hosted nearly 75 exchange students from foreign schools on campus and ran an International Student Exchange Fair through its student Exchange Council with the Student Exchange Office.",
+      "Its PGP-FABM programme takes incoming exchange students from ESSEC, UBC, Shanghai Jiao Tong and NHH for a term at IIMA."
+     ],
+     "result": "International exposure through exchange, not through enrolment: the share of international degree students is still about 0.3%.",
+     "evidence": "official",
+     "src": [
+      {
+       "t": "IIM Ahmedabad: international student exchange fair 2013 (press release)",
+       "u": "https://iima.ac.in/sites/default/files/media-release/185444915IIMAPR26-11-2013multi.pdf"
+      },
+      {
+       "t": "IIM Ahmedabad: PGP-FABM exchange programme",
+       "u": "https://www.iima.ac.in/hindi/node/444"
+      }
+     ],
+     "caveat": "The figures are from 2013; a current inbound count was not found."
+    },
+    {
+     "id": "insead-intl",
+     "school": "INSEAD (France, Singapore, Abu Dhabi)",
+     "group": "global",
+     "stage": "maturity",
+     "ageThen": 58,
+     "when": "2015",
+     "situation": "A leading global school, founded in 1957.",
+     "did": [
+      "Operates campuses in France, Singapore and Abu Dhabi; one alumnus says the Singapore expansion was pivotal to where the school is today.",
+      "No single nationality holds a majority of the class."
+     ],
+     "result": "Class of 2016 was 93% international, against about 35% at Harvard Business School and 40% at Stanford.",
+     "evidence": "news",
+     "src": {
+      "t": "Poets&Quants: Meet INSEAD's Class of 2016",
+      "u": "https://poetsandquants.com/2015/09/10/meet-inseads-class-of-2016/"
+     },
+     "caveat": "A result and a campus footprint; INSEAD's admissions method is not documented in the sources found. A further claim of a 10% nationality cap rests on one source and is not used."
     }
    ],
-   "notDocumented": "No source gives the share of international students at any of these schools at the matching age, and no established-school case was found for raising it."
+   "notDocumented": "No source gives the share of international students at any of these schools at the matching age. The IIMA exchange figures are from 2013 and INSEAD's admissions method is not documented in the sources found."
   },
   "gender": {
    "title": "Raise women's share",
@@ -761,6 +808,117 @@
     }
    ],
    "notDocumented": "No fix for a shrinking recruiter base was found; IIM Ranchi's count was 124 (2023), 76 (2024) and 81 (2025) in one aggregator, and sources conflict. The IIM Ahmedabad and Bangalore moves are too recent to show results, and no source explains why ISB, HKUST or CEIBS kept growing at ages 15-20."
+  },
+  "recruiters": {
+   "title": "Rebuild and widen the recruiter base",
+   "why": "IIM Ranchi's recruiter count fell from 124 (2023) to 77 (2026), against 187 on average at IIM A/B/C. The cases below show what a recruiter base looks like when it grows at ages 11-19, and the one school that documents how it rebuilt its own.",
+   "analogs": [
+    {
+     "id": "olin",
+     "school": "Olin Business School, Washington University (USA)",
+     "group": "global",
+     "stage": "maturity",
+     "ageThen": null,
+     "when": "2018-2019",
+     "situation": "An established school that decided its recruiting was too transactional.",
+     "did": [
+      "Merged the career centre and corporate relations so they 'work hand-in-glove'.",
+      "Put staff in the field, with team members in the eastern and western US, Europe, the Middle East and Shanghai.",
+      "Brought in Boston Consulting Group, which conceived many of the strategies in corporate relations and career services.",
+      "Moved recruiting from a transactional model to a relationship-based one."
+     ],
+     "result": "In one year, 14 companies planned to hire more Olin graduates and 15 hired Olin graduates for the first time; internship recruiting, new on-campus firms and alumni engagement also grew.",
+     "evidence": "official",
+     "src": {
+      "t": "Olin Business School: Retooled career center and corporate relations yields big results",
+      "u": "https://olin.washu.edu/about/news-and-media/news/2020/01/retooled-career-center-corporate-relations-yields-big-results.php"
+     },
+     "caveat": "A school publication, so the results are self-reported. The overall placement numbers are not given."
+    },
+    {
+     "id": "shl-recruiters",
+     "school": "IIM Shillong (peer)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 17,
+     "when": "2022-2026",
+     "situation": "Founded 2007; 73 recruiters in 2022.",
+     "did": [
+      "Method not published."
+     ],
+     "result": "Recruiters doubled to 147 by 2026 as median pay rose from ₹22.3 L to ₹25 L (2022-2025).",
+     "evidence": "secondary",
+     "src": [
+      {
+       "t": "IMS India: IIM Shillong placements",
+       "u": "https://www.imsindia.com/blog/cat/iim-shillong-placement/"
+      },
+      {
+       "t": "Cracku: IIM Shillong placements 2026",
+       "u": "https://cracku.in/iim-shillong-placements-2026"
+      }
+     ],
+     "caveat": "Counts are from aggregator sites; none explains how the base was widened."
+    },
+    {
+     "id": "sir-recruiters",
+     "school": "IIM Sirmaur (own history)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 10,
+     "when": "2023-2025",
+     "situation": "Founded 2015; 125 participating firms in 2023, 65+ of them new recruiters.",
+     "did": [
+      "Method not published."
+     ],
+     "result": "About 250 participating firms by 2025.",
+     "evidence": "report",
+     "src": {
+      "t": "IIM Sirmaur placement report 2023",
+      "u": "https://www.iimsirmaur.ac.in/sites/default/files/2023-05/MBA%2007%20Report.pdf"
+     },
+     "caveat": "The 2025 count is from news and placement sites and may include summer recruiters."
+    },
+    {
+     "id": "bg-recruiters",
+     "school": "IIM Bodh Gaya (peer)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 11,
+     "when": "2026",
+     "situation": "Founded 2015, a non-metro campus.",
+     "did": [
+      "Method not published."
+     ],
+     "result": "More than 180 recruiters took part in the 2024-26 batch, over 100 of them first-time recruiters.",
+     "evidence": "news",
+     "src": {
+      "t": "Careers360: IIM Bodh Gaya convocation 2026",
+      "u": "https://news.careers360.com/iim-bodh-gaya-579-graduates-409-placements-30-lpa-highest-package-international-offers-2026-43.63-mba-management/amp"
+     },
+     "caveat": "Another tally gives 201 recruiters, 141 of them new, so the counts conflict."
+    },
+    {
+     "id": "jmu-recruiters",
+     "school": "IIM Jammu (peer)",
+     "group": "peer",
+     "stage": "growth",
+     "ageThen": 10,
+     "when": "2025-2026",
+     "situation": "Founded 2016.",
+     "did": [
+      "Method not published."
+     ],
+     "result": "Recruiters up from 200 to 260 in a year.",
+     "evidence": "secondary",
+     "src": {
+      "t": "Cracku: IIM Jammu placements 2026",
+      "u": "https://cracku.in/iim-jammu-placements-2026"
+     },
+     "caveat": "Counts are from an aggregator site."
+    }
+   ],
+   "notDocumented": "No Indian institute documents how it widened its recruiter base; the IIM cases are outcomes only. IIM Ranchi's count was 124 (2023), 76 (2024) and 81 (2025) in one aggregator, and sources conflict. Olin documents a method but is an established US school, not a peer."
   }
  }
 }
