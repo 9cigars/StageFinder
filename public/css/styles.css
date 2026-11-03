@@ -346,3 +346,32 @@ html.demo-open { overflow: hidden; }
 .d-btn { background: var(--card-2); border: 1px solid var(--line); border-radius: 99px; padding: 8px 16px; font-weight: 700; cursor: pointer; } .d-btn:hover { border-color: var(--accent); } .d-btn.on { background: var(--accent); color: #0b0b10; border-color: transparent; }
 @media (max-width: 900px) { .d-split, .d-road { grid-template-columns: 1fr; } .d-top { padding: 10px 16px; } .d-bot { padding: 6px 12px 12px; } }
 @media print { .demo { display: none !important; } }
+
+/* presentation mode: script-synced slides */
+.d-metrics { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 18px; }
+.d-mc { padding: 16px; border-radius: 18px; background: var(--card-2); border: 1px solid var(--line); display: grid; gap: 6px; align-content: start; }
+.d-mc i { font: 800 1.6rem var(--display); color: var(--accent-2); font-style: normal; } .d-mc b { font: 800 1.05rem var(--display); } .d-mc span { color: var(--muted); font-size: .82rem; line-height: 1.4; }
+.d-weights { display: flex; gap: 6px; margin-top: 14px; } .d-weights div { flex: 1; padding: 10px 8px; text-align: center; border-radius: 12px; background: color-mix(in srgb, var(--accent) 24%, var(--card-2)); border: 1px solid var(--line); }
+.d-weights b { display: block; font: 800 1.5rem var(--display); color: var(--accent-2); } .d-weights span { font-size: .8rem; color: var(--muted); font-weight: 700; }
+.d-gauge { position: relative; display: flex; height: 26px; border-radius: 14px; margin: 54px 0 8px; } .d-gauge > i { display: block; }
+.d-gauge .g { background: var(--good); border-radius: 14px 0 0 14px; } .d-gauge .m { background: var(--warn); } .d-gauge .x { background: var(--bad); border-radius: 0 14px 14px 0; }
+.d-gauge .pin { position: absolute; top: -46px; transform: translateX(-50%); } .d-gauge .pin b { display: block; padding: 6px 12px; border-radius: 99px; background: var(--ink); color: var(--bg); font: 800 .95rem var(--sans); white-space: nowrap; position: relative; }
+.d-gauge .pin b::after { content: ""; position: absolute; left: 50%; bottom: -6px; margin-left: -6px; border: 6px solid transparent; border-bottom: 0; border-top-color: var(--ink); }
+.demo .d-gauge .pin.b { transform: translate(-50%, 18px); } .demo .d-gauge .pin.b.on { transform: translateX(-50%); }
+.d-ticks { position: relative; height: 22px; font-size: .8rem; color: var(--muted); font-weight: 700; } .d-ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; } .d-ticks span:first-child { transform: none; } .d-ticks span:last-child { transform: translateX(-100%); }
+.d-rules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+.d-rc { padding: 16px 18px; border-radius: 18px; background: var(--card-2); border: 1px solid var(--line); } .d-rc b { display: block; font: 800 1.2rem var(--display); color: var(--accent-2); } .d-rc span { color: var(--muted); }
+.d-blend { display: flex; gap: 4px; border-radius: 16px; overflow: hidden; } .d-blend i { font-style: normal; padding: 14px 18px; background: var(--card-2); border: 1px solid var(--line); } .d-blend i:first-child { background: color-mix(in srgb, var(--accent) 30%, var(--card-2)); } .d-blend b { font: 800 1.6rem var(--display); margin-right: 4px; }
+.d-tags { display: flex; gap: 10px; flex-wrap: wrap; } .d-tags span { padding: 12px 20px; border-radius: 16px; border: 1px solid var(--line); font-weight: 700; background: var(--card-2); } .d-tags b { margin-right: 6px; } .d-tags .good b { color: var(--good); } .d-tags .bad b { color: var(--bad); }
+.d-end { display: flex; gap: 24px; align-items: center; justify-content: center; margin-top: 22px; flex-wrap: wrap; }
+.d-qr { width: 168px; height: 168px; background: #fff; border-radius: 14px; padding: 6px; } .d-qr svg { width: 100%; height: 100%; display: block; }
+.d-url { font: 800 1.3rem var(--display); color: var(--accent-2); }
+@media (max-width: 900px) { .d-metrics { grid-template-columns: 1fr 1fr; } .d-rules { grid-template-columns: 1fr 1fr; } }
+@media (max-height: 820px) {
+  .d-top { padding: 8px 24px; } .d-stage { padding-top: 0; padding-bottom: 6px; }
+  .d-h { font-size: clamp(1.4rem, 3vw, 2.1rem); margin-bottom: 12px; }
+  .d-row { padding: 4px 0; font-size: .95rem; } .d-card { padding: 16px 20px; } .d-col { gap: 10px; }
+  .d-stat { padding: 10px 18px; } .d-stat b { font-size: clamp(1.6rem, 3vw, 2.3rem); } .d-stat span { margin-top: 3px; font-size: .88rem; }
+  .d-gauge { margin-top: 46px; } .d-rules { margin-top: 10px; } .d-rc { padding: 12px 16px; }
+  .d-verdict { padding: 10px 16px; } .d-bot { padding: 4px 20px 10px; gap: 6px; } .d-chart { padding: 6px 6px 0; }
+}

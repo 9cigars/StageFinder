@@ -43,7 +43,7 @@ async function boot() {
 }
 async function openDemo() {
   const m = await import("./demo.js");
-  m.startDemo({ data, pb, nick, onExit() { applyTheme(state.iim); } });
+  m.startDemo({ data, pb, nick, onExit() { applyTheme(state.iim); }, onLive() { if (state.step !== "home") go("home"); pick("sirmaur", innerWidth / 2, innerHeight / 2); } });
 }
 function go(step, extra = {}) {
   Object.assign(state, { step }, extra);

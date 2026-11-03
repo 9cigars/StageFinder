@@ -81,7 +81,7 @@ python scripts/patch_data.py
 
 ## Presentation mode
 
-The home page has a **Presentation mode** button (or open `?demo=1`). It is a seven-scene, four-minute walkthrough for IIM Sirmaur built from the live data, so every number on a slide is the number in the engine. Keys: `→` / `Space` next, `←` back, `A` auto-play on the script timing, `N` speaker notes, `F` fullscreen, `R` reset, `Esc` exit. The code is in `public/js/demo.js`.
+The home page has a **Presentation mode** button (or open `?demo=1`). It is a seven-scene, three-minute walkthrough that follows the closing script (what it is, the five metrics, the data and benchmark, the stage rule, the student view, a live demo, the close with a QR code). Every number on a slide is the number in the engine. Keys: `→` / `Space` next, `←` back, `A` auto-play on the script timing, `N` speaker notes, `F` fullscreen, `R` reset, `Esc` exit. The code is in `public/js/demo.js`.
 
 ## Look and feel
 
