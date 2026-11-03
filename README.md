@@ -79,6 +79,10 @@ python scripts/patch_data.py
 
 **Part B: find the bottleneck (5 questions, one per metric).** A 1-5 rating (feeds strengths and weaknesses) followed by up to two specific causes. Some causes ask for a detail: which sector is missing from recruiters, which department lacks faculty, which cost hurts, which research resource is weak.
 
+## Presentation mode
+
+The home page has a **Presentation mode** button (or open `?demo=1`). It is a seven-scene, four-minute walkthrough for IIM Sirmaur built from the live data, so every number on a slide is the number in the engine. Keys: `→` / `Space` next, `←` back, `A` auto-play on the script timing, `N` speaker notes, `F` fullscreen, `R` reset, `Esc` exit. The code is in `public/js/demo.js`.
+
 ## Look and feel
 
 Each IIM has its own palette, an animated scene and a particle effect that reacts to the cursor (embers, network, rain, snow, leaves, ripples, mist, petals, lanterns). Choosing an IIM plays a colour wipe from the click point. The quiz has a live curve and radar that update as you answer. Motion is switched off for users who prefer reduced motion.

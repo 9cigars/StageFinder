@@ -38,7 +38,12 @@ async function boot() {
   if (state.iim && !data.iims[state.iim]) state.iim = null;
   applyTheme(state.iim);
   render();
+  if (new URLSearchParams(location.search).get("demo")) openDemo();
   apiOk = await api.health();
+}
+async function openDemo() {
+  const m = await import("./demo.js");
+  m.startDemo({ data, pb, nick, onExit() { applyTheme(state.iim); } });
 }
 function go(step, extra = {}) {
   Object.assign(state, { step }, extra);
@@ -85,11 +90,12 @@ function viewHome() {
     <span class="eyebrow rv in">Operations management · product life cycle</span>
     <h1>${words("Where does your IIM stand in")} <em>${words("its life cycle?", 5)}</em></h1>
     <p class="lead rv" data-d="500">Ten short questions, set against public NIRF and placement data. You will see the stage your institute is in, what it does well, and the specific bottlenecks holding it back.</p>
+    <div class="row rv" data-d="560" style="margin:6px 0 4px"><button class="btn" data-action="demo">▶ Presentation mode</button></div>
     <div class="board card rv" data-d="650">
       <div class="board-h"><div><span class="eyebrow" style="margin:0">Live stage board</span></div>
         <div class="legend2"><span>Hover a dot for the numbers</span><span>Click a name to open it</span></div></div>
       <div id="board">${plcChart(boardMarkers(board))}</div>
-    </div>
+    </div>
   </section>
   <section id="pick"><span class="eyebrow rv">Step 1 · choose your institute</span>
     <div class="iim-grid">${ORDER.map((id) => iimCard(id, board)).join("")}</div>
@@ -428,10 +434,12 @@ const shareUrl = () => `${location.origin}${location.pathname}?iim=${state.iim}`
 const copy = async (t, msg) => { try { await navigator.clipboard.writeText(t); toast(msg); } catch { toast("Copy blocked by the browser"); } };
 
 document.addEventListener("click", (e) => {
+  if (e.target.closest("#demo")) return;
   const el = e.target.closest("[data-action]");
   if (!el) { const d = e.target.closest(".plc-dot, .plc-lbl"); if (d && state.step === "home") pick(d.dataset.id, e.clientX, e.clientY); return; }
   const a = el.dataset.action;
   if (a === "home") return go("home");
+  if (a === "demo") return openDemo();
   if (a === "pick") return pick(el.dataset.id, e.clientX, e.clientY);
   if (a === "start") { const i = QUESTIONS.findIndex((q) => !answeredQ(q)); return go("quiz", { qi: i < 0 ? 0 : i }); }
   if (a === "preview") return go("results");
