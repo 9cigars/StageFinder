@@ -395,3 +395,12 @@ html.demo-open { overflow: hidden; }
 .d-duo .d-tags span { flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; }
 .d-agree { margin: 12px 0 0; color: var(--ink); font-size: .95rem; } .d-agree b { color: var(--accent-2); }
 @media (max-width: 900px) { .d-duo { grid-template-columns: 1fr; } }
+
+/* guided demo: pointer and step bar */
+#gcursor { position: fixed; left: -14px; top: -14px; width: 28px; height: 28px; z-index: 300; pointer-events: none; transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
+#gcursor i { display: block; width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--accent-2); background: color-mix(in srgb, var(--accent-2) 30%, transparent); box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-2) 22%, transparent); transition: transform .14s; }
+#gcursor.press i { transform: scale(.65); }
+#gbar { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 300; display: grid; gap: 8px; justify-items: center; width: min(900px, 92vw); pointer-events: none; }
+.g-pill { padding: 6px 14px; border-radius: 99px; background: #0b0b10d9; color: #eef0f7; font-size: .78rem; font-weight: 700; display: flex; gap: 14px; opacity: .55; } .g-hint { opacity: .65; font-weight: 500; }
+#gbar.auto .g-pill { background: color-mix(in srgb, var(--accent) 80%, #000); opacity: .9; }
+.g-say { padding: 14px 20px; border-radius: 16px; background: #0b0b10f2; border: 1px solid var(--line); color: #eef0f7; font-size: 1.05rem; line-height: 1.55; }

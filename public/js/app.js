@@ -38,12 +38,17 @@ async function boot() {
   if (state.iim && !data.iims[state.iim]) state.iim = null;
   applyTheme(state.iim);
   render();
-  if (new URLSearchParams(location.search).get("demo")) openDemo();
+  { const sp = new URLSearchParams(location.search); if (sp.get("demo")) openDemo(); else if (sp.get("guided")) openGuided(); }
   apiOk = await api.health();
 }
 async function openDemo() {
   const m = await import("./demo.js");
-  m.startDemo({ data, pb, nick, onExit() { applyTheme(state.iim); }, onLive() { if (state.step !== "home") go("home"); pick("sirmaur", innerWidth / 2, innerHeight / 2); } });
+  m.startDemo({ data, pb, nick, onExit() { applyTheme(state.iim); }, onLive() { if (state.step !== "home") go("home"); pick("sirmaur", innerWidth / 2, innerHeight / 2); }, onGuided() { openGuided(); } });
+}
+// guided demo: fills in the real quiz for Sirmaur (no data is sent anywhere)
+async function openGuided() {
+  const m = await import("./guided.js");
+  m.startGuided({ prepare() { state.demo = true; state.answers = empty(); state.meta = {}; state.iim = "sirmaur"; persist(); applyTheme("sirmaur"); go("home"); }, onStop() { state.demo = false; } });
 }
 function go(step, extra = {}) {
   Object.assign(state, { step }, extra);
@@ -221,7 +226,7 @@ function finish() {
   const btn = $('[data-action="finish"]'); if (btn) { btn.disabled = true; btn.textContent = "Working it out…"; }
   if (!state.anonId) state.anonId = (crypto.randomUUID && crypto.randomUUID()) || String(Math.random()).slice(2) + Date.now();
   persist();
-  if (apiOk) api.submit({ iim: state.iim, anonId: state.anonId, ...state.answers, ...state.meta, hp: "" });
+  if (apiOk && !state.demo) api.submit({ iim: state.iim, anonId: state.anonId, ...state.answers, ...state.meta, hp: "" });
   go("results", { fresh: true });
 }
 function showReveal() {
@@ -467,6 +472,7 @@ document.addEventListener("change", (e) => {
   persist();
 });
 document.addEventListener("keydown", (e) => {
+  if ((e.key === "g" || e.key === "G") && state.step === "home" && !e.ctrlKey && !e.metaKey && !/INPUT|TEXTAREA|SELECT/.test(e.target.tagName) && !document.querySelector("#demo, #gbar")) return openGuided();
   if (state.step !== "quiz" || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
   const q = QUESTIONS[state.qi];
   if (/^[1-5]$/.test(e.key)) { const k = +e.key; if (q.kind === "stage" && q.options[k - 1]) return answer(q.options[k - 1].v); if (q.kind === "metric") return rate(String(k)); }

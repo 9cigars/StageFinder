@@ -10,7 +10,7 @@ const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "
 const TOTAL = 185;                                   // seconds: the script runs about 3:05
 const mmss = (s) => `${Math.floor(s / 60)}:${String(Math.max(0, Math.floor(s % 60))).padStart(2, "0")}`;
 
-export function startDemo({ data, pb, nick, onExit, onLive }) {
+export function startDemo({ data, pb, nick, onExit, onLive, onGuided }) {
   const ID = "sirmaur", I = data.iims[ID], S = I.series;
   applyTheme(ID);
   const st = stageFromData(data, ID), ds = dataScores(data, ID);
@@ -77,7 +77,7 @@ export function startDemo({ data, pb, nick, onExit, onLive }) {
         <div class="d-split"><div class="d-card d-chart">${plcChart(board)}</div>
         <div class="d-col"><div class="d-stat b" data-s="1"><b>${esc(st.stage)}</b><span>Sirmaur's stage on the live board, ${P(st.level)} of the benchmark</span></div>
           <div class="d-card b" data-s="2"><h3 class="d-h3">Bottlenecks <small>(data score below 65)</small></h3>${bottlenecks.map((r) => bar(r.label, r.val, r.score, "pr")).join("") || `<p class="d-note">No metric scores below 65.</p>`}</div>
-          <div class="b" data-s="3"><button class="btn" data-d="live">Open it on the live site ↗</button></div></div></div>`; } },
+          <div class="b row" data-s="3"><button class="btn primary" data-d="guided">▶ Run the live demo</button><button class="btn" data-d="live">Open the live site ↗</button></div></div></div>`; } },
     { id: "close", at: 170, label: "Close", concept: "Limits and close", steps: 2,
       notes: "Student responses are exploratory, and salary definitions differ across IIMs, so results are indicative. Run each year, StageFinder becomes our continuous-improvement check. Scan the code and try it on your own IIM. Thank you.",
       after: () => makeQR(),
@@ -173,7 +173,7 @@ export function startDemo({ data, pb, nick, onExit, onLive }) {
   document.addEventListener("keydown", key, true);
   root.addEventListener("click", (e) => {
     const b = e.target.closest("[data-d]");
-    if (b) { const a = b.dataset.d; if (a === "exit") exit(); else if (a === "next") next(); else if (a === "prev") prev(); else if (a === "auto") toggleAuto(); else if (a === "notes") $("#dnotes").hidden = !$("#dnotes").hidden; else if (a === "fs") (document.fullscreenElement ? document.exitFullscreen() : root.requestFullscreen?.()); else if (a === "live") { exit(); onLive?.(); } else if (a === "go") { const n = +b.dataset.i; show(n, 0); if (auto || t0) { t0 = Date.now() - SCENES[n].at * 1000; } } e.stopPropagation(); return; }
+    if (b) { const a = b.dataset.d; if (a === "exit") exit(); else if (a === "next") next(); else if (a === "prev") prev(); else if (a === "auto") toggleAuto(); else if (a === "notes") $("#dnotes").hidden = !$("#dnotes").hidden; else if (a === "fs") (document.fullscreenElement ? document.exitFullscreen() : root.requestFullscreen?.()); else if (a === "live") { exit(); onLive?.(); } else if (a === "guided") { exit(); onGuided?.(); } else if (a === "go") { const n = +b.dataset.i; show(n, 0); if (auto || t0) { t0 = Date.now() - SCENES[n].at * 1000; } } e.stopPropagation(); return; }
     if (e.target.closest(".d-slide")) { const r = root.getBoundingClientRect(); (e.clientX < r.left + r.width * 0.25 ? prev : next)(); }
   });
   show(0);

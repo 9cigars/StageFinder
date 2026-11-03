@@ -83,6 +83,8 @@ python scripts/patch_data.py
 
 The home page has a **Presentation mode** button (or open `?demo=1`). It is a seven-scene, three-minute walkthrough that follows the closing script (what it is, the five metrics, the data and benchmark, the stage rule, the student view, a live demo, the close with a QR code). Every number on a slide is the number in the engine. Keys: `→` / `Space` next, `←` back, `A` auto-play on the script timing, `N` speaker notes, `F` fullscreen, `R` reset, `Esc` exit. The code is in `public/js/demo.js`.
 
+**Guided demo.** The last-but-one slide has a **Run the live demo** button (or open `?guided=1`, or press `G` on the home page). It fills in the real quiz for IIM Sirmaur by clicking the real buttons, one step per key press (`→`), with `A` for auto-play, `N` to show the spoken line and `Esc` to stop. It then walks down the result page. Nothing is sent to the server while it runs. The code is in `public/js/guided.js`.
+
 ## Look and feel
 
 Each IIM has its own palette, an animated scene and a particle effect that reacts to the cursor (embers, network, rain, snow, leaves, ripples, mist, petals, lanterns). Choosing an IIM plays a colour wipe from the click point. The quiz has a live curve and radar that update as you answer. Motion is switched off for users who prefer reduced motion.
