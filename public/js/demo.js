@@ -40,13 +40,13 @@ export function startDemo({ data, pb, nick, onExit, onLive }) {
       notes: "We picked measures that global rankings such as QS and the Financial Times treat as important, and whose data is public and verifiable. That gave five: median salary, return on investment, faculty with PhDs, research output per faculty, and diversity, meaning women and international students. Each carries an equal weight of twenty percent.",
       html: () => `<h2 class="d-h">Five measures that global rankings value, from <em>public, verifiable data</em></h2>
         <div class="d-chips b" data-s="1" style="justify-content:flex-start"><span>Important to QS and the Financial Times</span><span>Data is public</span><span>Data is verifiable</span></div>
-        <div class="d-metrics b" data-s="2">${METRICS.map((m, k) => `<div class="d-mc"><i>${k + 1}</i><b>${esc(m.label)}</b><span>${esc(m.uses)}</span></div>`).join("")}</div>
-        <div class="d-weights b" data-s="3">${METRICS.map((m) => `<div><b>20%</b><span>${esc(m.short)}</span></div>`).join("")}</div>` },
+        <div class="d-metrics b" data-s="2">${METRICS.map((m, k) => `<div class="d-mc"><i>${k + 1}</i><b>${esc(m.label)}</b><span>${esc(m.uses)}</span><em class="b" data-s="3">20%</em></div>`).join("")}</div>
+        <p class="d-foot b" data-s="3" style="text-align:center">Equal weights: five metrics, 20% each.</p>` },
     { id: "data", at: 55, label: "Data", concept: "How we use the data", steps: 3,
       notes: "For each IIM we collected 2021 to 2026 figures from NIRF filings and placement reports. We benchmark every institute against the average of IIM Ahmedabad, Bangalore and Calcutta, and score each metric from zero to one hundred against that average. For example, Sirmaur's median salary of fourteen point two lakh is roughly forty-two percent of that benchmark.",
       html: () => `<h2 class="d-h">Every IIM is scored 0 to 100 against the <em>A/B/C average</em></h2>
-        <div class="d-split"><div class="d-card"><h3 class="d-h3">Sirmaur's score on each metric <small>(100 = the benchmark)</small></h3>${rows.map((r) => bar(r.label, r.val, r.score)).join("")}</div>
-        <div class="d-col"><div class="d-stat b" data-s="1"><b>2021–2026</b><span>figures per IIM, from NIRF filings and placement reports</span></div>
+        <div class="d-split even"><div class="d-card"><h3 class="d-h3">Sirmaur's score on each metric <small>(100 = the benchmark)</small></h3>${rows.map((r) => bar(r.label, r.val, r.score)).join("")}</div>
+        <div class="d-col d-even"><div class="d-stat b" data-s="1"><b>2021–2026</b><span>figures per IIM, from NIRF filings and placement reports</span></div>
           <div class="d-stat b" data-s="2"><b>A + B + C</b><span>IIM Ahmedabad, Bangalore and Calcutta: their average is the benchmark</span></div>
           <div class="d-stat hot b" data-s="3"><b>${P(st.level)}</b><span>Sirmaur's median salary, ₹${ds.salary.own} L against ₹${ds.salary.bench.toFixed(1)} L</span></div></div></div>` },
     { id: "stage", at: 90, label: "Stage rule", concept: "How we interpret it · the stage", steps: 5,
@@ -64,13 +64,12 @@ export function startDemo({ data, pb, nick, onExit, onLive }) {
     { id: "students", at: 115, label: "Student view", concept: "How we interpret it · the student view", steps: 5,
       notes: "Then students add their view. Five questions, on reputation, recruiters, processes, faculty and salary direction, each vote for a stage, and the tool shows whether students and data agree. Five more questions rate each metric and name the cause, such as which department or which sector. Final scores blend sixty percent data and forty percent student rating. Above seventy is a strength; below fifty is a weakness.",
       html: () => `<h2 class="d-h">Then <em>students add their view</em></h2>
-        <div class="d-split"><div class="d-col">
-          <div class="d-card b" data-s="1"><h3 class="d-h3">Part A · five questions, each votes for a stage</h3><div class="d-kpi" style="margin:8px 0 0">${SIGNALS.map((s) => `<span>${esc(s)}</span>`).join("")}</div></div>
-          <div class="d-verdict b" data-s="2">The tool shows whether students and data <b>agree</b></div></div>
-        <div class="d-col">
-          <div class="d-card b" data-s="3"><h3 class="d-h3">Part B · five questions rate each metric and name the cause</h3><p class="d-note" style="margin:4px 0 0">Which department lacks faculty? Which sector is missing from recruiters?</p></div>
-          <div class="d-blend b" data-s="4"><i style="flex:60"><b>60%</b> data</i><i style="flex:40"><b>40%</b> students</i></div>
-          <div class="d-tags b" data-s="5"><span class="good"><b>Above 70</b> Strength</span><span class="bad"><b>Below 50</b> Weakness</span></div></div></div>` },
+        <div class="d-split even">
+          <div class="d-card b" data-s="1"><h3 class="d-h3">Part A · five questions, each votes for a stage</h3><div class="d-kpi" style="margin:10px 0 0">${SIGNALS.map((s) => `<span>${esc(s)}</span>`).join("")}</div>
+            <p class="d-agree b" data-s="2">The tool shows whether students and data <b>agree</b>.</p></div>
+          <div class="d-card b" data-s="3"><h3 class="d-h3">Part B · five questions rate each metric and name the cause</h3><p class="d-note" style="margin:8px 0 0">Which department lacks faculty? Which sector is missing from recruiters?</p></div></div>
+        <div class="d-duo"><div class="d-blend b" data-s="4"><i style="flex:60"><b>60%</b> data</i><i style="flex:40"><b>40%</b> students</i></div>
+          <div class="d-tags b" data-s="5"><span class="good"><b>Above 70</b> Strength</span><span class="bad"><b>Below 50</b> Weakness</span></div></div>` },
     { id: "demo", at: 140, label: "Live demo", concept: "Live demo", steps: 3,
       notes: "[Open Presentation mode, pick Sirmaur, point to the live stage board, then show the bottlenecks result.]",
       html: () => { const board = stageBoard(data).map((b) => ({ id: b.id, label: b.id === ID ? "Sirmaur · you are here" : nick(b.id), t: b.t, primary: b.id === ID, tip: `${esc(data.iims[b.id].name)}: ${b.stage}` }));

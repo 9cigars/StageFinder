@@ -266,7 +266,7 @@ function causeBlock(l, iimId) {
   const chk = causeCheck(data, iimId, l.id), all = casesFor(sol, l.id, l.detail, iimId, data), cases = all.slice(0, 4), rest = all.slice(4), gap = sol.gaps[l.id];
   return `<div class="cause2"><div class="cause-h"><b>→</b><span>${esc(l.label)}${l.detail ? ` <b>· ${esc(l.detail)}</b>` : ""}</span></div>
     ${chk ? `<div class="check ${chk.v}"><b>${{ supports: "Your data supports this", contradicts: "Your data does not back this", partial: "Partly checked" }[chk.v]}.</b> ${esc(chk.t)}</div>` : `<div class="check none">No public figure measures this directly, so it rests on student experience.</div>`}
-    ${cases.length ? `<details class="fixes" open><summary>What comparable institutes did <span class="faint">(${all.length})</span></summary>${cases.map(caseHtml).join("")}${rest.length ? `<details class="more"><summary>Show ${rest.length} more</summary>${rest.map(caseHtml).join("")}</details>` : ""}</details>` : ""}
+    ${cases.length ? `<details class="fixes" open><summary>What comparable institutes did <span class="faint">(${all.length})</span></summary><div class="cgrid">${cases.map(caseHtml).join("")}</div>${rest.length ? `<details class="more"><summary>Show ${rest.length} more</summary><div class="cgrid">${rest.map(caseHtml).join("")}</div></details>` : ""}</details>` : ""}
     ${gap ? `<p class="gap"><b>Not documented:</b> ${esc(gap)}</p>` : ""}</div>`;
 }
 // no cause named for a bottleneck: show the best-documented fixes for that metric instead
@@ -274,7 +274,7 @@ function fallbackFixes(m, iimId) {
   const ids = CAUSES[m.id].map((c) => c.id), seen = new Set(), cases = [];
   for (const id of ids) for (const c of casesFor(sol, id, "", iimId, data)) if (!seen.has(c.id)) { seen.add(c.id); cases.push(c); }
   cases.sort((a, b) => ["official", "report", "dataset", "news", "secondary"].indexOf(a.evidence) - ["official", "report", "dataset", "news", "secondary"].indexOf(b.evidence));
-  return `<p class="small faint" style="margin-top:6px">You named no cause, so these are the best-documented fixes for this metric.</p>${cases.length ? `<details class="fixes" open><summary>What comparable institutes did <span class="faint">(${Math.min(cases.length, 4)})</span></summary>${cases.slice(0, 4).map(caseHtml).join("")}</details>` : ""}`;
+  return `<p class="small faint" style="margin-top:6px">You named no cause, so these are the best-documented fixes for this metric.</p>${cases.length ? `<details class="fixes" open><summary>What comparable institutes did <span class="faint">(${Math.min(cases.length, 4)})</span></summary><div class="cgrid">${cases.slice(0, 4).map(caseHtml).join("")}</div></details>` : ""}`;
 }
 // causes the student named for metrics that are not ranked as bottlenecks still get checked and matched
 function otherCauses(r, iim) {
@@ -299,30 +299,31 @@ function bnCard(m, iim, concern = false) {
 const GL = { global: "Global leader", "leading-iim": "Leading IIM", peer: "Peer IIM" };
 const stageCode = (name) => ({ Growth: "growth", Maturity: "maturity", Decline: "decline" }[name]);
 function ageChip(a, age) {
-  if (a.ageThen === 0) return `At founding · you are ${age}`;
+  if (a.ageThen === 0) return `At founding · you ${age}`;
   if (a.ageThen == null) return "Established school";
   const d = a.ageThen - age, rel = Math.abs(d) <= 4 ? "Similar age" : d < 0 ? "Earlier stage" : "Later stage";
-  return `${rel} · they were ${a.ageThen}, you are ${age}`;
+  return `${rel} · ${a.ageThen} vs ${age} yrs`;
 }
 function analogHtml(a, age) {
   const srcs = [].concat(a.src);
-  return `<div class="analog"><div class="an-h"><b>${esc(a.school)}</b><span class="pill grp-${a.group}">${GL[a.group]}</span><span class="pill match">${ageChip(a, age)}</span><span class="pill e-${a.evidence}" data-tip="${esc(sol.evidence[a.evidence])}">${EVL[a.evidence]}</span></div>
-    <p class="when">${esc(a.when)}</p><p><b>What they faced.</b> ${esc(a.situation)}</p>
-    <ul class="did">${a.did.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
-    <p class="res"><b>Result.</b> ${esc(a.result)}</p>${a.caveat ? `<p class="cav">${esc(a.caveat)}</p>` : ""}
-    <div class="srcs">${srcs.map((x) => `<a class="src" href="${esc(x.u)}" target="_blank" rel="noopener noreferrer">${esc(x.t)} ↗</a>`).join("")}</div></div>`;
+  return `<article class="analog"><header class="an-h"><b>${esc(a.school)}</b><span class="when">${esc(a.when)}</span></header>
+    <div class="an-pills"><span class="pill grp-${a.group}">${GL[a.group]}</span><span class="pill match">${ageChip(a, age)}</span><span class="pill e-${a.evidence}" data-tip="${esc(sol.evidence[a.evidence])}">${EVL[a.evidence]}</span></div>
+    <p><b class="lb">Faced</b>${esc(a.situation)}</p>
+    <div class="did-w"><b class="lb">Did</b><ul class="did">${a.did.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>
+    <p class="res"><b class="lb">Result</b>${esc(a.result)}</p>${a.caveat ? `<p class="cav">${esc(a.caveat)}</p>` : ""}
+    <div class="srcs">${srcs.map((x) => `<a class="src" href="${esc(x.u)}" target="_blank" rel="noopener noreferrer">${esc(x.t)} ↗</a>`).join("")}</div></article>`;
 }
 function playbookCard(pid, probs, age, stage) {
   const book = pb.playbooks[pid], ac = book.analogs;
   const sorted = [...ac].sort((a, b) => (a.stage === stage ? 0 : 1) - (b.stage === stage ? 0 : 1) || Math.abs(a.ageThen - age) - Math.abs(b.ageThen - age));
   const same = ac.filter((a) => a.stage === stage).length;
-  const first = sorted.slice(0, 3), rest = sorted.slice(3);
+  const n = sorted.length === 3 ? 3 : Math.min(sorted.length, 4), first = sorted.slice(0, n), rest = sorted.slice(n);
   return `<div class="card playbook rv"><span class="eyebrow">Playbook</span><h3 style="font-size:1.55rem">${esc(book.title)}</h3>
     <div class="chips" style="margin:10px 0 4px">${probs.map((p) => `<span class="pill">fixes: ${esc(p.title)}</span>`).join("")}</div>
     <p class="muted small">${esc(book.why)}</p>
     ${same ? "" : `<p class="check partial"><b>No stage-matched analogue found.</b> No documented case in this playbook was at your stage (${esc(stage)}), so these are the closest, with their own stage shown.</p>`}
-    ${first.map((a) => analogHtml(a, age)).join("")}
-    ${rest.length ? `<details class="more"><summary>Show ${rest.length} more</summary>${rest.map((a) => analogHtml(a, age)).join("")}</details>` : ""}
+    <div class="agrid">${first.map((a) => analogHtml(a, age)).join("")}</div>
+    ${rest.length ? `<details class="more"><summary>Show ${rest.length} more</summary><div class="agrid">${rest.map((a) => analogHtml(a, age)).join("")}</div></details>` : ""}
     <p class="gap"><b>Not documented:</b> ${esc(book.notDocumented)}</p></div>`;
 }
 function diagnosisSection(iim) {
