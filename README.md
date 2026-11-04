@@ -79,11 +79,9 @@ python scripts/patch_data.py
 
 **Part B: find the bottleneck (5 questions, one per metric).** A 1-5 rating (feeds strengths and weaknesses) followed by up to two specific causes. Some causes ask for a detail: which sector is missing from recruiters, which department lacks faculty, which cost hurts, which research resource is weak.
 
-## Presentation mode
+## Guided demo
 
-The home page has a **Presentation mode** button (or open `?demo=1`). It is a seven-scene, three-minute walkthrough that follows the closing script (what it is, the five metrics, the data and benchmark, the stage rule, the student view, a live demo, the close with a QR code). Every number on a slide is the number in the engine. Keys: `→` / `Space` next, `←` back, `A` auto-play on the script timing, `N` speaker notes, `F` fullscreen, `R` reset, `Esc` exit. The code is in `public/js/demo.js`.
-
-**Guided demo.** The last-but-one slide has a **Run the live demo** button (or open `?guided=1`, or press `G` on the home page). It fills in the real quiz for IIM Sirmaur by clicking the real buttons, one step per key press (`→`), with `A` for auto-play, `N` to show the spoken line and `Esc` to stop. It then walks down the result page. Nothing is sent to the server while it runs. The code is in `public/js/guided.js`.
+Open `?guided=1` (or press `G` on the home page). It fills in the real quiz for IIM Sirmaur by clicking the real buttons, one step per key press (`→`), with `A` for auto-play, `N` to show the spoken line and `Esc` to stop. It then walks down the result page. Nothing is sent to the server while it runs. The code is in `public/js/guided.js`.
 
 ## Look and feel
 

@@ -42,12 +42,8 @@ async function boot() {
   if (state.iim && !data.iims[state.iim]) state.iim = null;
   applyTheme(state.iim);
   render();
-  { const sp = new URLSearchParams(location.search); if (sp.get("demo")) openDemo(); else if (sp.get("guided")) openGuided(); }
+  { const sp = new URLSearchParams(location.search); if (sp.get("guided")) openGuided(); }
   apiOk = await api.health();
-}
-async function openDemo() {
-  const m = await import("./demo.js");
-  m.startDemo({ data, pb, nick, onExit() { applyTheme(state.iim); }, onLive() { if (state.step !== "home") go("home"); pick("sirmaur", innerWidth / 2, innerHeight / 2); }, onGuided() { openGuided(); } });
 }
 // guided demo: fills in the real quiz for Sirmaur (no data is sent anywhere)
 async function openGuided() {
@@ -99,7 +95,6 @@ function viewHome() {
     <span class="eyebrow rv in">Operations management · product life cycle</span>
     <h1>${words("Where does your IIM stand in")} <em>${words("its life cycle?", 5)}</em></h1>
     <p class="lead rv" data-d="500">Ten short questions, set against public NIRF and placement data. You will see the stage your institute is in, what it does well, and the specific bottlenecks holding it back.</p>
-    <div class="row rv" data-d="560" style="margin:6px 0 4px"><button class="btn" data-action="demo">▶ Presentation mode</button></div>
     <div class="board card rv" data-d="650">
       <div class="board-h"><div><span class="eyebrow" style="margin:0">Live stage board</span></div>
         <div class="legend2"><span>Hover a dot for the numbers</span><span>Click or tap a name to open it</span></div></div>
@@ -445,12 +440,10 @@ const shareUrl = () => `${location.origin}${location.pathname}?iim=${state.iim}`
 const copy = async (t, msg) => { try { await navigator.clipboard.writeText(t); toast(msg); } catch { toast("Copy blocked by the browser"); } };
 
 document.addEventListener("click", (e) => {
-  if (e.target.closest("#demo")) return;
   const el = e.target.closest("[data-action]");
   if (!el) { const d = e.target.closest(".plc-dot, .plc-lbl, .plc-nd, .plc-li"); if (d && state.step === "home") pick(d.dataset.id, e.clientX, e.clientY); return; }
   const a = el.dataset.action;
   if (a === "home") return go("home");
-  if (a === "demo") return openDemo();
   if (a === "pick") return pick(el.dataset.id, e.clientX, e.clientY);
   if (a === "start") { const i = QUESTIONS.findIndex((q) => !answeredQ(q)); return go("quiz", { qi: i < 0 ? 0 : i }); }
   if (a === "preview") return go("results");
@@ -477,7 +470,7 @@ document.addEventListener("change", (e) => {
   persist();
 });
 document.addEventListener("keydown", (e) => {
-  if ((e.key === "g" || e.key === "G") && state.step === "home" && !e.ctrlKey && !e.metaKey && !/INPUT|TEXTAREA|SELECT/.test(e.target.tagName) && !document.querySelector("#demo, #gbar")) return openGuided();
+  if ((e.key === "g" || e.key === "G") && state.step === "home" && !e.ctrlKey && !e.metaKey && !/INPUT|TEXTAREA|SELECT/.test(e.target.tagName) && !document.querySelector("#gbar")) return openGuided();
   if (state.step !== "quiz" || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
   const q = QUESTIONS[state.qi];
   if (/^[1-5]$/.test(e.key)) { const k = +e.key; if (q.kind === "stage" && q.options[k - 1]) return answer(q.options[k - 1].v); if (q.kind === "metric") return rate(String(k)); }
