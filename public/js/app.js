@@ -18,6 +18,10 @@ const saved = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {};
 const state = { step: "home", iim: saved.iim || null, qi: 0, agg: null, fresh: false, answers: { ...empty(), ...(saved.answers || {}) }, meta: saved.meta || {}, anonId: saved.anonId || null };
 const persist = () => { try { localStorage.setItem(KEY, JSON.stringify({ iim: state.iim, answers: state.answers, meta: state.meta, anonId: state.anonId })); } catch {} };
 const toast = (msg) => { const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("on"), 2200); };
+// key figures (rupees, percentages, months, years) get the display face so they stand out in running text
+const NUM = /(₹\s?\d[\d,.]*(?:\s?(?:L|Cr|lakh|crore)\b)?|\d[\d,.]*\s?%|\d+(?:\.\d+)?\s?(?:months?|years?|yrs?)\b)/g;
+const numify = (html) => html.replace(NUM, '<span class="num">$1</span>');
+const rich = (s) => numify(esc(s));
 const nick = (id) => data.iims[id].name.replace("IIM ", "");
 const words = (s, start = 0) => s.split(" ").map((w, i) => `<span class="w" style="--i:${i + start}">${esc(w)}</span>`).join(" ");
 
@@ -98,7 +102,7 @@ function viewHome() {
     <div class="row rv" data-d="560" style="margin:6px 0 4px"><button class="btn" data-action="demo">▶ Presentation mode</button></div>
     <div class="board card rv" data-d="650">
       <div class="board-h"><div><span class="eyebrow" style="margin:0">Live stage board</span></div>
-        <div class="legend2"><span>Hover a dot for the numbers</span><span>Click a name to open it</span></div></div>
+        <div class="legend2"><span>Hover a dot for the numbers</span><span>Click or tap a name to open it</span></div></div>
       <div id="board">${plcChart(boardMarkers(board))}</div>
     </div>
   </section>
@@ -130,7 +134,7 @@ function dossier(board) {
       </div>
       <div class="row"><button class="btn primary mag" data-action="start">${resumed ? "Resume the questions" : "Start the 10 questions"} →</button>
         <button class="btn" data-action="preview">Data-only result</button><button class="btn ghost small" data-action="share">Copy link for students</button></div></div>
-    <div><span class="eyebrow">Median salary, 2021–2026 · hover a year</span>${salaryExplorer(data, state.iim)}
+    <div><span class="eyebrow">Median salary, 2021–2026 · hover or tap a year</span>${salaryExplorer(data, state.iim)}
       <div class="chart-cap"><span><i style="background:var(--accent)"></i>${esc(i.name)}</span><span><i style="background:var(--accent-2)"></i>IIM A/B/C average</span></div></div>
   </div>`;
 }
@@ -238,7 +242,8 @@ function showReveal() {
 
 /* ------------------------------------------------------------------ results */
 const barRow = (label, cls, v) => `<div class="bar ${cls} ${v == null ? "none" : ""}"><span>${label}</span><div class="t"><i style="--w:${v == null ? 0 : Math.round(v)}%"></i></div><b ${v == null ? "" : `data-count="${Math.round(v)}"`}>${v == null ? "–" : "0"}</b></div>`;
-function evidence(m, iim) {
+const evidence = (m, iim) => numify(evidenceRaw(m, iim));
+function evidenceRaw(m, iim) {
   const d = m.data;
   if (d.score == null) return `No verified public figure yet (${esc(d.why.toLowerCase())}).`;
   const n = d.benchN, who = n === 3 ? "IIM A/B/C average" : `average of the ${n} IIM A/B/C with data`;
@@ -254,9 +259,9 @@ function evidence(m, iim) {
 function narrative(r) {
   const s = r.stage;
   if (!s) return `<p>${esc(r.iim.name)} has no salary series in the dataset, so a data-based stage cannot be given.</p>`;
-  let h = `<p style="font-size:1.15rem"><b>${esc(r.iim.name)}</b> is in the <b>${s.stage}</b> stage, and its momentum is <b>${s.momentum}</b>. ${esc(s.rule)}</p>`;
+  let h = `<p class="lede"><b>${esc(r.iim.name)}</b> is in the <b>${s.stage}</b> stage, and its momentum is <b>${s.momentum}</b>. ${esc(s.rule)}</p>`;
   if (s.yearsToParity) h += `<p class="muted">At ${fmt.pct(s.cagr)} a year against ${fmt.pct(s.abcCagr)} for IIM A/B/C, salary would reach the A/B/C level in roughly <b>${Math.round(s.yearsToParity)} years</b> (a straight-line projection, not a forecast). Closing the gap faster needs a change in strategy, not just more of the same.</p>`;
-  return h;
+  return numify(h);
 }
 function causeLines(metricId) {
   return (state.answers.causes[metricId] || []).map((cid) => { const c = CAUSE_BY_ID[cid]; return { id: cid, label: c.label, detail: state.answers.details[cid] }; });
@@ -265,7 +270,7 @@ const EVL = { official: "Official", report: "Report", news: "News", secondary: "
 const KDL = { action: "Policy or programme", outcome: "Result only", reference: "Benchmark" };
 function caseHtml(c) {
   return `<div class="case"><div class="case-h"><b>${esc(c.who)}</b>${c.own ? `<span class="pill good">Your institute</span>` : ""}<span class="pill k-${c.kind}">${KDL[c.kind]}</span><span class="pill e-${c.evidence}" data-tip="${esc(sol.evidence[c.evidence])}">${EVL[c.evidence]}</span></div>
-    <p>${esc(c.what)}</p>${c.adapt ? `<p class="adapt"><b>How to use it:</b> ${esc(c.adapt)}</p>` : ""}<a class="src" href="${esc(c.src.u)}" target="_blank" rel="noopener noreferrer">${esc(c.src.t)} ↗</a></div>`;
+    <p>${rich(c.what)}</p>${c.adapt ? `<p class="adapt"><b class="lb">How to use it</b>${rich(c.adapt)}</p>` : ""}<a class="src" href="${esc(c.src.u)}" target="_blank" rel="noopener noreferrer">${esc(c.src.t)} ↗</a></div>`;
 }
 function causeBlock(l, iimId) {
   const chk = causeCheck(data, iimId, l.id), all = casesFor(sol, l.id, l.detail, iimId, data), cases = all.slice(0, 4), rest = all.slice(4), gap = sol.gaps[l.id];
@@ -311,11 +316,11 @@ function ageChip(a, age) {
 }
 function analogHtml(a, age) {
   const srcs = [].concat(a.src);
-  return `<article class="analog"><header class="an-h"><b>${esc(a.school)}</b><span class="when">${esc(a.when)}</span></header>
+  return `<article class="analog g-${a.group}"><header class="an-h"><b>${esc(a.school)}</b><span class="when">${esc(a.when)}</span></header>
     <div class="an-pills"><span class="pill grp-${a.group}">${GL[a.group]}</span><span class="pill match">${ageChip(a, age)}</span><span class="pill e-${a.evidence}" data-tip="${esc(sol.evidence[a.evidence])}">${EVL[a.evidence]}</span></div>
-    <p><b class="lb">Faced</b>${esc(a.situation)}</p>
-    <div class="did-w"><b class="lb">Did</b><ul class="did">${a.did.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>
-    <p class="res"><b class="lb">Result</b>${esc(a.result)}</p>${a.caveat ? `<p class="cav">${esc(a.caveat)}</p>` : ""}
+    <p><b class="lb">Faced</b>${rich(a.situation)}</p>
+    <div class="did-w"><b class="lb">Did</b><ul class="did">${a.did.map((x) => `<li>${rich(x)}</li>`).join("")}</ul></div>
+    <p class="res"><b class="lb">Result</b>${rich(a.result)}</p>${a.caveat ? `<p class="cav">${esc(a.caveat)}</p>` : ""}
     <div class="srcs">${srcs.map((x) => `<a class="src" href="${esc(x.u)}" target="_blank" rel="noopener noreferrer">${esc(x.t)} ↗</a>`).join("")}</div></article>`;
 }
 function playbookCard(pid, probs, age, stage) {
@@ -339,8 +344,8 @@ function diagnosisSection(iim) {
   return `<section><span class="eyebrow rv">What the data says is wrong</span>
     <h2 class="sec rv">${esc(iim.name)}'s problems, ranked from its own numbers</h2>
     <p class="muted rv" style="max-width:66ch">Each problem is measured against the IIM A/B/C average and the other IIMs. ${esc(iim.name)} is ${age} years old and in the <b>${esc(dg.stage)}</b> stage, so the playbooks below favour schools that faced the same problem at a similar age.</p>
-    ${top.length ? `<div class="probs">${top.map((p) => `<div class="card prob rv"><div class="prob-h"><h3>${esc(p.title)}</h3><span class="sevn">${p.severity}</span></div>
-      <div class="sev"><i style="--w:${p.severity}%"></i></div><ul class="ev">${p.evidence.map((e) => `<li>${esc(e)}</li>`).join("")}</ul></div>`).join("")}</div>`
+    ${top.length ? `<div class="probs">${top.map((p) => `<div class="card prob rv"><div class="prob-h"><div><span class="pno">Problem ${String(top.indexOf(p) + 1).padStart(2, "0")}</span><h3>${esc(p.title)}</h3></div><span class="sevn" style="--v:${p.severity}" data-tip="Severity ${p.severity} of 100"><b>${p.severity}</b></span></div>
+      <ul class="ev">${p.evidence.map((e) => `<li>${rich(e)}</li>`).join("")}</ul></div>`).join("")}</div>`
       : `<div class="card rv"><b>No problem stands out against the benchmark.</b> Every measured metric is at or near the IIM A/B/C level.</div>`}
     ${dg.notes.map((n) => `<p class="faint small rv" style="margin-top:10px">${esc(n)}</p>`).join("")}
     ${books.length ? `<span class="eyebrow rv" style="margin-top:34px">How leaders fixed the same problems at your stage</span>${books.map(([id, w]) => playbookCard(id, w.probs, age, stage)).join("")}` : ""}</section>`;
@@ -364,7 +369,7 @@ function viewResults() {
     <div class="stage-title"><h2>${s ? s.stage : "No stage"}</h2>${s ? `<span class="pill">Momentum: ${s.momentum}</span>` : ""}${agree}</div>
     ${narrative(r)}
     <div style="margin-top:12px">${plcChart(markers, { compact: true })}</div>
-    ${s ? `<ul class="ev">${s.evidence.map((e) => `<li>${esc(e)}</li>`).join("")}</ul>` : ""}
+    ${s ? `<ul class="ev">${s.evidence.map((e) => `<li>${rich(e)}</li>`).join("")}</ul>` : ""}
     <div class="row no-print" style="margin-top:24px"><button class="btn primary" data-action="print">Print or save as PDF</button><button class="btn" data-action="copy">Copy summary</button><button class="btn ghost" data-action="retake">Retake the questions</button></div>
   </div>${voteBlock}</section>
 
@@ -442,7 +447,7 @@ const copy = async (t, msg) => { try { await navigator.clipboard.writeText(t); t
 document.addEventListener("click", (e) => {
   if (e.target.closest("#demo")) return;
   const el = e.target.closest("[data-action]");
-  if (!el) { const d = e.target.closest(".plc-dot, .plc-lbl"); if (d && state.step === "home") pick(d.dataset.id, e.clientX, e.clientY); return; }
+  if (!el) { const d = e.target.closest(".plc-dot, .plc-lbl, .plc-nd, .plc-li"); if (d && state.step === "home") pick(d.dataset.id, e.clientX, e.clientY); return; }
   const a = el.dataset.action;
   if (a === "home") return go("home");
   if (a === "demo") return openDemo();

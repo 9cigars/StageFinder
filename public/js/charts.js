@@ -9,7 +9,47 @@ const BANDS = [
 
 /* ------------------------------------------------------------------ life-cycle curve */
 // markers: [{ id, label, t, primary, tip }]. opts.mini draws a small version with only the primary marker.
-export function plcChart(markers, { w = 900, h = 330, compact = false, mini = false, live = false } = {}) {
+export function plcChart(markers, opts = {}) {
+  if (opts.mini) return plcSvg(markers, opts);
+  return `<div class="plc-both">${plcSvg(markers, opts)}<div class="plc-ph">${plcPhone(markers)}</div></div>`;
+}
+const bandOf = (t) => (BANDS.find((b) => t >= b.a && t < b.b) || BANDS[3]).name;
+
+// Phone version: numbered dots on a taller curve, names listed underneath (labels on the curve are unreadable at 375px)
+function plcPhone(markers) {
+  const w = 360, h = 290, L = 16, R = 16, T = 72, B = 34, iw = w - L - R, ih = h - T - B;
+  const X = (t) => L + t * iw, Y = (t) => T + (1 - CURVE(t) * 0.92) * ih;
+  let d = "";
+  for (let i = 0; i <= 100; i++) { const t = i / 100; d += (i ? " L" : "M") + X(t).toFixed(1) + " " + Y(t).toFixed(1); }
+  const short = ["Intro", "Growth", "Maturity", "Decline"];
+  let s = `<svg class="plc plc-p draw" viewBox="0 0 ${w} ${h}" role="img" aria-label="Product life-cycle curve">`;
+  s += `<defs><linearGradient id="plcfillp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--accent)" stop-opacity=".5"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>`;
+  BANDS.forEach((b, i) => {
+    s += `<rect class="plc-bandbg" x="${X(b.a)}" y="12" width="${(b.b - b.a) * iw}" height="${h - 12 - B + 12}" style="--i:${i}"/>`;
+    s += `<text x="${X((b.a + b.b) / 2)}" y="${h - 12}" text-anchor="middle" class="plc-band sm">${short[i]}</text>`;
+  });
+  s += `<path class="plc-area" d="${d} L${X(1)} ${T + ih} L${X(0)} ${T + ih}Z" fill="url(#plcfillp)"/>`;
+  s += `<path class="plc-line" pathLength="1" d="${d}" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>`;
+  const sorted = [...markers].sort((a, b) => a.t - b.t), placed = [];
+  const dots = sorted.map((m, i) => {
+    const x = X(m.t), y = Y(m.t), r = m.primary ? 13 : 10;
+    let lvl = 0, cy = y;
+    for (; lvl < 5; lvl++) { cy = y - lvl * 25; if (placed.every((q) => Math.hypot(q.x - x, q.y - cy) >= 24)) break; }
+    placed.push({ x, y: cy });
+    return { m, i, x, y, cy, lvl, r };
+  });
+  dots.forEach(({ m, i, x, y, cy, lvl, r }) => {
+    if (lvl) s += `<line x1="${x}" y1="${y}" x2="${x}" y2="${cy + r}" stroke="var(--faint)" stroke-width="1" stroke-dasharray="2 3"/>`;
+    s += `<g class="plc-nd pop ${m.primary ? "me" : ""}" style="--i:${i}" data-id="${esc(m.id)}" data-tip="${esc(m.tip || m.label)}">`;
+    if (m.primary) s += `<circle cx="${x}" cy="${cy}" r="22" fill="var(--accent-2)" opacity=".2" class="pulse"/>`;
+    s += `<circle cx="${x}" cy="${cy}" r="${r}"/><text x="${x}" y="${cy + 4}" text-anchor="middle">${i + 1}</text></g>`;
+  });
+  s += "</svg>";
+  s += `<ol class="plc-key">${sorted.map((m, i) => `<li class="plc-li ${m.primary ? "me" : ""}" data-id="${esc(m.id)}" data-tip="${esc(m.tip || m.label)}"><span class="n">${i + 1}</span><span class="nm">${esc(m.label)}</span><span class="st">${bandOf(m.t)}</span></li>`).join("")}</ol>`;
+  return s;
+}
+
+function plcSvg(markers, { w = 900, h = 330, compact = false, mini = false, live = false } = {}) {
   if (mini) { w = 360; h = 190; }
   const L = 24, R = 24, T = mini ? 18 : 42, B = mini ? 30 : 46, iw = w - L - R, ih = h - T - B;
   const X = (t) => L + t * iw, Y = (t) => T + (1 - CURVE(t) * 0.92) * ih;
@@ -99,17 +139,20 @@ export function sparkline(series, { w = 120, h = 34 } = {}) {
 }
 
 /* ------------------------------------------------------------------ salary explorer (hover any year) */
-export function salaryExplorer(data, id, { w = 640, h = 300 } = {}) {
+export function salaryExplorer(data, id) {
+  return `<div class="ex-both">${explorerSvg(data, id, 640, 300, false)}<div class="ex-ph">${explorerSvg(data, id, 360, 250, true)}</div></div>`;
+}
+function explorerSvg(data, id, w, h, phone) {
   const years = data.years, S = data.iims[id].series.salary;
   const abc = years.map((y) => { const v = ["ahmedabad", "bangalore", "calcutta"].map((k) => data.iims[k].series.salary[y]).filter((x) => x != null); return v.length >= 2 ? v.reduce((a, b) => a + b, 0) / v.length : null; });
   const own = years.map((y) => S[y] ?? null);
   const hi = Math.ceil(Math.max(...abc.filter(Boolean), ...own.filter(Boolean)) / 10) * 10;
-  const L = 44, R = 18, T = 20, B = 36, iw = w - L - R, ih = h - T - B;
+  const L = phone ? 34 : 44, R = phone ? 12 : 18, T = 20, B = 36, iw = w - L - R, ih = h - T - B;
   const X = (i) => L + (i / (years.length - 1)) * iw, Y = (v) => T + (1 - v / hi) * ih;
   const path = (arr) => { let d = "", pen = false; arr.forEach((v, i) => { if (v == null) { pen = false; return; } d += (pen ? " L" : " M") + X(i).toFixed(1) + " " + Y(v).toFixed(1); pen = true; }); return d.trim(); };
-  let s = `<svg class="explorer draw" viewBox="0 0 ${w} ${h}" role="img" aria-label="Median salary by year compared with IIM A/B/C">`;
+  let s = `<svg class="explorer draw ${phone ? "ex-p" : ""}" viewBox="0 0 ${w} ${h}" role="img" aria-label="Median salary by year compared with IIM A/B/C">`;
   for (let v = 0; v <= hi; v += hi / 4) s += `<line x1="${L}" x2="${w - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L - 8}" y="${Y(v) + 4}" text-anchor="end" class="ax">${Math.round(v)}</text>`;
-  years.forEach((y, i) => (s += `<text x="${X(i)}" y="${h - 10}" text-anchor="middle" class="ax">${y}</text>`));
+  years.forEach((y, i) => (s += `<text x="${X(i)}" y="${h - 10}" text-anchor="middle" class="ax">${phone ? "'" + String(y).slice(2) : y}</text>`));
   s += `<text x="10" y="12" class="ax">₹ lakh</text>`;
   s += `<path class="plc-line" pathLength="1" d="${path(abc)}" fill="none" stroke="var(--accent-2)" stroke-width="2.4" stroke-dasharray="1" stroke-linecap="round" opacity=".9" style="stroke-dasharray:.015 .02"/>`;
   s += `<path class="plc-line" pathLength="1" d="${path(own)}" fill="none" stroke="var(--accent)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>`;

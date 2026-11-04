@@ -87,6 +87,8 @@ The home page has a **Presentation mode** button (or open `?demo=1`). It is a se
 
 ## Look and feel
 
+Type is a press-room editorial set: Rozha One for headlines, Schibsted Grotesk for text, Newsreader italic for emphasis and Spline Sans Mono for labels. Key figures in running text are set in the display face with a marker underline. On phones the life-cycle curve switches to numbered dots with the names listed underneath.
+
 Each IIM has its own palette, an animated scene and a particle effect that reacts to the cursor (embers, network, rain, snow, leaves, ripples, mist, petals, lanterns). Choosing an IIM plays a colour wipe from the click point. The quiz has a live curve and radar that update as you answer. Motion is switched off for users who prefer reduced motion.
 
 ## How the stage is decided (from `engine.js`)
