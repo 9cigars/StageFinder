@@ -116,6 +116,8 @@ export function stageFromData(data, id) {
   const abc = mean(ABC.map((a) => cagr(data.iims[a].series.salary)).filter((x) => x != null));
   const rec = recent(s);
   const abcRec = mean(ABC.map((a) => recent(data.iims[a].series.salary)?.cagr).filter((x) => x != null));
+  // recent pay growth measured against the pace of the three leaders themselves
+  const ratio = rec && abcRec ? rec.cagr / abcRec : null;
   const T = THRESHOLDS;
   const pct = (x) => (x * 100).toFixed(1) + "%";
   const ev = [];
@@ -131,8 +133,10 @@ export function stageFromData(data, id) {
     stage = "Decline"; momentum = "falling";
     rule = `Median salary fell ${(Math.abs(rec.change) * 100).toFixed(1)}% between ${rec.from} and ${rec.to}; a fall of more than 3% marks decline.`;
   } else if (L >= T.maturityFrom) {
-    stage = "Maturity"; momentum = own != null && own > abc + 0.01 ? "still climbing" : "steady";
-    rule = `Salary is at ${(L * 100).toFixed(0)}% of the A/B/C level, above the ${T.maturityFrom * 100}% line for maturity.`;
+    stage = "Maturity";
+    momentum = ratio == null ? "steady" : ratio >= 1.15 ? "still climbing" : ratio <= 0.85 ? "flattening" : "steady";
+    rule = `Salary is at ${(L * 100).toFixed(0)}% of the A/B/C level, above the ${T.maturityFrom * 100}% line for maturity.`
+      + (ratio != null ? ` Pay grew ${pct(rec.cagr)} a year over ${rec.from}–${rec.to} against ${pct(abcRec)} across the three leaders, so it reads as ${momentum}.` : "");
   } else if (L >= T.growthBelow) {
     const slow = rec && rec.cagr < (abcRec ?? abc);
     stage = slow ? "Maturity" : "Growth";
@@ -147,14 +151,34 @@ export function stageFromData(data, id) {
     rule = `Salary is at ${(L * 100).toFixed(0)}% of the A/B/C level, below the 70% line, so the institute is still building. ` +
       (stalling ? "But growth is not outpacing the benchmark, so the climb is stalling." : "Growth is faster than the benchmark's, so it is closing the gap.");
   }
-  // position on the S-curve (0..1)
-  let t;
-  if (stage === "Decline") t = 0.9;
-  else if (L < 0.7) t = 0.2 + (Math.max(L, 0) / 0.7) * 0.38;
-  else t = 0.58 + (Math.min(L, 1) - 0.7) / 0.3 * 0.24;
+  // Position on the S-curve (0..1), inside the chart's own bands:
+  //   introduction 0–0.20 · growth 0.20–0.58 · maturity 0.58–0.82 · decline 0.82–1.00, curve peaks at 0.70.
+  // Growth is placed by how far pay has climbed toward the benchmark; maturity by recent pay growth against
+  // the leaders' own pace. Only a measured fall puts a marker on the falling side, so no institute is drawn
+  // as declining unless its median actually dropped.
+  let t, placement;
+  if (stage === "Decline") {
+    t = 0.90;
+    placement = `Past the peak, because the median fell ${(Math.abs(rec.change) * 100).toFixed(1)}% between ${rec.from} and ${rec.to}.`;
+  } else if (stage === "Maturity") {
+    const off = ratio == null ? 0 : clamp(ratio - 1, -0.6, 0.6) * 0.12;
+    t = clamp(0.70 - off - (L < T.maturityFrom ? 0.05 : 0), 0.62, 0.80);
+    const where = ratio == null ? "On the plateau" : ratio >= 1.15 ? "Just before the peak" : ratio <= 0.85 ? "On the plateau, just past the peak" : "At the peak";
+    placement = rec
+      ? `${where}: pay grew ${pct(rec.cagr)} a year over ${rec.from}–${rec.to}${abcRec ? ` against ${pct(abcRec)} across the three leaders` : ""}. The median ${rec.change >= 0 ? "rose" : "fell"} ${(Math.abs(rec.change) * 100).toFixed(1)}% in that window, so the decline rule does not apply.`
+      : `${where}: pay is at ${(L * 100).toFixed(0)}% of the A/B/C level and no fall is recorded.`;
+  } else {
+    t = 0.22 + (clamp(L, 0, T.maturityFrom) / T.maturityFrom) * 0.34;
+    placement = `On the climb: pay is ${(L * 100).toFixed(0)}% of the A/B/C level, which is ${Math.round(Math.min(L / T.maturityFrom, 1) * 100)}% of the way up the growth slope.`;
+  }
   const yearsToParity = own != null && abc != null && own > abc && L < T.maturityFrom
     ? Math.log(1 / L) / (Math.log(1 + own) - Math.log(1 + abc)) : null;
-  return { stage, momentum, t, level: L, cagr: own, abcCagr: abc, recent: rec, rule, evidence: ev, year: sal.year, yearsToParity };
+  if (stage !== "Decline" && rec) {
+    ev.push(rec.change > 0
+      ? `No decline: the median rose over ${rec.from}–${rec.to}, and decline needs a fall of more than ${Math.abs(T.declineDrop) * 100}%.`
+      : `The ${(Math.abs(rec.change) * 100).toFixed(1)}% change over ${rec.from}–${rec.to} does not meet the ${Math.abs(T.declineDrop) * 100}% fall that marks decline.`);
+  }
+  return { stage, momentum, t, placement, level: L, cagr: own, abcCagr: abc, recent: rec, recentRatio: ratio, rule, evidence: ev, year: sal.year, yearsToParity };
 }
 
 // Part A answers vote for a stage. votes = { intro, growth, mature, decline } counts.

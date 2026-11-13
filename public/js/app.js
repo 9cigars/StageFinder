@@ -85,8 +85,25 @@ function iimCard(id, board) {
 function boardMarkers(board) {
   return board.map((b) => ({
     id: b.id, label: nick(b.id), t: b.t, primary: b.id === state.iim,
-    tip: `<b>${esc(data.iims[b.id].name)}</b><br>${b.stage} · ${b.momentum}<br>Salary ${Math.round(b.level * 100)}% of IIM A/B/C`,
+    tip: `<b>${esc(data.iims[b.id].name)}</b><br>${b.stage} · ${b.momentum}<br>Salary ${Math.round(b.level * 100)}% of IIM A/B/C<br>${esc(b.placement)}`,
   }));
+}
+// Four equal cells under the curve: who is in each stage, and why a stage is empty.
+const STAGES4 = ["Introduction", "Growth", "Maturity", "Decline"];
+function boardLegend(board) {
+  const why = {
+    Introduction: "No institute here is new enough to have no placement record.",
+    Growth: "Pay below 85% of the IIM A/B/C level and still climbing.",
+    Maturity: "Pay at or above 85% of that level, placed by recent growth against each other.",
+    Decline: `No median fell: decline needs a drop of more than ${Math.abs(THRESHOLDS.declineDrop) * 100}% over about three years.`,
+  };
+  return `<div class="board-key">${STAGES4.map((s) => {
+    const inIt = board.filter((b) => b.stage === s).sort((a, b) => b.level - a.level);
+    return `<div class="bk stage-${s} ${inIt.length ? "" : "empty"}">
+      <div class="bk-h"><span class="bk-n">${String(inIt.length).padStart(2, "0")}</span><b>${s}</b></div>
+      <p class="bk-l">${inIt.length ? inIt.map((b) => esc(nick(b.id))).join(" · ") : "None"}</p>
+      <p class="bk-w">${esc(why[s])}</p></div>`;
+  }).join("")}</div>`;
 }
 function viewHome() {
   const board = stageBoard(data);
@@ -96,9 +113,10 @@ function viewHome() {
     <h1>${words("Where does your IIM stand in")} <em>${words("its life cycle?", 5)}</em></h1>
     <p class="lead rv" data-d="500">Ten short questions, set against public NIRF and placement data. You will see the stage your institute is in, what it does well, and the specific bottlenecks holding it back.</p>
     <div class="board card rv" data-d="650">
-      <div class="board-h"><div><span class="eyebrow" style="margin:0">Live stage board</span></div>
-        <div class="legend2"><span>Hover a dot for the numbers</span><span>Click or tap a name to open it</span></div></div>
+      <div class="board-h"><span class="eyebrow">Live stage board</span>
+        <span class="legend2">Left to right is the stage, not the year</span></div>
       <div id="board">${plcChart(boardMarkers(board))}</div>
+      ${boardLegend(board)}
     </div>
   </section>
   <section id="pick"><span class="eyebrow rv">Step 1 · choose your institute</span>
@@ -122,6 +140,7 @@ function dossier(board) {
   return `<div class="card dossier rv">
     <div><span class="eyebrow">${esc(t.line)}</span><h2>${esc(i.name)}</h2>
       <p class="meta">${esc(i.city)}, ${esc(i.state)} · founded ${i.founded}${b ? ` · <span class="badge stage-${b.stage}" style="margin:0">${b.stage} · ${b.momentum}</span>` : ""}</p>
+      ${b?.placement ? `<p class="why"><b class="lb">Why here</b>${rich(b.placement)}</p>` : ""}
       <div class="facts">
         ${f("median salary" + (sal ? ` (${sal.year})` : ""), sal ? { count: sal.value, dec: 1, pre: "₹", suf: " L" } : {})}
         ${f("faculty with PhDs", ph ? { count: ph.value * 100, suf: "%" } : {})}
@@ -364,6 +383,7 @@ function viewResults() {
     <div class="stage-title"><h2>${s ? s.stage : "No stage"}</h2>${s ? `<span class="pill">Momentum: ${s.momentum}</span>` : ""}${agree}</div>
     ${narrative(r)}
     <div style="margin-top:12px">${plcChart(markers, { compact: true })}</div>
+    ${s?.placement ? `<p class="why"><b class="lb">Why here</b>${rich(s.placement)}</p>` : ""}
     ${s ? `<ul class="ev">${s.evidence.map((e) => `<li>${rich(e)}</li>`).join("")}</ul>` : ""}
     <div class="row no-print" style="margin-top:24px"><button class="btn primary" data-action="print">Print or save as PDF</button><button class="btn" data-action="copy">Copy summary</button><button class="btn ghost" data-action="retake">Retake the questions</button></div>
   </div>${voteBlock}</section>

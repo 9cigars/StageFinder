@@ -97,6 +97,8 @@ Salary is compared with the IIM A/B/C average for the same year.
 - 85% or more: **Maturity**
 - a fall of more than 3% over about 3 years: **Decline**
 
+**Where the marker sits on the curve.** The curve's bands are introduction 0–0.20, growth 0.20–0.58, maturity 0.58–0.82 and decline 0.82–1.00, and the curve peaks at 0.70. A growth institute is placed by how far its pay has climbed toward the benchmark, so its height on the curve tracks its salary level. A mature institute is placed by its recent pay growth against the three leaders' own pace: faster than they are, just before the peak; about the same, at the peak; slower, just past it. Only a measured fall puts a marker on the falling side. That is why IIM A/B/C sit on the plateau and not on the downslope: Ahmedabad +10.0%, Calcutta +12.9% and Bangalore +3.5% over 2022–2025, so no decline rule is met, and the decline band is empty. Each institute's own "Why here" line on the site states its reason.
+
 Student answers cross-check the stage; they do not change it. Bottlenecks are the metrics scoring below 65 that public data backs up; weak spots only students raised are shown separately.
 
 Metric scores: salary, PhD share, payback and research are each compared with the A/B/C figure; diversity is 70% women share + 30% international share. Blended score = 60% data + 40% student rating, or whichever side exists.
